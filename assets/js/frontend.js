@@ -1,40 +1,40 @@
 jQuery(document).ready(function ($) {
-  $(document).on("click", ".dstab-tab-title", function (e) {
+  $(document).on("click", ".dstabify-tab-title", function (e) {
     e.preventDefault();
 
     const $tab = $(this);
-    const $tabs = $tab.closest(".dstab-tabs");
+    const $tabs = $tab.closest(".dstabify-tabs");
     const tabIndex = $tab.data("tab");
 
     // Update active tab
     $tabs
-      .find(".dstab-tab-title")
-      .removeClass("dstab-active")
+      .find(".dstabify-tab-title")
+      .removeClass("dstabify-active")
       .attr("aria-selected", "false")
       .attr("tabindex", "-1");
 
     $tab
-      .addClass("dstab-active")
+      .addClass("dstabify-active")
       .attr("aria-selected", "true")
       .attr("tabindex", "0");
 
     // Update active content
     $tabs
-      .find(".dstab-tab-content")
-      .removeClass("dstab-active")
+      .find(".dstabify-tab-content")
+      .removeClass("dstabify-active")
       .attr("hidden", "hidden");
 
     $tabs
-      .find('.dstab-tab-content[data-tab="' + tabIndex + '"]')
-      .addClass("dstab-active")
+      .find('.dstabify-tab-content[data-tab="' + tabIndex + '"]')
+      .addClass("dstabify-active")
       .removeAttr("hidden");
   });
 
   // Keyboard navigation
-  $(document).on("keydown", ".dstab-tab-title", function (e) {
+  $(document).on("keydown", ".dstabify-tab-title", function (e) {
     const $tab = $(this);
-    const $tabs = $tab.closest(".dstab-tabs");
-    const $tabList = $tabs.find(".dstab-tab-title");
+    const $tabs = $tab.closest(".dstabify-tabs");
+    const $tabList = $tabs.find(".dstabify-tab-title");
     const currentIndex = $tabList.index($tab);
 
     switch (e.key) {

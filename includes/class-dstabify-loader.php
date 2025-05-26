@@ -81,7 +81,7 @@ class DsTabify_Loader
 		}
 	}
 
-	public function deensimc_allowed_tags()
+	public function dstabify_allowed_tags()
 	{
 		$allowed_tags = array(
 			'strong' => array(),
@@ -144,7 +144,7 @@ class DsTabify_Loader
 
 		);
 
-		printf('<div class="notice notice-warning is-dismissible"><p>%1$s</p></div>', wp_kses($message, $this->deensimc_allowed_tags()));
+		printf('<div class="notice notice-warning is-dismissible"><p>%1$s</p></div>', wp_kses($message, $this->dstabify_allowed_tags()));
 	}
 
 	/**
@@ -167,7 +167,7 @@ class DsTabify_Loader
 
 		);
 
-		printf('<div class="notice notice-warning is-dismissible"><p>%1$s</p></div>', wp_kses($message, $this->deensimc_allowed_tags()));
+		printf('<div class="notice notice-warning is-dismissible"><p>%1$s</p></div>', wp_kses($message, $this->dstabify_allowed_tags()));
 	}
 
 	/**
@@ -190,7 +190,7 @@ class DsTabify_Loader
 
 		);
 
-		printf('<div class="notice notice-warning is-dismissible"><p>%1$s</p></div>', wp_kses($message, $this->deensimc_allowed_tags()));
+		printf('<div class="notice notice-warning is-dismissible"><p>%1$s</p></div>', wp_kses($message, $this->dstabify_allowed_tags()));
 	}
 
 	/**
@@ -207,31 +207,31 @@ class DsTabify_Loader
 	public function init()
 	{
 
-		add_action('elementor/frontend/after_enqueue_styles', [$this, 'tabify_enqueue_frontend_styles']);
-		add_action('elementor/frontend/after_register_scripts', [$this, 'tabify_enqueue_frontend_scripts']);
-		add_action('elementor/widgets/register', [$this, 'tabify_register_widgets']);
-		add_action('elementor/editor/before_enqueue_styles', [$this, 'tabify_enqueue_editor_styles']);
+		add_action('elementor/frontend/after_enqueue_styles', [$this, 'dstabify_enqueue_frontend_styles']);
+		add_action('elementor/frontend/after_register_scripts', [$this, 'dstabify_enqueue_frontend_scripts']);
+		add_action('elementor/widgets/register', [$this, 'dstabify_register_widgets']);
+		add_action('elementor/editor/before_enqueue_styles', [$this, 'dstabify_enqueue_editor_styles']);
 	}
 
 
 
-	public function tabify_register_widgets($widgets_manager)
+	public function dstabify_register_widgets($widgets_manager)
 	{
 		require_once DSTABIFY_PATH . 'includes/class-dstabify-widget.php';
 		$widgets_manager->register(new DsTabify_Widget());
 	}
 
-	public function tabify_enqueue_frontend_styles()
+	public function dstabify_enqueue_frontend_styles()
 	{
 		wp_enqueue_style('dstabify-style-frontend', DSTABIFY_URL . 'assets/css/frontend.css', array(), DSTABIFY_VERSION);
 	}
 
-	public function tabify_enqueue_frontend_scripts()
+	public function dstabify_enqueue_frontend_scripts()
 	{
 		wp_enqueue_script('dstabify-script-frontend', DSTABIFY_URL . 'assets/js/frontend.js', array('jquery'), DSTABIFY_VERSION, true);
 	}
 
-	public function tabify_enqueue_editor_styles()
+	public function dstabify_enqueue_editor_styles()
 	{
 		wp_enqueue_style('dstabify-editor', DSTABIFY_URL . 'assets/css/editor.css', array(), DSTABIFY_VERSION);
 	}
