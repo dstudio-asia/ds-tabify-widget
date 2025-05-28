@@ -112,7 +112,7 @@ class DsTabify_Widget extends \Elementor\Widget_Base
 				],
 				'default' => ['size' => 8, 'unit' => 'px'],
 				'selectors' => [
-					'{{WRAPPER}} .dstab-tab-icon' => 'margin-right: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .dstabify-tab-icon' => 'margin-right: {{SIZE}}{{UNIT}};',
 				],
 				'condition' => [
 					'tab_icon[value]!' => '',
@@ -411,7 +411,12 @@ class DsTabify_Widget extends \Elementor\Widget_Base
 					'unit' => 'px',
 				],
 				'selectors' => [
-					'{{WRAPPER}} .dstabify-tab-title:not(:last-child)' => 'margin-right: {{SIZE}}{{UNIT}};',
+
+					// Horizontal top
+					'{{WRAPPER}}.dstabify-tabs-view-horizontal .dstabify-tab-title:not(:last-child)' => 'margin-right: {{SIZE}}{{UNIT}};',
+					// Horizontal bottom
+					'{{WRAPPER}}.dstabify-tabs-view-horizontal-bottom .dstabify-tab-title:not(:last-child)' => 'margin-right: {{SIZE}}{{UNIT}};',
+					// Vertical left/right
 					'{{WRAPPER}}.dstabify-tabs-view-vertical-left .dstabify-tab-title:not(:last-child)' => 'margin-bottom: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}}.dstabify-tabs-view-vertical-right .dstabify-tab-title:not(:last-child)' => 'margin-bottom: {{SIZE}}{{UNIT}};',
 				],
@@ -437,14 +442,13 @@ class DsTabify_Widget extends \Elementor\Widget_Base
 					'unit' => 'px',
 				],
 				'selectors' => [
-					// Top tab
 					'{{WRAPPER}}.dstabify-tabs-view-horizontal .dstabify-tabs-content-wrapper' => 'margin-top: {{SIZE}}{{UNIT}};',
-					// Bottom tab
 					'{{WRAPPER}}.dstabify-tabs-view-horizontal-bottom .dstabify-tabs-content-wrapper' => 'margin-bottom: {{SIZE}}{{UNIT}};',
-					// Left tab
 					'{{WRAPPER}}.dstabify-tabs-view-vertical-left .dstabify-tabs-content-wrapper' => 'margin-left: {{SIZE}}{{UNIT}};',
-					// Right tab
 					'{{WRAPPER}}.dstabify-tabs-view-vertical-right .dstabify-tabs-content-wrapper' => 'margin-right: {{SIZE}}{{UNIT}};',
+				],
+				'condition' => [
+					'position' =>  ['horizontal', 'horizontal-bottom'],
 				],
 			]
 		);
@@ -480,13 +484,13 @@ class DsTabify_Widget extends \Elementor\Widget_Base
 				],
 				'selectors' => [
 					'{{WRAPPER}}.dstabify-tabs-view-vertical-left .dstabify-tabs-wrapper, 
-					{{WRAPPER}}.dstabify-tabs-view-vertical-right .dstabify-tabs-wrapper' => 'width: {{SIZE}}{{UNIT}}',
+					{{WRAPPER}}.dstabify-tabs-view-vertical-right .dstabify-tabs-wrapper' => 'width: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}}.dstabify-tabs-view-horizontal .dstabify-tabs-wrapper,
-					{{WRAPPER}}.dstabify-tabs-view-horizontal-bottom .dstabify-tabs-wrapper' => 'height: {{SIZE}}{{UNIT}}',
+					{{WRAPPER}}.dstabify-tabs-view-horizontal-bottom .dstabify-tabs-wrapper' => 'height: {{SIZE}}{{UNIT}}; ',
 				],
-				// 'condition' => [
-				// 	'type' => 'vertical',
-				// ],
+				'condition' => [
+					'position' => ['vertical-left', 'vertical-right'],
+				],
 			]
 		);
 
@@ -689,6 +693,8 @@ class DsTabify_Widget extends \Elementor\Widget_Base
 	protected function render()
 	{
 		$settings = $this->get_settings_for_display();
+
+		// echo "<pre>";print_r($settings);echo "</pre>";die;
 		$tabs = $settings['tabs'];
 		$active_tab = !empty($settings['active_tab']) ? intval($settings['active_tab']) : 1;
 		$position = !empty($settings['position']) ? $settings['position'] : 'horizontal';
