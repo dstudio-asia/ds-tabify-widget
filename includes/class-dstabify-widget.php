@@ -5,6 +5,7 @@ use Elementor\Plugin;
 use Elementor\Group_Control_Text_Stroke;
 use Elementor\Group_Control_Text_Shadow;
 use Elementor\Group_Control_Typography;
+use Elementor\Group_Control_Image_Size;
 
 use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
 use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
@@ -52,10 +53,11 @@ class DsTabify_Widget extends \Elementor\Widget_Base
 			]
 		);
 
+
 		$repeater = new Elementor\Repeater();
 
 		$repeater->add_control(
-			'tab_title',
+			'dstabify_tab_title',
 			[
 				'label' => esc_html__('Title', 'dstabify'),
 				'type' => Controls_Manager::TEXT,
@@ -85,51 +87,153 @@ class DsTabify_Widget extends \Elementor\Widget_Base
 			]
 		);
 
+		// $repeater->add_control(
+		// 	'tab_icon_position',
+		// 	[
+		// 		'label' => esc_html__('Icon Position', 'plugin-name'),
+		// 		'type' => Controls_Manager::SELECT,
+		// 		'default' => 'left',
+		// 		'options' => [
+		// 			'left' => esc_html__('Left', 'plugin-name'),
+		// 			'right' => esc_html__('Right', 'plugin-name'),
+		// 			'top' => esc_html__('Top', 'plugin-name'),
+		// 		],
+		// 		'condition' => [
+		// 			'tab_icon[value]!' => '',
+		// 		],
+		// 	]
+		// );
+
+		// $repeater->add_responsive_control(
+		// 	'tab_icon_spacing',
+		// 	[
+		// 		'label' => esc_html__('Icon Spacing', 'plugin-name'),
+		// 		'type' => \Elementor\Controls_Manager::SLIDER,
+		// 		'range' => [
+		// 			'px' => ['min' => 0, 'max' => 50],
+		// 		],
+		// 		'default' => ['size' => 8, 'unit' => 'px'],
+		// 		'selectors' => [
+		// 			'{{WRAPPER}} .dstabify-icon-position-left' => 'margin-right: {{SIZE}}{{UNIT}}!important;',
+		// 		],
+		// 		// 'condition' => [
+		// 		// 	'tab_icon[value]!' => '',
+		// 		// 	'tab_icon_position' => 'left',
+		// 		// ],
+		// 	]
+		// );
+
+		// $repeater->add_control(
+		// 	'tab_content',
+		// 	[
+		// 		'label' => esc_html__('Content', 'dstabify'),
+		// 		'type' => Controls_Manager::WYSIWYG,
+		// 		'default' => esc_html__('Tab Content', 'dstabify'),
+		// 		'placeholder' => esc_html__('Tab Content', 'dstabify'),
+		// 	]
+		// );
 		$repeater->add_control(
-			'tab_icon_position',
+			'dstabify_tab_heading',
 			[
-				'label' => esc_html__('Icon Position', 'plugin-name'),
-				'type' => Controls_Manager::SELECT,
-				'default' => 'left',
+				'label' => esc_html__('Heading', 'dstabify'),
+				'type' => Controls_Manager::TEXT,
+				'default' => esc_html__('Your Card Heading', 'dstabify'),
+			]
+		);
+
+		$repeater->add_control(
+			'dstabify_tab_description',
+			[
+				'label' => esc_html__('Description', 'dstabify'),
+				'type' => Controls_Manager::TEXTAREA,
+				'default' => esc_html__('Your card description here.', 'dstabify'),
+			]
+		);
+
+		$repeater->add_control(
+			'dstabify_tab_button_text',
+			[
+				'label' => esc_html__('Button Text', 'dstabify'),
+				'type' => Controls_Manager::TEXT,
+			]
+		);
+
+		$repeater->add_control(
+			'dstabify_tab_button_link',
+			[
+				'label' => esc_html__('Button Link', 'dstabify'),
+				'type' => Controls_Manager::URL,
+				'placeholder' => 'https://your-link.com',
+				'show_external' => true,
+			]
+		);
+
+		$repeater->add_control(
+			'dstabify_tab_image',
+			[
+				'label' => esc_html__('Choose Image', 'dstabify'),
+				'type' => Controls_Manager::MEDIA,
+				'default' => [
+					'url' => \Elementor\Utils::get_placeholder_image_src(),
+				],
+			]
+		);
+		// $repeater->add_control(
+		// 	'dstabify_tab_image_position',
+		// 	[
+		// 		'label' => esc_html__('Image Position', 'dstabify'),
+		// 		'type' => \Elementor\Controls_Manager::SELECT,
+		// 		'default' => 'left',
+		// 		'options' => [
+		// 			'left' => esc_html__('Left', 'dstabify'),
+		// 			'right' => esc_html__('Right', 'dstabify'),
+		// 		],
+		// 	]
+		// );
+		$repeater->add_control(
+			'image_position',
+			[
+				'label' => esc_html__('Image Position', 'dstabify'),
+				'type' => \Elementor\Controls_Manager::CHOOSE,
 				'options' => [
-					'left' => esc_html__('Left', 'plugin-name'),
-					'right' => esc_html__('Right', 'plugin-name'),
-					'top' => esc_html__('Top', 'plugin-name'),
+					'left' => [
+						'title' => esc_html__('Left', 'dstabify'),
+						'icon' => 'eicon-h-align-left',
+					],
+					'right' => [
+						'title' => esc_html__('Right', 'dstabify'),
+						'icon' => 'eicon-h-align-right',
+					],
+					'top' => [
+						'title' => esc_html__('Top', 'dstabify'),
+						'icon' => 'eicon-v-align-top',
+					],
+					'bottom' => [
+						'title' => esc_html__('Bottom', 'dstabify'),
+						'icon' => 'eicon-v-align-bottom',
+					],
 				],
-				'condition' => [
-					'tab_icon[value]!' => '',
-				],
-			]
-		);
-
-		$repeater->add_responsive_control(
-			'tab_icon_spacing',
-			[
-				'label' => esc_html__('Icon Spacing', 'plugin-name'),
-				'type' => \Elementor\Controls_Manager::SLIDER,
-				'range' => [
-					'px' => ['min' => 0, 'max' => 50],
-				],
-				'default' => ['size' => 8, 'unit' => 'px'],
 				'selectors' => [
-					'{{WRAPPER}} .dstabify-tab-icon' => 'margin-right: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .dstabify-tabs .dstabify-tab-content[data-tab="{{CURRENT_ITEM}}"] .dstabify-card-content-wrapper' => 'flex-direction: {{VALUE}};',
 				],
-				'condition' => [
-					'tab_icon[value]!' => '',
-					'tab_icon_position' => 'left',
-				],
+				'default' => 'left',
+				// 'condition' => [
+				// 	'card_style' => 'image',
+				// ],
+				'prefix_class' => 'image-position-',
 			]
 		);
 
-		$repeater->add_control(
-			'tab_content',
+
+		$repeater->add_group_control(
+			Group_Control_Image_Size::get_type(),
 			[
-				'label' => esc_html__('Content', 'dstabify'),
-				'type' => Controls_Manager::WYSIWYG,
-				'default' => esc_html__('Tab Content', 'dstabify'),
-				'placeholder' => esc_html__('Tab Content', 'dstabify'),
+				'name' => 'thumbnail',
+				'default' => 'medium_large',
+				'separator' => 'none',
 			]
 		);
+
 
 
 		$repeater->add_control(
@@ -163,15 +267,15 @@ class DsTabify_Widget extends \Elementor\Widget_Base
 				'fields' => $repeater->get_controls(),
 				'default' => [
 					[
-						'tab_title' => esc_html__('Tab #1', 'dstabify'),
+						'dstabify_tab_title' => esc_html__('Tab #1', 'dstabify'),
 						'tab_content' => esc_html__('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.', 'dstabify'),
 					],
 					[
-						'tab_title' => esc_html__('Tab #2', 'dstabify'),
+						'dstabify_tab_title' => esc_html__('Tab #2', 'dstabify'),
 						'tab_content' => esc_html__('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.', 'dstabify'),
 					],
 				],
-				'title_field' => '{{{ tab_title }}}',
+				'title_field' => '{{{ dstabify_tab_title }}}',
 			]
 		);
 
@@ -180,7 +284,7 @@ class DsTabify_Widget extends \Elementor\Widget_Base
 		$this->add_control(
 			'position',
 			[
-				'label' => esc_html__('Tab Position', 'dstabify'),
+				'label' => esc_html__('Direction', 'dstabify'),
 				'type' => Controls_Manager::CHOOSE,
 				'options' => [
 					'horizontal' => [
@@ -207,9 +311,9 @@ class DsTabify_Widget extends \Elementor\Widget_Base
 		);
 
 		$this->add_control(
-			'tabs_align',
+			'dstabify_tabs_justify',
 			[
-				'label' => esc_html__('Tabs Alignment', 'dstabify'),
+				'label' => esc_html__('Justify', 'dstabify'),
 				'type' => Controls_Manager::CHOOSE,
 				'options' => [
 					'start' => [
@@ -236,6 +340,77 @@ class DsTabify_Widget extends \Elementor\Widget_Base
 		);
 
 		$this->add_control(
+			'dstabify_width',
+			[
+				'label' => esc_html__('Width', 'dstabify'),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px', '%', 'em', 'rem', 'custom'],
+				'default' => [
+					'unit' => '%',
+				],
+				'range' => [
+					'px' => [
+						'min' => 10,
+						'max' => 500,
+					],
+					'%' => [
+						'min' => 10,
+						'max' => 50,
+					],
+					'em' => [
+						'min' => 1,
+						'max' => 50,
+					],
+					'rem' => [
+						'min' => 1,
+						'max' => 50,
+					],
+				],
+				'selectors' => [
+					'{{WRAPPER}}.dstabify-tabs-view-vertical-left .dstabify-tabs-wrapper, 
+					{{WRAPPER}}.dstabify-tabs-view-vertical-right .dstabify-tabs-wrapper' => 'width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.dstabify-tabs-view-horizontal .dstabify-tabs-wrapper,
+					{{WRAPPER}}.dstabify-tabs-view-horizontal-bottom .dstabify-tabs-wrapper' => 'height: {{SIZE}}{{UNIT}}; ',
+				],
+				'condition' => [
+					'position' => ['vertical-left', 'vertical-right'],
+				],
+			]
+		);
+
+		// $this->add_control(
+		// 	'image_position',
+		// 	[
+		// 		'label' => esc_html__('Image Position', 'dstabify'),
+		// 		'type' => \Elementor\Controls_Manager::CHOOSE,
+		// 		'options' => [
+		// 			'left' => [
+		// 				'title' => esc_html__('Left', 'dstabify'),
+		// 				'icon' => 'eicon-h-align-left',
+		// 			],
+		// 			'right' => [
+		// 				'title' => esc_html__('Right', 'dstabify'),
+		// 				'icon' => 'eicon-h-align-right',
+		// 			],
+		// 			'top' => [
+		// 				'title' => esc_html__('Top', 'dstabify'),
+		// 				'icon' => 'eicon-v-align-top',
+		// 			],
+		// 			'bottom' => [
+		// 				'title' => esc_html__('Bottom', 'dstabify'),
+		// 				'icon' => 'eicon-v-align-bottom',
+		// 			],
+		// 		],
+		// 		'default' => 'left',
+		// 		// 'condition' => [
+		// 		// 	'card_style' => 'image',
+		// 		// ],
+		// 		'prefix_class' => 'image-position-',
+		// 	]
+		// );
+
+
+		$this->add_control(
 			'active_tab',
 			[
 				'label' => esc_html__('Active Tab', 'dstabify'),
@@ -255,7 +430,66 @@ class DsTabify_Widget extends \Elementor\Widget_Base
 				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
 			]
 		);
+		$this->add_responsive_control(
+			'tab_gap',
+			[
+				'label' => esc_html__('Gap Between Tabs', 'plugin-name'),
+				'type' => \Elementor\Controls_Manager::SLIDER,
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 100,
+					],
+				],
+				'default' => [
+					'size' => 4,
+					'unit' => 'px',
+				],
+				'selectors' => [
+
+					// Horizontal top
+					'{{WRAPPER}}.dstabify-tabs-view-horizontal .dstabify-tab-title:not(:last-child)' => 'margin-right: {{SIZE}}{{UNIT}};',
+					// Horizontal bottom
+					'{{WRAPPER}}.dstabify-tabs-view-horizontal-bottom .dstabify-tab-title:not(:last-child)' => 'margin-right: {{SIZE}}{{UNIT}};',
+					// Vertical left/right
+					'{{WRAPPER}}.dstabify-tabs-view-vertical-left .dstabify-tab-title:not(:last-child)' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.dstabify-tabs-view-vertical-right .dstabify-tab-title:not(:last-child)' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+				],
+				// 'condition' => [
+				// 	'position!' => 'horizontal-bottom',
+				// ]
+			]
+		);
+
+		$this->add_responsive_control(
+			'content_spacing',
+			[
+				'label' => esc_html__('Distance from content', 'plugin-name'),
+				'type' => \Elementor\Controls_Manager::SLIDER,
+				'range' => [
+					'px' => [
+						'min' => 0,
+						'max' => 100,
+					],
+				],
+				'default' => [
+					'size' => 0,
+					'unit' => 'px',
+				],
+				'selectors' => [
+					'{{WRAPPER}}.dstabify-tabs-view-horizontal .dstabify-tabs-content-wrapper' => 'margin-top: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.dstabify-tabs-view-horizontal-bottom .dstabify-tabs-content-wrapper' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.dstabify-tabs-view-vertical-left .dstabify-tabs-content-wrapper' => 'margin-left: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.dstabify-tabs-view-vertical-right .dstabify-tabs-content-wrapper' => 'margin-right: {{SIZE}}{{UNIT}};',
+				],
+				// 'condition' => [
+				// 	'position' =>  ['horizontal', 'horizontal-bottom'],
+				// ],
+			]
+		);
 		$this->start_controls_tabs('tabs_style_tabs');
+
+
 		$this->start_controls_tab(
 			'tab_style_normal',
 			[
@@ -387,112 +621,12 @@ class DsTabify_Widget extends \Elementor\Widget_Base
 		$this->end_controls_tabs();
 		$this->end_controls_section();
 
-		$this->start_controls_section(
-			'section_tabs_style',
-			[
-				'label' => esc_html__('Tabs', 'dstabify'),
-				'tab' => Controls_Manager::TAB_STYLE,
-			]
-		);
-
-		$this->add_responsive_control(
-			'tab_gap',
-			[
-				'label' => esc_html__('Gap Between Tabs', 'plugin-name'),
-				'type' => \Elementor\Controls_Manager::SLIDER,
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 100,
-					],
-				],
-				'default' => [
-					'size' => 4,
-					'unit' => 'px',
-				],
-				'selectors' => [
-
-					// Horizontal top
-					'{{WRAPPER}}.dstabify-tabs-view-horizontal .dstabify-tab-title:not(:last-child)' => 'margin-right: {{SIZE}}{{UNIT}};',
-					// Horizontal bottom
-					'{{WRAPPER}}.dstabify-tabs-view-horizontal-bottom .dstabify-tab-title:not(:last-child)' => 'margin-right: {{SIZE}}{{UNIT}};',
-					// Vertical left/right
-					'{{WRAPPER}}.dstabify-tabs-view-vertical-left .dstabify-tab-title:not(:last-child)' => 'margin-bottom: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}}.dstabify-tabs-view-vertical-right .dstabify-tab-title:not(:last-child)' => 'margin-bottom: {{SIZE}}{{UNIT}};',
-				],
-				// 'condition' => [
-				// 	'position!' => 'horizontal-bottom',
-				// ]
-			]
-		);
-
-		$this->add_responsive_control(
-			'content_spacing',
-			[
-				'label' => esc_html__('Content Spacing', 'plugin-name'),
-				'type' => \Elementor\Controls_Manager::SLIDER,
-				'range' => [
-					'px' => [
-						'min' => 0,
-						'max' => 100,
-					],
-				],
-				'default' => [
-					'size' => 0,
-					'unit' => 'px',
-				],
-				'selectors' => [
-					'{{WRAPPER}}.dstabify-tabs-view-horizontal .dstabify-tabs-content-wrapper' => 'margin-top: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}}.dstabify-tabs-view-horizontal-bottom .dstabify-tabs-content-wrapper' => 'margin-bottom: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}}.dstabify-tabs-view-vertical-left .dstabify-tabs-content-wrapper' => 'margin-left: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}}.dstabify-tabs-view-vertical-right .dstabify-tabs-content-wrapper' => 'margin-right: {{SIZE}}{{UNIT}};',
-				],
-				'condition' => [
-					'position' =>  ['horizontal', 'horizontal-bottom'],
-				],
-			]
-		);
 
 
 
-		$this->add_control(
-			'navigation_width',
-			[
-				'label' => esc_html__('Navigation Width', 'dstabify'),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => ['px', '%', 'em', 'rem', 'custom'],
-				'default' => [
-					'unit' => '%',
-				],
-				'range' => [
-					'px' => [
-						'min' => 10,
-						'max' => 500,
-					],
-					'%' => [
-						'min' => 10,
-						'max' => 50,
-					],
-					'em' => [
-						'min' => 1,
-						'max' => 50,
-					],
-					'rem' => [
-						'min' => 1,
-						'max' => 50,
-					],
-				],
-				'selectors' => [
-					'{{WRAPPER}}.dstabify-tabs-view-vertical-left .dstabify-tabs-wrapper, 
-					{{WRAPPER}}.dstabify-tabs-view-vertical-right .dstabify-tabs-wrapper' => 'width: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}}.dstabify-tabs-view-horizontal .dstabify-tabs-wrapper,
-					{{WRAPPER}}.dstabify-tabs-view-horizontal-bottom .dstabify-tabs-wrapper' => 'height: {{SIZE}}{{UNIT}}; ',
-				],
-				'condition' => [
-					'position' => ['vertical-left', 'vertical-right'],
-				],
-			]
-		);
+
+
+
 
 		// $this->add_control(
 		// 	'border_width',
@@ -582,22 +716,19 @@ class DsTabify_Widget extends \Elementor\Widget_Base
 		// 	]
 		// );
 
-		$this->add_group_control(
-			Group_Control_Typography::get_type(),
+		$this->start_controls_section(
+			'section_tab_title_style',
 			[
-				'name' => 'tab_typography',
-				'selector' => '{{WRAPPER}} .elementor-tab-title',
-				'global' => [
-					'default' => Global_Typography::TYPOGRAPHY_PRIMARY,
-				],
+				'label' => esc_html__('Tab Title', 'dstabify'),
+				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);
 
 		$this->add_group_control(
-			Group_Control_Text_Stroke::get_type(),
+			Group_Control_Typography::get_type(),
 			[
-				'name' => 'text_stroke',
-				'selector' => '{{WRAPPER}} .elementor-tab-title',
+				'name' => 'tab_typography',
+				'selector' => '{{WRAPPER}} .dstabify-tab-title',
 			]
 		);
 
@@ -605,57 +736,186 @@ class DsTabify_Widget extends \Elementor\Widget_Base
 			Group_Control_Text_Shadow::get_type(),
 			[
 				'name' => 'title_shadow',
-				'selector' => '{{WRAPPER}} .elementor-tab-title',
+				'selector' => '{{WRAPPER}} .dstabify-tab-title',
 			]
 		);
 
 		$this->add_control(
-			'title_align',
+			'tab_title_color',
 			[
-				'label' => esc_html__('Alignment', 'dstabify'),
+				'label' => esc_html__('Title Color', 'dstabify'),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .dstabify-tab-title' => 'color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_control(
+			'tab_title_active_color',
+			[
+				'label' => esc_html__('Active Title Color', 'dstabify'),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .dstabify-tab-title.dstabify-active' => 'color: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->end_controls_section();
+
+		$this->start_controls_section(
+			'section_tab_icon_style',
+			[
+				'label' => esc_html__('Tab Icon', 'dstabify'),
+				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+		// Icon Position (top, bottom, left, right)
+		$this->add_control(
+			'tab_icon_position',
+			[
+				'label' => esc_html__('Icon Position', 'dstabify'),
 				'type' => Controls_Manager::CHOOSE,
 				'options' => [
 					'left' => [
 						'title' => esc_html__('Left', 'dstabify'),
-						'icon' => 'eicon-text-align-left',
-					],
-					'center' => [
-						'title' => esc_html__('Center', 'dstabify'),
-						'icon' => 'eicon-text-align-center',
+						'icon' => 'eicon-h-align-left',
 					],
 					'right' => [
 						'title' => esc_html__('Right', 'dstabify'),
-						'icon' => 'eicon-text-align-right',
+						'icon' => 'eicon-h-align-right',
+					],
+					'top' => [
+						'title' => esc_html__('Top', 'dstabify'),
+						'icon' => 'eicon-v-align-top',
+					],
+					'bottom' => [
+						'title' => esc_html__('Bottom', 'dstabify'),
+						'icon' => 'eicon-v-align-bottom',
 					],
 				],
+				'toggle' => false,
+				'default' => 'left',
+			]
+		);
+
+
+
+		// Icon Size
+		$this->add_responsive_control(
+			'tab_icon_size',
+			[
+				'label' => esc_html__('Icon Size', 'dstabify'),
+				'type' => Controls_Manager::SLIDER,
+				'range' => ['px' => ['min' => 10, 'max' => 100]],
+				'default' => ['size' => 20, 'unit' => 'px'],
 				'selectors' => [
-					'{{WRAPPER}} .elementor-tab-title' => 'text-align: {{VALUE}};',
-				],
-				'condition' => [
-					'tabs_align' => 'stretch',
+					'{{WRAPPER}} .dstabify-tab-icon svg' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
 
-		$this->add_control(
-			'heading_content',
+		// Icon Spacing
+		$this->add_responsive_control(
+			'tab_icon_spacing',
 			[
-				'label' => esc_html__('Content', 'dstabify'),
-				'type' => Controls_Manager::HEADING,
-				'separator' => 'before',
+				'label' => esc_html__('Icon Spacing', 'dstabify'),
+				'type' => Controls_Manager::SLIDER,
+				'range' => ['px' => ['min' => 0, 'max' => 50]],
+				'default' => ['size' => 8, 'unit' => 'px'],
+				'selectors' => [
+					'{{WRAPPER}} .dstabify-icon-position-left' => 'margin-right: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .dstabify-icon-position-right' => 'margin-left: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .dstabify-icon-position-top' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .dstabify-icon-position-bottom' => 'margin-top: {{SIZE}}{{UNIT}};',
+				],
+			]
+		);
+
+		// Tabs: Normal, Hover, Active
+		$this->start_controls_tabs('tab_icon_color_tabs');
+
+		// Normal
+		$this->start_controls_tab(
+			'tab_icon_normal',
+			[
+				'label' => esc_html__('Normal', 'dstabify'),
+			]
+		);
+		$this->add_control(
+			'tab_icon_color_normal',
+			[
+				'label' => esc_html__('Color', 'dstabify'),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .dstabify-tab-icon svg' => 'fill: {{VALUE}};',
+				],
+			]
+		);
+		$this->end_controls_tab();
+
+		// Hover
+		$this->start_controls_tab(
+			'tab_icon_hover',
+			[
+				'label' => esc_html__('Hover', 'dstabify'),
+			]
+		);
+		$this->add_control(
+			'tab_icon_color_hover',
+			[
+				'label' => esc_html__('Color', 'dstabify'),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .dstabify-tab-title:hover .dstabify-tab-icon svg' => 'fill: {{VALUE}};',
+				],
+			]
+		);
+		$this->end_controls_tab();
+
+		// Active
+		$this->start_controls_tab(
+			'tab_icon_active',
+			[
+				'label' => esc_html__('Active', 'dstabify'),
+			]
+		);
+		$this->add_control(
+			'tab_icon_color_active',
+			[
+				'label' => esc_html__('Color', 'dstabify'),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .dstabify-tab-title.dstabify-active .dstabify-tab-icon svg' => 'fill: {{VALUE}};',
+				],
+			]
+		);
+		$this->end_controls_tab();
+
+		$this->end_controls_tabs();
+
+		$this->end_controls_section();
+
+
+
+
+		$this->start_controls_section(
+			'section_tab_content_style',
+			[
+				'label' => esc_html__('Tab Content', 'dstabify'),
+				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);
 
 		$this->add_control(
 			'content_color',
 			[
-				'label' => esc_html__('Color', 'dstabify'),
+				'label' => esc_html__('Content Color', 'dstabify'),
 				'type' => Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .elementor-tab-content' => 'color: {{VALUE}};',
-				],
-				'global' => [
-					'default' => Global_Colors::COLOR_TEXT,
+					'{{WRAPPER}} .dstabify-tab-content' => 'color: {{VALUE}};',
 				],
 			]
 		);
@@ -664,10 +924,7 @@ class DsTabify_Widget extends \Elementor\Widget_Base
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'content_typography',
-				'selector' => '{{WRAPPER}} .elementor-tab-content',
-				'global' => [
-					'default' => Global_Typography::TYPOGRAPHY_TEXT,
-				],
+				'selector' => '{{WRAPPER}} .dstabify-tab-content',
 			]
 		);
 
@@ -675,7 +932,7 @@ class DsTabify_Widget extends \Elementor\Widget_Base
 			Group_Control_Text_Shadow::get_type(),
 			[
 				'name' => 'content_shadow',
-				'selector' => '{{WRAPPER}} .elementor-tab-content',
+				'selector' => '{{WRAPPER}} .dstabify-tab-content',
 			]
 		);
 
@@ -693,8 +950,6 @@ class DsTabify_Widget extends \Elementor\Widget_Base
 	protected function render()
 	{
 		$settings = $this->get_settings_for_display();
-
-		// echo "<pre>";print_r($settings);echo "</pre>";die;
 		$tabs = $settings['tabs'];
 		$active_tab = !empty($settings['active_tab']) ? intval($settings['active_tab']) : 1;
 		$position = !empty($settings['position']) ? $settings['position'] : 'horizontal';
@@ -714,16 +969,22 @@ class DsTabify_Widget extends \Elementor\Widget_Base
 				<?php endif; ?>
 
 				<div class="dstabify-tabs-wrapper" role="tablist">
-					<?php
-					foreach ($tabs as $index => $item) :
+					<?php foreach ($tabs as $index => $item) :
 						$tab_count = $index + 1;
 						$tab_id = 'dstabify-tab-title-' . $id_int . $tab_count;
 						$active_class = $tab_count === $active_tab ? 'dstabify-active' : '';
-						$has_icon = !empty($item['tab_icon']['value']);
+						$icon_html = '';
+						$icon_position = $item['tab_icon_position'] ?? 'left';
+
+						if (!empty($item['tab_icon']['value'])) {
+							ob_start();
+							\Elementor\Icons_Manager::render_icon($item['tab_icon'], ['aria-hidden' => 'true']);
+							$icon_html = ob_get_clean();
+						}
 
 						$this->add_render_attribute($tab_id, [
 							'id' => $tab_id,
-							'class' => ['dstabify-tab-title', 'dstabify-tab-desktop-title', $active_class],
+							'class' => ['dstabify-tab-title', 'dstabify-icon-' . $icon_position, $active_class],
 							'aria-selected' => $tab_count === $active_tab ? 'true' : 'false',
 							'data-tab' => $tab_count,
 							'role' => 'tab',
@@ -732,34 +993,25 @@ class DsTabify_Widget extends \Elementor\Widget_Base
 						]);
 					?>
 						<div <?php $this->print_render_attribute_string($tab_id); ?>>
-							<?php if ($has_icon) :
-								$icon_position = !empty($item['tab_icon_position']) ? $item['tab_icon_position'] : 'left';
-							?>
-								<?php if ($icon_position === 'top') : ?>
-									<div class="dstabify-icon-top-wrapper">
-										<span class="dstabify-tab-icon dstabify-icon-position-top">
-											echo
-											<?php \Elementor\Icons_Manager::render_icon($item['tab_icon'], ['aria-hidden' => 'true']); ?>
-										</span>
-										<span class="dstabify-tab-title-text"><?php echo esc_html($item['tab_title']); ?></span>
+							<?php if ($icon_html) : ?>
+								<?php if ($icon_position === 'top' || $icon_position === 'bottom') : ?>
+									<div class="dstabify-icon-wrapper dstabify-icon-wrapper-<?php echo esc_attr($icon_position); ?>">
+										<span class="dstabify-tab-icon"><?php echo $icon_html; ?></span>
+										<span class="dstabify-tab-title-text"><?php echo esc_html($item['dstabify_tab_title']); ?></span>
 									</div>
 								<?php else : ?>
-									<div class="dstabify-tab-title-inner dstabify-icon-<?php echo esc_attr($icon_position); ?>">
+									<div class="dstabify-tab-title-inner">
 										<?php if ($icon_position === 'left') : ?>
-											<span class="dstabify-tab-icon dstabify-icon-position-left">
-												<?php \Elementor\Icons_Manager::render_icon($item['tab_icon'], ['aria-hidden' => 'true']); ?>
-											</span>
+											<span class="dstabify-tab-icon"><?php echo $icon_html; ?></span>
 										<?php endif; ?>
-										<span class="dstabify-tab-title-text"><?php echo esc_html($item['tab_title']); ?></span>
+										<span class="dstabify-tab-title-text"><?php echo esc_html($item['dstabify_tab_title']); ?></span>
 										<?php if ($icon_position === 'right') : ?>
-											<span class="dstabify-tab-icon dstabify-icon-position-right">
-												<?php \Elementor\Icons_Manager::render_icon($item['tab_icon'], ['aria-hidden' => 'true']); ?>
-											</span>
+											<span class="dstabify-tab-icon"><?php echo $icon_html; ?></span>
 										<?php endif; ?>
 									</div>
 								<?php endif; ?>
 							<?php else : ?>
-								<span class="dstabify-tab-title-text"><?php echo esc_html($item['tab_title']); ?></span>
+								<span class="dstabify-tab-title-text"><?php echo esc_html($item['dstabify_tab_title']); ?></span>
 							<?php endif; ?>
 						</div>
 					<?php endforeach; ?>
@@ -775,12 +1027,25 @@ class DsTabify_Widget extends \Elementor\Widget_Base
 		<?php
 	}
 
+
+
+
+
+
+
 	protected function render_tab_contents($tabs, $id_int, $active_tab)
 	{
 		foreach ($tabs as $index => $item) :
 			$tab_count = $index + 1;
 			$tab_content_id = 'dstabify-tab-content-' . $id_int . $tab_count;
 			$active_class = $tab_count === $active_tab ? 'dstabify-active' : '';
+			$image_url = $item['dstabify_tab_image']['url'] ?? '';
+			$has_image = !empty($image_url);
+			$btn_text = $item['dstabify_tab_button_text'] ?? '';
+			$btn_link = $item['dstabify_tab_button_link'] ?? [];
+			// $image_position = $item['dstabify_tab_image_position'] ?? 'left';
+			$image_position = $item['image_position'] ?? 'left';
+
 
 			$this->add_render_attribute($tab_content_id, [
 				'id' => $tab_content_id,
@@ -793,103 +1058,124 @@ class DsTabify_Widget extends \Elementor\Widget_Base
 			if ($tab_count !== $active_tab) {
 				$this->add_render_attribute($tab_content_id, 'hidden', 'hidden');
 			}
-
-			$this->add_inline_editing_attributes($tab_content_id, 'advanced');
 		?>
 			<div <?php $this->print_render_attribute_string($tab_content_id); ?>>
-				<?php echo $item['tab_content']; ?>
+				<div class="dstabify-card-content-wrapper image-position-<?php echo esc_attr($image_position); ?> <?php echo $has_image ? 'has-image' : 'no-image'; ?>">
+					<div class="dstabify-card-left-section">
+						<h3 class="dstabify-card-heading"><?php echo esc_html($item['dstabify_tab_heading']); ?></h3>
+						<p class="dstabify-card-description"><?php echo esc_html($item['dstabify_tab_description']); ?></p>
+						<?php if (!empty($btn_text)) : ?>
+							<a class="dstabify-card-button" href="<?php echo esc_url($btn_link['url']); ?>" <?php echo $btn_link['is_external'] ? 'target="_blank"' : ''; ?> <?php echo $btn_link['nofollow'] ? 'rel="nofollow"' : ''; ?>>
+								<?php echo esc_html($btn_text); ?>
+							</a>
+						<?php endif; ?>
+					</div>
+
+					<?php if ($has_image) : ?>
+						<div class="dstabify-card-image">
+							<?php echo \Elementor\Group_Control_Image_Size::print_attachment_image_html($item, 'thumbnail', 'dstabify_tab_image'); ?>
+						</div>
+					<?php endif; ?>
+				</div>
 			</div>
 		<?php endforeach;
 	}
 
+
+
+
 	protected function content_template()
 	{
 		?>
-		<div class="dstabify-tabs dstabify-tabs-view-{{ settings.position }}" data-active-tab="{{ settings.active_tab }}">
+		<div class="dstabify-tabs dstabify-tabs-view-{{ settings.position }} dstabify-icon-position-{{ settings.tab_icon_position }}" data-active-tab="{{ settings.active_tab }}">
 			<div class="dstabify-tabs-inner">
 				<# var idInt=view.getIDInt().toString().substr(0, 3); #>
 
-					<# if (settings.position==='horizontal-bottom' ) { #>
-						<div class="dstabify-tabs-content-wrapper">
-							<# _.each(settings.tabs, function(item, index) {
-								var tabCount=index + 1;
-								var tabContentId='dstabify-tab-content-' + idInt + tabCount;
-								#>
-								<div id="{{ tabContentId }}"
-									class="dstabify-tab-content <# if (tabCount === settings.active_tab) { #>dstabify-active<# } #>"
-									data-tab="{{ tabCount }}"
-									role="tabpanel"
-									aria-labelledby="dstabify-tab-title-{{ idInt + tabCount }}"
-									<# if (tabCount !==settings.active_tab) { #>hidden="hidden"<# } #>>
-										{{{ item.tab_content }}}
-								</div>
-								<# }); #>
-						</div>
-						<# } #>
+					<!-- Tabs Title Rendering -->
+					<div class="dstabify-tabs-wrapper" role="tablist">
+						<# _.each(settings.tabs, function(item, index) {
+							var tabCount=index + 1;
+							var tabId='dstabify-tab-title-' + idInt + tabCount;
+							var hasIcon=item.tab_icon && item.tab_icon.value;
+							var iconHTML=elementor.helpers.renderIcon(view, item.tab_icon, { 'aria-hidden' : true }, 'i' , 'object' );
+							var iconPosition=item.tab_icon_position || 'left' ;
+							#>
+							<div id="{{ tabId }}"
+								class="dstabify-tab-title <# if (tabCount == settings.active_tab) { #>dstabify-active<# } #>"
+								aria-selected="{{ tabCount == settings.active_tab ? 'true' : 'false' }}"
+								data-tab="{{ tabCount }}"
+								role="tab"
+								aria-controls="dstabify-tab-content-{{ idInt + tabCount }}"
+								tabindex="{{ tabCount == settings.active_tab ? '0' : '-1' }}">
 
-							<div class="dstabify-tabs-wrapper" role="tablist">
-								<# _.each(settings.tabs, function(item, index) {
-									var tabCount=index + 1;
-									var tabId='dstabify-tab-title-' + idInt + tabCount;
-									var hasIcon=item.tab_icon && item.tab_icon.value;
-									var iconPosition=item.tab_icon_position || 'left' ;
-									var iconHTML=elementor.helpers.renderIcon(view, item.tab_icon, { 'aria-hidden' : true }, 'i' , 'object' );
-									#>
-									<div id="{{ tabId }}"
-										class="dstabify-tab-title dstabify-tab-desktop-title <# if (tabCount === settings.active_tab) { #>dstabify-active<# } #>"
-										aria-selected="{{ tabCount === settings.active_tab ? 'true' : 'false' }}"
-										data-tab="{{ tabCount }}"
-										role="tab"
-										aria-controls="dstabify-tab-content-{{ idInt + tabCount }}"
-										tabindex="{{ tabCount === settings.active_tab ? '0' : '-1' }}">
-
-										<# if (hasIcon) { #>
-											<# if (iconPosition==='top' ) { #>
-												<div class="dstabify-icon-top-wrapper">
-													<span class="dstabify-tab-icon dstabify-icon-position-top">
-														{{{ iconHTML.value }}}
-													</span>
-													<span class="dstabify-tab-title-text">{{{ item.tab_title }}}</span>
-												</div>
-												<# } else { #>
-													<div class="dstabify-tab-title-inner dstabify-icon-{{ iconPosition }}">
-														<# if (iconPosition==='left' ) { #>
-															<span class="dstabify-tab-icon dstabify-icon-position-left">
-																{{{ iconHTML.value }}}
-															</span>
-															<# } #>
-																<span class="dstabify-tab-title-text">{{{ item.tab_title }}}</span>
-																<# if (iconPosition==='right' ) { #>
-																	<span class="dstabify-tab-icon dstabify-icon-position-right">
-																		{{{ iconHTML.value }}}
-																	</span>
-																	<# } #>
-													</div>
-													<# } #>
-														<# } else { #>
-															<span class="dstabify-tab-title-text">{{{ item.tab_title }}}</span>
-															<# } #>
-									</div>
-									<# }); #>
-							</div>
-
-							<# if (settings.position !=='horizontal-bottom' ) { #>
-								<div class="dstabify-tabs-content-wrapper">
-									<# _.each(settings.tabs, function(item, index) {
-										var tabCount=index + 1;
-										var tabContentId='dstabify-tab-content-' + idInt + tabCount;
-										#>
-										<div id="{{ tabContentId }}"
-											class="dstabify-tab-content <# if (tabCount === settings.active_tab) { #>dstabify-active<# } #>"
-											data-tab="{{ tabCount }}"
-											role="tabpanel"
-											aria-labelledby="dstabify-tab-title-{{ idInt + tabCount }}"
-											<# if (tabCount !==settings.active_tab) { #>hidden="hidden"<# } #>>
-												{{{ item.tab_content }}}
+								<# if (hasIcon) { #>
+									<# if (iconPosition==='top' || iconPosition==='bottom' ) { #>
+										<div class="dstabify-icon-wrapper dstabify-icon-wrapper-{{ iconPosition }}">
+											<span class="dstabify-tab-icon dstabify-icon-position-{{ iconPosition }}">
+												{{{ iconHTML.value }}}
+											</span>
+											<span class="dstabify-tab-title-text">{{{ item.dstabify_tab_title }}}</span>
 										</div>
-										<# }); #>
-								</div>
-								<# } #>
+										<# } else { #>
+											<div class="dstabify-tab-title-inner dstabify-icon-{{ iconPosition }}">
+												<# if (iconPosition==='left' ) { #>
+													<span class="dstabify-tab-icon dstabify-icon-position-left">{{{ iconHTML.value }}}</span>
+													<# } #>
+														<span class="dstabify-tab-title-text">{{{ item.dstabify_tab_title }}}</span>
+														<# if (iconPosition==='right' ) { #>
+															<span class="dstabify-tab-icon dstabify-icon-position-right">{{{ iconHTML.value }}}</span>
+															<# } #>
+											</div>
+											<# } #>
+												<# } else { #>
+													<span class="dstabify-tab-title-text">{{{ item.dstabify_tab_title }}}</span>
+													<# } #>
+							</div>
+							<# }); #>
+					</div>
+
+					<!-- Tab Content Rendering -->
+					<div class="dstabify-tabs-content-wrapper">
+						<# _.each(settings.tabs, function(item, index) {
+							var tabCount=index + 1;
+							var tabContentId='dstabify-tab-content-' + idInt + tabCount;
+							var imageUrl=item.dstabify_tab_image && item.dstabify_tab_image.url || '' ;
+							var hasImage=imageUrl.length> 0;
+							var btn = item.dstabify_tab_button_link || {};
+							var imgPos = item.image_position || 'left';
+							#>
+							<div id="{{ tabContentId }}"
+								class="dstabify-tab-content <# if (tabCount == settings.active_tab) { #>dstabify-active<# } #>"
+								data-tab="{{ tabCount }}"
+								role="tabpanel"
+								aria-labelledby="dstabify-tab-title-{{ idInt + tabCount }}"
+								<# if (tabCount !=settings.active_tab) { #>hidden="hidden"<# } #>>
+
+									<div class="dstabify-card-content-wrapper image-position-{{ imgPos }} <# if (hasImage) { #>has-image<# } else { #>no-image<# } #>">
+										<div class="dstabify-card-left-section">
+											<# if (item.dstabify_tab_heading) { #>
+												<h3 class="dstabify-card-heading">{{{ item.dstabify_tab_heading }}}</h3>
+												<# } #>
+													<# if (item.dstabify_tab_description) { #>
+														<p class="dstabify-card-description">{{{ item.dstabify_tab_description }}}</p>
+														<# } #>
+															<# if (item.dstabify_tab_button_text) { #>
+																<a class="dstabify-card-button" href="{{ btn.url }}" <# if (btn.is_external) { #>target="_blank"<# } #>
+																		<# if (btn.nofollow) { #>rel="nofollow"<# } #>>
+																				{{{ item.dstabify_tab_button_text }}}
+																</a>
+																<# } #>
+										</div>
+
+										<# if (hasImage) { #>
+											<div class="dstabify-card-image">
+												<img src="{{ imageUrl }}" alt="">
+											</div>
+											<# } #>
+									</div>
+							</div>
+							<# }); #>
+					</div>
 			</div>
 		</div>
 <?php

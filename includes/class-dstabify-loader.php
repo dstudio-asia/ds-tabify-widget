@@ -209,6 +209,8 @@ class DsTabify_Loader
 
 		add_action('elementor/frontend/after_enqueue_styles', [$this, 'dstabify_enqueue_frontend_styles']);
 		add_action('elementor/frontend/after_register_scripts', [$this, 'dstabify_enqueue_frontend_scripts']);
+		add_action('elementor/editor/after_enqueue_scripts', [$this, 'dstabify_enqueue_frontend_scripts']);
+
 		add_action('elementor/widgets/register', [$this, 'dstabify_register_widgets']);
 		add_action('elementor/editor/before_enqueue_styles', [$this, 'dstabify_enqueue_editor_styles']);
 	}
