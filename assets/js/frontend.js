@@ -1,4 +1,4 @@
-jQuery(document).ready(function ($) {
+
   // $(document).on("click", ".dstabify-tab-title", function (e) {
   //   e.preventDefault();
 
@@ -30,7 +30,7 @@ jQuery(document).ready(function ($) {
   //     .removeAttr("hidden");
   // });
 
-  // // Keyboard navigation
+  // Keyboard navigation
   // $(document).on("keydown", ".dstabify-tab-title", function (e) {
   //   const $tab = $(this);
   //   const $tabs = $tab.closest(".dstabify-tabs");
@@ -66,52 +66,172 @@ jQuery(document).ready(function ($) {
   // });
 
 
-  console.log('Elementor frontend initialized');
-  $(window).on("elementor/frontend/init", function () {
-    const widgetHandler = function ($scope, $) {
-      const $tabs = $scope.find(".dstabify-tabs");
-      const $tabButtons = $tabs.find(".dstabify-tab-title");
-      const $tabContents = $tabs.find(".dstabify-tab-content");
-      const widgetId = $scope.attr("data-id");
-      const localStorageKey = "dstabify_active_tab_" + widgetId;
+ 
 
-      // Load from localStorage or default
-      let activeTab =
-        localStorage.getItem(localStorageKey) || $tabs.data("active-tab") || 1;
+  // jQuery(window).on("elementor/frontend/init", function () {
+  //   elementorFrontend.hooks.addAction(
+  //     "frontend/element_ready/dstabify.default",
+  //     function ($scope, $) {
+  //       const $tabs = $scope.find(".dstabify-tabs");
+  //       const $tabButtons = $tabs.find(".dstabify-tab-title");
+  //       const $tabContents = $tabs.find(".dstabify-tab-content");
 
-      // Reset all tabs
-      $tabButtons
-        .removeClass("dstabify-active")
-        .attr({ "aria-selected": "false", tabindex: "-1" });
-      $tabContents.removeClass("dstabify-active").attr("hidden", "hidden");
+  //       // Initialize tabs on load
+  //       function initTabs() {
+  //         const widgetId = $tabs.attr("data-id") || "dstabify-default";
+  //         const localStorageKey = "dstabify_active_tab_" + widgetId;
 
-      // Activate saved tab
-      $tabs
-        .find(`.dstabify-tab-title[data-tab="${activeTab}"]`)
-        .addClass("dstabify-active")
-        .attr({ "aria-selected": "true", tabindex: "0" });
-      $tabs
-        .find(`.dstabify-tab-content[data-tab="${activeTab}"]`)
-        .addClass("dstabify-active")
-        .removeAttr("hidden");
-      $tabs.attr("data-active-tab", activeTab);
+  //         // Don't use localStorage in editor mode
+  //         if (elementorFrontend.isEditMode()) {
+  //           localStorage.removeItem(localStorageKey);
+  //         }
 
-      // Tab click handler
-      $tabButtons.on("click", function () {
-        const tabNum = $(this).data("tab");
-        localStorage.setItem(localStorageKey, tabNum);
-        location.reload(); // optional: only use if needed to re-render
-      });
-    };
+  //         let activeTab = parseInt($tabs.data("active-tab")) || 1;
 
+  //         function activateTab(tabNum) {
+  //           $tabButtons
+  //             .removeClass("dstabify-active")
+  //             .attr({ "aria-selected": "false", tabindex: "-1" });
+
+  //           $tabContents
+  //             .removeClass("dstabify-active")
+  //             .attr("hidden", "hidden");
+
+  //           $tabButtons
+  //             .filter(`[data-tab="${tabNum}"]`)
+  //             .addClass("dstabify-active")
+  //             .attr({ "aria-selected": "true", tabindex: "0" });
+
+  //           $tabContents
+  //             .filter(`[data-tab="${tabNum}"]`)
+  //             .addClass("dstabify-active")
+  //             .removeAttr("hidden");
+
+  //           // In editor mode, update the URL to persist the active tab
+  //           if (elementorFrontend.isEditMode()) {
+  //             const url = new URL(window.location);
+  //             url.searchParams.set("active_tab", tabNum);
+  //             window.history.replaceState(null, "", url);
+  //           }
+  //         }
+
+  //         // Set click handlers
+  //         $tabButtons.off("click").on("click", function () {
+  //           const tabNum = parseInt($(this).data("tab"));
+  //           if (!tabNum) return;
+
+  //           if (!elementorFrontend.isEditMode()) {
+  //             localStorage.setItem(localStorageKey, tabNum);
+  //           }
+  //           activateTab(tabNum);
+  //         });
+
+  //         // Activate initial tab
+  //         activateTab(activeTab);
+  //       }
+
+  //       initTabs();
+
+  //       // Reinitialize when Elementor does AJAX loading
+  //       $(document).on("elementor/popup/show", initTabs);
+  //     }
+  //   );
+  // });
+
+
+  jQuery(window).on("elementor/frontend/init", function () {
     elementorFrontend.hooks.addAction(
-      "frontend/element_ready/dstabify-tabs.default",
-      widgetHandler
+      "frontend/element_ready/dstabify.default",
+      function ($scope, $) {
+        const $tabs = $scope.find(".dstabify-tabs");
+        const $tabButtons = $tabs.find(".dstabify-tab-title");
+        const $tabContents = $tabs.find(".dstabify-tab-content");
+
+        // Get the widget ID from the scope
+        const widgetId = $scope.attr("data-id") || "dstabify-default";
+        const storageKey = `dstabify_active_tab_${widgetId}`;
+
+        // Initialize tabs
+        function initTabs() {
+          // Get active tab from localStorage (frontend) or Elementor state (editor)
+          let activeTab;
+
+          if (elementorFrontend.isEditMode()) {
+            // In editor, try to get from Elementor's memory
+            activeTab =
+              window.sessionStorage.getItem(storageKey) ||
+              $tabs.data("active-tab") ||
+              1;
+          } else {
+            // In frontend, use localStorage
+            activeTab =
+              localStorage.getItem(storageKey) || $tabs.data("active-tab") || 1;
+          }
+
+          // Convert to number
+          activeTab = parseInt(activeTab);
+
+          // Activate the tab
+          function activateTab(tabNum) {
+            $tabButtons
+              .removeClass("dstabify-active")
+              .attr({ "aria-selected": "false", tabindex: "-1" });
+
+            $tabContents
+              .removeClass("dstabify-active")
+              .attr("hidden", "hidden");
+
+            $tabButtons
+              .filter(`[data-tab="${tabNum}"]`)
+              .addClass("dstabify-active")
+              .attr({ "aria-selected": "true", tabindex: "0" });
+
+            $tabContents
+              .filter(`[data-tab="${tabNum}"]`)
+              .addClass("dstabify-active")
+              .removeAttr("hidden");
+
+            // Store the active tab
+            if (elementorFrontend.isEditMode()) {
+              window.sessionStorage.setItem(storageKey, tabNum);
+            } else {
+              localStorage.setItem(storageKey, tabNum);
+            }
+          }
+
+          // Set click handlers
+          $tabButtons.off("click").on("click", function () {
+            const tabNum = parseInt($(this).data("tab"));
+            activateTab(tabNum);
+          });
+
+          // Activate initial tab
+          activateTab(activeTab);
+        }
+
+        // Initialize tabs
+        initTabs();
+
+        // Handle Elementor's preview refresh
+        if (elementorFrontend.isEditMode()) {
+          // Listen for content changes
+          $scope.on("change", function () {
+            initTabs();
+          });
+
+          // Reinitialize when panel is closed
+          elementor.channels.editor.on("change", function () {
+            initTabs();
+          });
+        }
+      }
     );
   });
 
 
-});
+  
+  
+  
 
 
 
