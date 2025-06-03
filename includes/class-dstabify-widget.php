@@ -187,10 +187,10 @@ class DsTabify_Widget extends \Elementor\Widget_Base
 				'label' => esc_html__('Image Position', 'dstabify'),
 				'type' => \Elementor\Controls_Manager::CHOOSE,
 				'options' => [
-					'left' => ['title' => esc_html__('Left', 'dstabify'), 'icon' => 'eicon-h-align-left'],
-					'right' => ['title' => esc_html__('Right', 'dstabify'), 'icon' => 'eicon-h-align-right'],
-					'top' => ['title' => esc_html__('Top', 'dstabify'), 'icon' => 'eicon-v-align-top'],
-					'bottom' => ['title' => esc_html__('Bottom', 'dstabify'), 'icon' => 'eicon-v-align-bottom'],
+					'right' => ['title' => esc_html__('Left', 'dstabify'), 'icon' => 'eicon-h-align-left'],
+					'left' => ['title' => esc_html__('Right', 'dstabify'), 'icon' => 'eicon-h-align-right'],
+					'bottom' => ['title' => esc_html__('Top', 'dstabify'), 'icon' => 'eicon-v-align-top'],
+					'top' => ['title' => esc_html__('Bottom', 'dstabify'), 'icon' => 'eicon-v-align-bottom'],
 				],
 				'default' => 'left',
 				'toggle' => true,
@@ -213,8 +213,8 @@ class DsTabify_Widget extends \Elementor\Widget_Base
 				'default' => ['unit' => '%', 'size' => 40],
 				'selectors' => [
 					'{{WRAPPER}} {{CURRENT_ITEM}} .dstabify-card-image' => 'width: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} {{CURRENT_ITEM}}.image-position-top .dstabify-card-image' => 'width: 100%;',
-					'{{WRAPPER}} {{CURRENT_ITEM}}.image-position-bottom .dstabify-card-image' => 'width: 100%;',
+					// '{{WRAPPER}} {{CURRENT_ITEM}}.image-position-top .dstabify-card-image' => 'width: 100%;',
+					// '{{WRAPPER}} {{CURRENT_ITEM}}.image-position-bottom .dstabify-card-image' => 'width: 100%;',
 				],
 			]
 		);
@@ -415,7 +415,7 @@ class DsTabify_Widget extends \Elementor\Widget_Base
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'position',
 			[
 				'label' => esc_html__('Direction', 'dstabify'),
@@ -432,7 +432,7 @@ class DsTabify_Widget extends \Elementor\Widget_Base
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'dstabify_tabs_justify',
 			[
 				'label' => esc_html__('Justify', 'dstabify'),
@@ -448,13 +448,13 @@ class DsTabify_Widget extends \Elementor\Widget_Base
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'dstabify_width',
 			[
 				'label' => esc_html__('Width', 'dstabify'),
 				'type' => Controls_Manager::SLIDER,
 				'size_units' => ['px', '%', 'em', 'rem', 'custom'],
-				'default' => ['unit' => '%'],
+				'default' => ['size' => 10, 'unit' => '%'],
 				'range' => [
 					'px' => ['min' => 10, 'max' => 500],
 					'%' => ['min' => 10, 'max' => 50],
@@ -787,6 +787,76 @@ class DsTabify_Widget extends \Elementor\Widget_Base
 			]
 		);
 
+		$this->add_responsive_control(
+			'content_align',
+			[
+				'label' => esc_html__('Content Alignment', 'dstabify'),
+				'type' => Controls_Manager::CHOOSE,
+				'options' => [
+					'flex-start' => ['title' => esc_html__('Left', 'dstabify'), 'icon' => 'eicon-text-align-left'],
+					'center' => ['title' => esc_html__('Center', 'dstabify'), 'icon' => 'eicon-text-align-center'],
+					'flex-end' => ['title' => esc_html__('Right', 'dstabify'), 'icon' => 'eicon-text-align-right'],
+				],
+				'default' => 'flex-start',
+				'selectors' => [
+					'{{WRAPPER}} .dstabify-card-left-section' => 'align-items: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'text_align',
+			[
+				'label' => esc_html__('Text Alignment', 'dstabify'),
+				'type' => Controls_Manager::CHOOSE,
+				'options' => [
+					'left' => [
+						'title' => esc_html__('Left', 'dstabify'),
+						'icon' => 'eicon-text-align-left',
+					],
+					'center' => [
+						'title' => esc_html__('Center', 'dstabify'),
+						'icon' => 'eicon-text-align-center',
+					],
+					'right' => [
+						'title' => esc_html__('Right', 'dstabify'),
+						'icon' => 'eicon-text-align-right',
+					],
+				],
+				'default' => 'left',
+				'selectors' => [
+					'{{WRAPPER}} .dstabify-card-left-section' => 'text-align: {{VALUE}};',
+				],
+			]
+		);
+
+		$this->add_responsive_control(
+			'vertical_align',
+			[
+				'label' => esc_html__('Vertical Alignment', 'dstabify'),
+				'type' => \Elementor\Controls_Manager::CHOOSE,
+				'options' => [
+					'flex-start' => [
+						'title' => esc_html__('Top', 'dstabify'),
+						'icon' => 'eicon-v-align-top',
+					],
+					'center' => [
+						'title' => esc_html__('Middle', 'dstabify'),
+						'icon' => 'eicon-v-align-middle',
+					],
+					'flex-end' => [
+						'title' => esc_html__('Bottom', 'dstabify'),
+						'icon' => 'eicon-v-align-bottom',
+					],
+				],
+				'default' => 'flex-start',
+				'selectors' => [
+					'{{WRAPPER}} .dstabify-card-left-section' => 'justify-content: {{VALUE}};',
+				],
+			]
+		);
+
+
 		$this->add_control(
 			'content_color',
 			[
@@ -821,13 +891,74 @@ class DsTabify_Widget extends \Elementor\Widget_Base
 			]
 		);
 
+		// $this->add_group_control(
+		// 	Group_Control_Border::get_type(),
+		// 	[
+		// 		'name' => 'content_border',
+		// 		'selector' => '{{WRAPPER}} .dstabify-tab-content',
+		// 	]
+		// );
+
 		$this->add_group_control(
 			Group_Control_Border::get_type(),
 			[
 				'name' => 'content_border',
+				'label' => __('Content Border', 'dstabify'),
 				'selector' => '{{WRAPPER}} .dstabify-tab-content',
+				'fields_options' => [
+					'border' => [
+						'default' => 'solid',
+					],
+					'width' => [
+						'default' => [
+							'top' => 1,
+							'right' => 1,
+							'bottom' => 1,
+							'left' => 1,
+							'isLinked' => true,
+						],
+					],
+					'color' => [
+						'default' => '#000000',
+					],
+				],
 			]
 		);
+
+		// $this->add_responsive_control(
+		// 	'content_align',
+		// 	[
+		// 		'label' => esc_html__('Content Alignment', 'dstabify'),
+		// 		'type' => Controls_Manager::CHOOSE,
+		// 		'options' => [
+		// 			'flex-start' => [
+		// 				'title' => esc_html__('Left', 'dstabify'),
+		// 				'icon' => 'eicon-text-align-left',
+		// 			],
+		// 			'center' => [
+		// 				'title' => esc_html__('Center', 'dstabify'),
+		// 				'icon' => 'eicon-text-align-center',
+		// 			],
+		// 			'flex-end' => [
+		// 				'title' => esc_html__('Right', 'dstabify'),
+		// 				'icon' => 'eicon-text-align-right',
+		// 			],
+		// 		],
+		// 		'default' => 'flex-start',
+		// 		'selectors' => [
+		// 			'{{WRAPPER}} .dstabify-card-left-section' => 'align-items: {{VALUE}};',
+		// 			'{{WRAPPER}} .dstabify-card-left-section > *' => 'text-align: {{CONTENT_ALIGN_TEXT}};',
+		// 		],
+		// 		'selectors_dictionary' => [
+		// 			'flex-start' => 'left',
+		// 			'center' => 'center',
+		// 			'flex-end' => 'right',
+		// 		],
+		// 	]
+		// );
+
+
+
 
 		$this->add_control(
 			'content_border_radius',
@@ -1260,7 +1391,11 @@ class DsTabify_Widget extends \Elementor\Widget_Base
 			<div <?php $this->print_render_attribute_string($tab_content_id); ?>>
 				<div class="dstabify-card-content-wrapper">
 					<div class="dstabify-card-left-section">
-						<<?php echo esc_attr($heading_tag); ?> class="dstabify-card-heading"><?php echo esc_html($item['dstabify_tab_heading']); ?></<?php echo esc_attr($heading_tag); ?>>
+						<?php if (!empty($item['dstabify_tab_heading'])) : ?>
+
+							<<?php echo esc_attr($heading_tag); ?> class="dstabify-card-heading"><?php echo esc_html($item['dstabify_tab_heading']); ?></<?php echo esc_attr($heading_tag); ?>>
+
+						<?php endif; ?>
 
 						<p class="dstabify-card-description"><?php echo esc_html($item['dstabify_tab_description']); ?></p>
 						<?php if (!empty($btn_text)) : ?>
@@ -1281,104 +1416,172 @@ class DsTabify_Widget extends \Elementor\Widget_Base
 	}
 
 
-
-
 	protected function content_template()
 	{
 		?>
-		<div class="dstabify-tabs dstabify-tabs-view-{{ settings.position }}" data-active-tab="{{ settings.active_tab }}">
-			<div class="dstabify-tabs-inner">
-				<# var idInt=view.getIDInt().toString().substr(0, 3); #>
-
-					<!-- Tabs Title Rendering -->
-					<div class="dstabify-tabs-wrapper" role="tablist">
-						<# _.each(settings.tabs, function(item, index) {
-							var tabCount=index + 1;
-							var tabId='dstabify-tab-title-' + idInt + tabCount;
-							var hasIcon=item.tab_icon && item.tab_icon.value;
-							var iconHTML=elementor.helpers.renderIcon(view, item.tab_icon, { 'aria-hidden' : true }, 'i' , 'object' );
-							var iconPosition=item.tab_icon_position || 'left' ;
-							#>
-							<div id="{{ tabId }}"
-								class="dstabify-tab-title elementor-repeater-item-{{ item._id }} <# if (tabCount == settings.active_tab) { #>dstabify-active<# } #>"
-								aria-selected="{{ tabCount == settings.active_tab ? 'true' : 'false' }}"
-								data-tab="{{ tabCount }}"
-								role="tab"
-								aria-controls="dstabify-tab-content-{{ idInt + tabCount }}"
-								tabindex="{{ tabCount == settings.active_tab ? '0' : '-1' }}">
-
-								<# if (hasIcon) { #>
-									<# if (iconPosition==='top' || iconPosition==='bottom' ) { #>
-										<div class="dstabify-icon-wrapper dstabify-icon-wrapper-{{ iconPosition }}">
-											<span class="dstabify-tab-icon dstabify-icon-position-{{ iconPosition }}">
-												{{{ iconHTML.value }}}
-											</span>
-											<span class="dstabify-tab-title-text">{{{ item.dstabify_tab_title }}}</span>
-										</div>
-										<# } else { #>
-											<div class="dstabify-tab-title-inner dstabify-icon-{{ iconPosition }}">
-												<# if (iconPosition==='left' ) { #>
-													<span class="dstabify-tab-icon dstabify-icon-position-left">{{{ iconHTML.value }}}</span>
+		<#
+			var id_int=view.getIDInt().toString().substr(0, 3);
+			var position=settings.position ? settings.position : 'horizontal' ;
+			var active_tab=settings.active_tab ? parseInt(settings.active_tab) : 1;
+			#>
+			<div class="dstabify-tabs dstabify-tabs-view-{{ position }}" data-active-tab="{{ active_tab }}">
+				<div class="dstabify-tabs-inner">
+					<# if (position==='horizontal-bottom' ) { #>
+						<div class="dstabify-tabs-content-wrapper">
+							<# _.each(settings.tabs, function(item, index) {
+								var tab_count=index + 1;
+								var tab_content_id='dstabify-tab-content-' + id_int + tab_count;
+								var active_class=tab_count===active_tab ? 'dstabify-active' : '' ;
+								var image_url=item.dstabify_tab_image && item.dstabify_tab_image.url ? item.dstabify_tab_image.url : '' ;
+								var has_image=image_url !=='' ;
+								var btn_text=item.dstabify_tab_button_text || '' ;
+								var btn_link=item.dstabify_tab_button_link || {};
+								var image_position=item.image_position || 'left' ;
+								var heading_tag=item.dstabify_tab_heading_tag ? item.dstabify_tab_heading_tag : 'h2' ;
+								#>
+								<div id="{{ tab_content_id }}"
+									class="dstabify-tab-content elementor-repeater-item-{{ item._id }} {{ active_class }} image-position-{{ image_position }} {{ has_image ? 'has-image' : 'no-image' }}"
+									data-tab="{{ tab_count }}"
+									role="tabpanel"
+									aria-labelledby="dstabify-tab-title-{{ id_int }}{{ tab_count }}"
+									<# if (tab_count !==active_tab) { #>hidden<# } #>>
+										<div class="dstabify-card-content-wrapper">
+											<div class="dstabify-card-left-section">
+												<# if (item.dstabify_tab_heading) { #>
+													<{{ heading_tag }} class="dstabify-card-heading">{{{ item.dstabify_tab_heading }}}</{{ heading_tag }}>
 													<# } #>
-														<span class="dstabify-tab-title-text">{{{ item.dstabify_tab_title }}}</span>
-														<# if (iconPosition==='right' ) { #>
-															<span class="dstabify-tab-icon dstabify-icon-position-right">{{{ iconHTML.value }}}</span>
+
+														<p class="dstabify-card-description">{{{ item.dstabify_tab_description }}}</p>
+														<# if (btn_text) { #>
+															<a class="dstabify-card-button" href="{{ btn_link.url }}"
+																<# if (btn_link.is_external) { #>target="_blank"<# } #>
+																	<# if (btn_link.nofollow) { #>rel="nofollow"<# } #>>
+																			{{{ btn_text }}}
+															</a>
 															<# } #>
 											</div>
-											<# } #>
-												<# } else { #>
+
+											<# if (has_image) { #>
+												<div class="dstabify-card-image">
+													<#
+														var image={
+														id: item.dstabify_tab_image.id,
+														url: item.dstabify_tab_image.url,
+														size: item.thumbnail_size,
+														dimension: item.thumbnail_custom_dimension,
+														model: view.getEditModel()
+														};
+														var image_url=elementor.imagesManager.getImageUrl(image);
+														#>
+														<img src="{{ image_url }}" alt="{{ item.dstabify_tab_heading }}">
+												</div>
+												<# } #>
+										</div>
+								</div>
+								<# }); #>
+						</div>
+						<# } #>
+
+							<div class="dstabify-tabs-wrapper" role="tablist">
+								<# _.each(settings.tabs, function(item, index) {
+									var tab_count=index + 1;
+									var tab_id='dstabify-tab-title-' + id_int + tab_count;
+									var active_class=tab_count===active_tab ? 'dstabify-active' : '' ;
+									var icon_html='' ;
+									var icon_position=item.tab_icon_position || 'left' ;
+
+									if (item.tab_icon && item.tab_icon.value) {
+									icon_html=elementor.helpers.renderIcon(view, item.tab_icon, { 'aria-hidden' : true }, 'i' , 'object' );
+									}
+									#>
+									<div id="{{ tab_id }}"
+										class="dstabify-tab-title dstabify-icon-{{ icon_position }} {{ active_class }}"
+										aria-selected="{{ tab_count === active_tab ? 'true' : 'false' }}"
+										data-tab="{{ tab_count }}"
+										role="tab"
+										aria-controls="dstabify-tab-content-{{ id_int }}{{ tab_count }}"
+										tabindex="{{ tab_count === active_tab ? '0' : '-1' }}">
+										<# if (icon_html.value) { #>
+											<# if (icon_position==='top' || icon_position==='bottom' ) { #>
+												<div class="dstabify-icon-wrapper dstabify-icon-wrapper-{{ icon_position }}">
+													<span class="dstabify-tab-icon">{{{ icon_html.value }}}</span>
 													<span class="dstabify-tab-title-text">{{{ item.dstabify_tab_title }}}</span>
-													<# } #>
-							</div>
-							<# }); #>
-					</div>
-
-					<!-- Tab Content Rendering -->
-					<div class="dstabify-tabs-content-wrapper">
-						<# _.each(settings.tabs, function(item, index) {
-							var tabCount=index + 1;
-							var tabContentId='dstabify-tab-content-' + idInt + tabCount;
-							var imageUrl=item.dstabify_tab_image && item.dstabify_tab_image.url || '' ;
-							var hasImage=imageUrl.length> 0;
-							var btn = item.dstabify_tab_button_link || {};
-							var imgPos = item.image_position || 'left';
-							var headingTag = item.dstabify_tab_heading_tag || 'h2';
-							#>
-							<div id="{{ tabContentId }}"
-								class="dstabify-tab-content elementor-repeater-item-{{ item._id }} <# if (tabCount == settings.active_tab) { #>dstabify-active<# } #>"
-								data-tab="{{ tabCount }}"
-								role="tabpanel"
-								aria-labelledby="dstabify-tab-title-{{ idInt + tabCount }}"
-								<# if (tabCount !=settings.active_tab) { #>hidden="hidden"<# } #>>
-
-									<div class="dstabify-card-content-wrapper image-position-{{ imgPos }} <# if (hasImage) { #>has-image<# } else { #>no-image<# } #>">
-										<div class="dstabify-card-left-section">
-											<# if (item.dstabify_tab_heading) { #>
-												<{{ headingTag }} class="dstabify-card-heading">{{{ item.dstabify_tab_heading }}}</{{ headingTag }}>
-												
-													<# } #>
-														<# if (item.dstabify_tab_description) { #>
-															<p class="dstabify-card-description">{{{ item.dstabify_tab_description }}}</p>
+												</div>
+												<# } else { #>
+													<div class="dstabify-tab-title-inner">
+														<# if (icon_position==='left' ) { #>
+															<span class="dstabify-tab-icon">{{{ icon_html.value }}}</span>
 															<# } #>
-																<# if (item.dstabify_tab_button_text) { #>
-																	<a class="dstabify-card-button" href="{{ btn.url }}" <# if (btn.is_external) { #>target="_blank"<# } #>
-																			<# if (btn.nofollow) { #>rel="nofollow"<# } #>>
-																					{{{ item.dstabify_tab_button_text }}}
+																<span class="dstabify-tab-title-text">{{{ item.dstabify_tab_title }}}</span>
+																<# if (icon_position==='right' ) { #>
+																	<span class="dstabify-tab-icon">{{{ icon_html.value }}}</span>
+																	<# } #>
+													</div>
+													<# } #>
+														<# } else { #>
+															<span class="dstabify-tab-title-text">{{{ item.dstabify_tab_title }}}</span>
+															<# } #>
+									</div>
+									<# }); #>
+							</div>
+
+							<# if (position !=='horizontal-bottom' ) { #>
+								<div class="dstabify-tabs-content-wrapper">
+									<# _.each(settings.tabs, function(item, index) {
+										var tab_count=index + 1;
+										var tab_content_id='dstabify-tab-content-' + id_int + tab_count;
+										var active_class=tab_count===active_tab ? 'dstabify-active' : '' ;
+										var image_url=item.dstabify_tab_image && item.dstabify_tab_image.url ? item.dstabify_tab_image.url : '' ;
+										var has_image=image_url !=='' ;
+										var btn_text=item.dstabify_tab_button_text || '' ;
+										var btn_link=item.dstabify_tab_button_link || {};
+										var image_position=item.image_position || 'left' ;
+										var heading_tag=item.dstabify_tab_heading_tag ? item.dstabify_tab_heading_tag : 'h2' ;
+										#>
+										<div id="{{ tab_content_id }}"
+											class="dstabify-tab-content elementor-repeater-item-{{ item._id }} {{ active_class }} image-position-{{ image_position }} {{ has_image ? 'has-image' : 'no-image' }}"
+											data-tab="{{ tab_count }}"
+											role="tabpanel"
+											aria-labelledby="dstabify-tab-title-{{ id_int }}{{ tab_count }}"
+											<# if (tab_count !==active_tab) { #>hidden<# } #>>
+												<div class="dstabify-card-content-wrapper">
+													<div class="dstabify-card-left-section">
+														<# if (item.dstabify_tab_heading) { #>
+															<{{ heading_tag }} class="dstabify-card-heading">{{{ item.dstabify_tab_heading }}}</{{ heading_tag }}>
+															<# } #>
+
+																<p class="dstabify-card-description">{{{ item.dstabify_tab_description }}}</p>
+																<# if (btn_text) { #>
+																	<a class="dstabify-card-button" href="{{ btn_link.url }}"
+																		<# if (btn_link.is_external) { #>target="_blank"<# } #>
+																			<# if (btn_link.nofollow) { #>rel="nofollow"<# } #>>
+																					{{{ btn_text }}}
 																	</a>
 																	<# } #>
-										</div>
+													</div>
 
-										<# if (hasImage) { #>
-											<div class="dstabify-card-image">
-												<img src="{{ imageUrl }}" alt="">
-											</div>
-											<# } #>
-									</div>
-							</div>
-							<# }); #>
-					</div>
+													<# if (has_image) { #>
+														<div class="dstabify-card-image">
+															<#
+																var image={
+																id: item.dstabify_tab_image.id,
+																url: item.dstabify_tab_image.url,
+																size: item.thumbnail_size,
+																dimension: item.thumbnail_custom_dimension,
+																model: view.getEditModel()
+																};
+																var image_url=elementor.imagesManager.getImageUrl(image);
+																#>
+																<img src="{{ image_url }}" alt="{{ item.dstabify_tab_heading }}">
+														</div>
+														<# } #>
+												</div>
+										</div>
+										<# }); #>
+								</div>
+								<# } #>
+				</div>
 			</div>
-		</div>
-<?php
+	<?php
 	}
 }

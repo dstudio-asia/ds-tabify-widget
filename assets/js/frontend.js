@@ -228,6 +228,34 @@
     );
   });
 
+  // jQuery(window).on("elementor:controls:init", function () {
+  //   const panel = elementor.channels.editor;
+
+  //   panel.on("section:activated", function (sectionView) {
+  //     const model = sectionView.model;
+  //     const controls = model.controls;
+
+  //     if (controls && controls.position) {
+  //       const currentDevice = elementor.getCurrentDeviceMode();
+
+  //       // Optional: Prevent changing direction on mobile
+  //       if (currentDevice === "mobile") {
+  //         model.setSetting("position", "horizontal");
+
+  //         // Lock control visually (optional)
+  //         const $input = sectionView.$el.find('[data-setting="position"]');
+  //         if ($input.length) {
+  //           $input.find("input").prop("disabled", true);
+  //           $input
+  //             .find(".elementor-control-type-choose")
+  //             .css({ opacity: 0.4, "pointer-events": "none" });
+  //         }
+  //       }
+  //     }
+  //   });
+  // });
+  
+
 
   
   
