@@ -117,7 +117,7 @@ class DsTabify_Widget extends \Elementor\Widget_Base
 				'label' => esc_html__('Content', 'dstabify'),
 			]
 		);
-		
+
 
 		$repeater->add_control(
 			'dstabify_tab_heading',
@@ -447,9 +447,10 @@ class DsTabify_Widget extends \Elementor\Widget_Base
 				],
 				'default' => 'left',
 				'toggle' => true,
-				'selectors' => [
-					'{{WRAPPER}} .dstabify-card-content-wrapper' => 'flex-direction: {{VALUE}};',
-				],
+				// 'selectors' => [
+				// 	'{{WRAPPER}} .dstabify-card-content-wrapper' => 'flex-direction: {{VALUE}};',
+				// ],
+				'prefix_class' => 'image-position-'
 			]
 		);
 
@@ -465,7 +466,8 @@ class DsTabify_Widget extends \Elementor\Widget_Base
 				],
 				'default' => ['unit' => '%', 'size' => 40],
 				'selectors' => [
-					'{{WRAPPER}} .dstabify-card-image' => 'width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .dstabify-card-image' => 'width: {{SIZE}}{{UNIT}};'
+
 					// '{{WRAPPER}} {{CURRENT_ITEM}}.image-position-top .dstabify-card-image' => 'width: 100%;',
 					// '{{WRAPPER}} {{CURRENT_ITEM}}.image-position-bottom .dstabify-card-image' => 'width: 100%;',
 				],
@@ -525,14 +527,11 @@ class DsTabify_Widget extends \Elementor\Widget_Base
 					'rem' => ['min' => 0, 'max' => 50],
 				],
 
-
-
-		
 				'selectors' => [
-					'{{WRAPPER}}.dstabify-tabs-view-horizontal .dstabify-tab-title:not(:last-child)' => 'margin-right: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}}.dstabify-tabs-view-horizontal-bottom .dstabify-tab-title:not(:last-child)' => 'margin-right: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}}.dstabify-tabs-view-vertical-left .dstabify-tab-title:not(:last-child)' => 'margin-bottom: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}}.dstabify-tabs-view-vertical-right .dstabify-tab-title:not(:last-child)' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.dstabify-tabs-view-horizontal .dstabify-tabs-wrapper' => 'gap: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.dstabify-tabs-view-horizontal-bottom .dstabify-tabs-wrapper' => 'gap: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.dstabify-tabs-view-vertical-left .dstabify-tabs-wrapper' => 'gap: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.dstabify-tabs-view-vertical-right .dstabify-tabs-wrapper' => 'gap: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
@@ -857,13 +856,73 @@ class DsTabify_Widget extends \Elementor\Widget_Base
 		// );
 
 
+		// $this->add_responsive_control(
+		// 	'vertical_align',
+		// 	[
+		// 		'label' => esc_html__('Horizontal Alignment', 'elementor-addon'),
+		// 		'type' => Controls_Manager::CHOOSE,
+		// 		'options' => [
+		// 			'start' => [
+		// 				'title' => esc_html__('Left', 'elementor-addon'),
+		// 				'icon' => 'eicon-text-align-left',
+		// 			],
+		// 			'center' => [
+		// 				'title' => esc_html__('Center', 'elementor-addon'),
+		// 				'icon' => 'eicon-text-align-center',
+		// 			],
+		// 			'end' => [
+		// 				'title' => esc_html__('Right', 'elementor-addon'),
+		// 				'icon' => 'eicon-text-align-right',
+		// 			],
+		// 		],
+		// 		'default' => 'center',
+		// 		'selectors' => [
+		// 			'{{WRAPPER}} .dstabify-card-left-section' => 'align-items: {{VALUE}};',
+		// 		],
+		// 		'prefix_class' => 'align-', // 
+		// 		'separator' => 'after',
+		// 	]
+		// );
+
+
+		// $this->add_responsive_control(
+		// 	'content_align',
+		// 	[
+		// 		'label' => esc_html__('Alignment', 'elementor-addon'),
+		// 		'type' => Controls_Manager::CHOOSE,
+		// 		'options' => [
+		// 			'left' => [
+		// 				'title' => esc_html__('Left', 'elementor-addon'),
+		// 				'icon' => 'eicon-text-align-left',
+		// 			],
+		// 			'center' => [
+		// 				'title' => esc_html__('Center', 'elementor-addon'),
+		// 				'icon' => 'eicon-text-align-center',
+		// 			],
+		// 			'right' => [
+		// 				'title' => esc_html__('Right', 'elementor-addon'),
+		// 				'icon' => 'eicon-text-align-right',
+		// 			],
+		// 		],
+		// 		'default' => 'center',
+		// 		'selectors' => [
+		// 			'{{WRAPPER}} .dstabify-card-content-wrapper' => 'text-align: {{VALUE}};',
+		// 			'{{WRAPPER}} .dstabify-card-left-section' => 'align-items: {{VALUE}};',
+		// 			'{{WRAPPER}} .image-position-bottom .dstabify-card-content-wrapper' => 'align-items: {{VALUE}};',
+		// 			'{{WRAPPER}} .image-position-top .dstabify-card-content-wrapper' => 'align-items: {{VALUE}};',
+		// 			'{{WRAPPER}} .image-position-left .dstabify-card-content-wrapper' => 'justify-content: {{VALUE}};',
+		// 			'{{WRAPPER}} .image-position-right .dstabify-card-content-wrapper' => 'justify-content: {{VALUE}};',
+		// 		],
+		// 	]
+		// );
+
 		$this->add_responsive_control(
-			'vertical_align',
+			'content_align',
 			[
-				'label' => esc_html__('Horizontal Alignment', 'elementor-addon'),
+				'label' => esc_html__('Alignment', 'elementor-addon'),
 				'type' => Controls_Manager::CHOOSE,
 				'options' => [
-					'start' => [
+					'left' => [
 						'title' => esc_html__('Left', 'elementor-addon'),
 						'icon' => 'eicon-text-align-left',
 					],
@@ -871,19 +930,35 @@ class DsTabify_Widget extends \Elementor\Widget_Base
 						'title' => esc_html__('Center', 'elementor-addon'),
 						'icon' => 'eicon-text-align-center',
 					],
-					'end' => [
+					'right' => [
 						'title' => esc_html__('Right', 'elementor-addon'),
 						'icon' => 'eicon-text-align-right',
 					],
 				],
-				'default' => 'left',
+				'default' => 'center',
 				'selectors' => [
-					'{{WRAPPER}} .dstabify-card-left-section' => 'align-items: {{VALUE}};flex: 1;max-width: 100%;display: flex;flex-direction: column;gap: 15px;',
+					'{{WRAPPER}} .dstabify-card-content-wrapper' => 'text-align: {{VALUE}};',
+					'{{WRAPPER}} .dstabify-card-left-section' => 'align-items: {{VALUE}};',
 
+					// Conditional mapping for flex values
+					'{{WRAPPER}}.elementor-align-left .image-position-bottom .dstabify-card-content-wrapper' => 'align-items: flex-start;',
+					'{{WRAPPER}}.elementor-align-center .image-position-bottom .dstabify-card-content-wrapper' => 'align-items: center;',
+					'{{WRAPPER}}.elementor-align-right .image-position-bottom .dstabify-card-content-wrapper' => 'align-items: flex-end;',
+
+					'{{WRAPPER}}.elementor-align-left .image-position-top .dstabify-card-content-wrapper' => 'align-items: flex-start;',
+					'{{WRAPPER}}.elementor-align-center .image-position-top .dstabify-card-content-wrapper' => 'align-items: center;',
+					'{{WRAPPER}}.elementor-align-right .image-position-top .dstabify-card-content-wrapper' => 'align-items: flex-end;',
+
+					// For left/right positions
+					'{{WRAPPER}}.elementor-align-left .image-position-left .dstabify-card-content-wrapper' => 'justify-content: flex-start;',
+					'{{WRAPPER}}.elementor-align-center .image-position-left .dstabify-card-content-wrapper' => 'justify-content: center;',
+					'{{WRAPPER}}.elementor-align-right .image-position-left .dstabify-card-content-wrapper' => 'justify-content: flex-end;',
+
+					'{{WRAPPER}}.elementor-align-left .image-position-right .dstabify-card-content-wrapper' => 'justify-content: flex-start;',
+					'{{WRAPPER}}.elementor-align-center .image-position-right .dstabify-card-content-wrapper' => 'justify-content: center;',
+					'{{WRAPPER}}.elementor-align-right .image-position-right .dstabify-card-content-wrapper' => 'justify-content: flex-end;',
 				],
-				
-				'prefix_class' => 'align-', // 
-				'separator' => 'after',
+				'prefix_class' => 'elementor-align-',
 			]
 		);
 
@@ -982,37 +1057,7 @@ class DsTabify_Widget extends \Elementor\Widget_Base
 			]
 		);
 
-		// $this->add_responsive_control(
-		// 	'content_align',
-		// 	[
-		// 		'label' => esc_html__('Content Alignment', 'dstabify'),
-		// 		'type' => Controls_Manager::CHOOSE,
-		// 		'options' => [
-		// 			'flex-start' => [
-		// 				'title' => esc_html__('Left', 'dstabify'),
-		// 				'icon' => 'eicon-text-align-left',
-		// 			],
-		// 			'center' => [
-		// 				'title' => esc_html__('Center', 'dstabify'),
-		// 				'icon' => 'eicon-text-align-center',
-		// 			],
-		// 			'flex-end' => [
-		// 				'title' => esc_html__('Right', 'dstabify'),
-		// 				'icon' => 'eicon-text-align-right',
-		// 			],
-		// 		],
-		// 		'default' => 'flex-start',
-		// 		'selectors' => [
-		// 			'{{WRAPPER}} .dstabify-card-left-section' => 'align-items: {{VALUE}};',
-		// 			'{{WRAPPER}} .dstabify-card-left-section > *' => 'text-align: {{CONTENT_ALIGN_TEXT}};',
-		// 		],
-		// 		'selectors_dictionary' => [
-		// 			'flex-start' => 'left',
-		// 			'center' => 'center',
-		// 			'flex-end' => 'right',
-		// 		],
-		// 	]
-		// );
+	
 
 
 
@@ -1084,9 +1129,9 @@ class DsTabify_Widget extends \Elementor\Widget_Base
 			[
 				'label' => esc_html__('Spacing', 'dstabify'),
 				'type' => Controls_Manager::SLIDER,
-				'range' => ['px' => ['min' => 0, 'max' => 50]],
+				'range' => ['px' => ['min' => 0, 'max' => 500]],
 				'selectors' => [
-					'{{WRAPPER}} .dstabify-card-heading' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .uptab-header' => 'margin-bottom: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
@@ -1328,7 +1373,7 @@ class DsTabify_Widget extends \Elementor\Widget_Base
 	{
 		$settings = $this->get_settings_for_display();
 		$tabs = $settings['tabs'];
-		
+
 
 		// Get active tab - handle both frontend and editor
 		$active_tab = 1;
@@ -1343,14 +1388,26 @@ class DsTabify_Widget extends \Elementor\Widget_Base
 		$position = !empty($settings['position']) ? $settings['position'] : 'horizontal';
 		$id_int = substr($this->get_id_int(), 0, 3);
 
+		// Determine the class for tab position
+		$position_class = 'dstabify-tabs-view-horizontal';
+		if ($position === 'top') {
+			$position_class = 'dstabify-tabs-view-horizontal';
+		} elseif ($position === 'bottom') {
+			$position_class = 'dstabify-tabs-view-horizontal-bottom';
+		} elseif ($position === 'left') {
+			$position_class = 'dstabify-tabs-view-vertical-left';
+		} elseif ($position === 'right') {
+			$position_class = 'dstabify-tabs-view-vertical-right';
+		}
+
 		$this->add_render_attribute('dstabify-tabs', [
-			'class' => 'dstabify-tabs dstabify-tabs-view-' . $position,
+			'class' => 'dstabify-tabs ' . $position_class,
 			'data-active-tab' => $active_tab,
 		]);
 ?>
 		<div <?php $this->print_render_attribute_string('dstabify-tabs'); ?>>
 			<div class="dstabify-tabs-inner">
-				
+
 
 				<div class="dstabify-tabs-wrapper" role="tablist">
 					<?php foreach ($tabs as $index => $item) :
@@ -1401,14 +1458,14 @@ class DsTabify_Widget extends \Elementor\Widget_Base
 					<?php endforeach; ?>
 				</div>
 
-				
-					<div class="dstabify-tabs-content-wrapper">
-						<?php
-						
-			
-						$this->render_tab_contents($tabs, $id_int, $active_tab, $settings); ?>
-					</div>
-				
+
+
+
+				<div class="dstabify-tabs-content-wrapper">
+					<?php
+					$this->render_tab_contents($tabs, $id_int, $active_tab, $settings); ?>
+				</div>
+
 			</div>
 		</div>
 		<?php
@@ -1427,8 +1484,8 @@ class DsTabify_Widget extends \Elementor\Widget_Base
 			$has_image = !empty($image_url);
 			$btn_text = $item['dstabify_tab_button_text'] ?? '';
 			$btn_link = $item['dstabify_tab_button_link'] ?? [];
-			
-			
+
+
 
 			$this->add_render_attribute($tab_content_id, [
 				'id' => $tab_content_id,
@@ -1451,17 +1508,22 @@ class DsTabify_Widget extends \Elementor\Widget_Base
 			<div <?php $this->print_render_attribute_string($tab_content_id); ?>>
 				<div class="dstabify-card-content-wrapper">
 					<div class="dstabify-card-left-section">
-						
-						<?php if (!empty($item['dstabify_tab_heading'])) : ?>
-							<div class="uptab-header>
 
-								<<?php echo esc_attr($heading_tag); ?> class="dstabify-card-heading"><?php echo esc_html($item['dstabify_tab_heading']); ?></<?php echo esc_attr($heading_tag); ?>>
+						<?php
+						if (!empty($item['dstabify_tab_heading'])) {
 
-							</div>
-						<?php endif; ?>
-						
+							$heading_tag = !empty($heading_tag) ? $heading_tag : 'h3'; // Default fallback
+							printf(
+								'<%1$s class="uptab-header">%2$s</%1$s>',
+								tag_escape($heading_tag),
+								esc_html($item['dstabify_tab_heading'])
+							);
+						}
+						?>
+
+
 						<div class="uptab-description">
-							
+
 
 							<p class="dstabify-card-description"><?php echo esc_html($item['dstabify_tab_description']); ?></p>
 						</div>
@@ -1481,10 +1543,6 @@ class DsTabify_Widget extends \Elementor\Widget_Base
 					<?php endif; ?>
 				</div>
 			</div>
-		<?php endforeach;
+<?php endforeach;
 	}
-
-
-	
-	
 }

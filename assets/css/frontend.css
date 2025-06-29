@@ -261,6 +261,7 @@
   }
 
 
+
   
   /* Content Section */
   .dstabify-card-left-section {
@@ -275,37 +276,30 @@
   .dstabify-card-image {
     flex-shrink: 0;
     display: flex;
-    align-items: center;
+    /* align-items: center; */
     justify-content: center;
     position: relative;
     overflow: hidden;
     transition: var(--dstabify-transition);
   }
   
-  .dstabify-card-image img {
-    width: 100%;
-    height: auto;
-    display: block;
-    transition: var(--dstabify-transition);
-    object-fit: cover;
-  }
+
   
   /* Specific image positioning */
   .image-position-left .dstabify-card-image,
   .image-position-right .dstabify-card-image {
-    width: 40%;
+    max-width: 50%;
   }
   
-  .image-position-top .dstabify-card-image,
-  .image-position-bottom .dstabify-card-image {
-    width: 100%;
-  }
+
   
   .image-position-top .dstabify-card-image {
+    max-width: 100%;
     margin-bottom: var(--dstabify-gap);
   }
   
   .image-position-bottom .dstabify-card-image {
+    max-width: 100%;
     margin-top: var(--dstabify-gap);
   }
   
@@ -356,16 +350,7 @@
      Responsive Styles
      ============================================= */
   
-  /* @media (max-width: 1024px) {
-    .dstabify-tabs-view-vertical-left .dstabify-tabs-wrapper,
-    .dstabify-tabs-view-vertical-right .dstabify-tabs-wrapper {
-      min-width: 120px;
-    }
-    
-    .dstabify-card-image img {
-      object-position: center;
-    }
-  } */
+
   
   @media (max-width: 767px) {
     :root {
@@ -389,6 +374,8 @@
       scrollbar-width: thin;
       padding-bottom: 5px;
       gap: 8px;
+      width: 100%;
+      justify-content: start !important;
     }
 
 
@@ -421,21 +408,36 @@
       flex-direction: column ;
     }
     
-    .dstabify-card-left-section,
+    /* .dstabify-card-left-section,
     .dstabify-card-image {
       width: 100% ;
       max-width: 100% ;
-    }
+    } */
     
-    .image-position-left .dstabify-card-image,
+    /* .image-position-left .dstabify-card-image,
     .image-position-right .dstabify-card-image {
+      max-width: 50%;
       margin: var(--dstabify-gap) 0 !important;
-    }
+    } */
+
     
     /* Remove specific margins for mobile */
     .image-position-top .dstabify-card-image,
     .image-position-bottom .dstabify-card-image {
-      margin: 0 0 var(--dstabify-gap) 0 !important;
+      max-width: 100%;
+      margin: 0 0 var(--dstabify-gap) 0;
+    }
+
+    .image-position-left .dstabify-card-content-wrapper,
+    .image-position-right .dstabify-card-content-wrapper {
+      flex-direction: column !important;
+    }
+    .image-position-left .dstabify-card-image,
+    .image-position-right .dstabify-card-image {
+      order: -1;   
+      width: 100%;
+      max-width: 100%;    /* same as your “.image-position-top” rule */
+      /* margin-bottom: 15px; */
     }
     
     .dstabify-card-button {
