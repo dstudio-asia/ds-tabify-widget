@@ -1,0 +1,486 @@
+/* =============================================
+   uptabs Widget - Main CSS
+   ============================================= */
+
+   :root {
+    --uptabs-primary: #61CE70;
+    --uptabs-secondary: #0073aa;
+    --uptabs-light: #f7f7f7;
+    --uptabs-dark: #333;
+    --uptabs-border: #d5d8dc;
+    --uptabs-hover: #e9e9e9;
+    --uptabs-padding: 20px;
+    --uptabs-gap: 15px;
+    --uptabs-radius: 4px;
+    --uptabs-transition: all 0.3s ease;
+  }
+  
+  .uptabs-card-left-section h1,
+  .uptabs-card-left-section h2,
+  .uptabs-card-left-section h3,
+  .uptabs-card-left-section h4,
+  .uptabs-card-left-section h5,
+  .uptabs-card-left-section h6 {
+    margin-block-start: unset;
+  }
+  
+  /* Base Container Styles */
+  .uptabs-tabs {
+    width: 100%;
+    position: relative;
+    box-sizing: border-box;
+  }
+  
+  .uptabs-tabs-inner {
+    display: flex;
+    width: 100%;
+    box-sizing: border-box;
+    flex-direction: column; /* Default for horizontal top */
+  }
+  
+  /* Layout Direction Classes */
+  /* .uptabs-tabs-view-horizontal .uptabs-tabs-inner
+  {
+    flex-direction: column;
+  }
+  .uptabs-tabs-view-horizontal-bottom .uptabs-tabs-inner {
+    flex-direction: column-reverse;
+  } */
+  
+  /* .uptabs-tabs-view-vertical-left .uptabs-tabs-inner {
+    flex-direction: row;
+  }
+  
+  .uptabs-tabs-view-vertical-right .uptabs-tabs-inner {
+    flex-direction: row-reverse;
+  } */
+  
+  /* Tab Wrapper Styles */
+  .uptabs-tabs-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    /* gap: var(--uptabs-gap); */
+    justify-content: flex-start;
+    z-index: 1;
+  }
+  
+  /* Horizontal Tabs Layout */
+  /* .uptabs-tabs-view-horizontal .uptabs-tabs-wrapper,
+  .uptabs-tabs-view-horizontal-bottom .uptabs-tabs-wrapper {
+    flex-direction: row;
+    min-height: 50px;
+  } */
+  
+  /* Horizontal Tabs Alignment */
+  .uptabs-tabs-align-start .uptabs-tabs-wrapper {
+    justify-content: flex-start;
+  }
+  
+  .uptabs-tabs-align-center .uptabs-tabs-wrapper {
+    justify-content: center;
+  }
+  
+  .uptabs-tabs-align-end .uptabs-tabs-wrapper {
+    justify-content: flex-end;
+  }
+  
+  .uptabs-tabs-align-stretch .uptabs-tabs-wrapper {
+    display: flex;
+  }
+  
+  .uptabs-tabs-align-stretch .uptabs-tab-title {
+    flex: 1;
+    min-width: 0;
+    justify-content: center;
+  }
+  
+  /* Vertical Tabs Layout */
+  /* .uptabs-tabs-view-vertical-left .uptabs-tabs-wrapper,
+  .uptabs-tabs-view-vertical-right .uptabs-tabs-wrapper {
+    flex-direction: column;
+    min-width: 150px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    box-sizing: border-box;
+  } */
+  
+  /* Tab Title Base Styles */
+  .uptabs-tab-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--uptabs-transition);
+    position: relative;
+    padding: 12px 20px;
+    border: 1px solid var(--uptabs-border);
+    background-color: var(--uptabs-light);
+    color: var(--uptabs-dark);
+    margin: 0;
+    outline: none;
+    box-sizing: border-box;
+    text-align: center;
+  }
+  
+  .uptabs-tab-title:hover {
+    background-color: var(--uptabs-hover);
+  }
+  
+  .uptabs-tab-title.uptabs-active {
+    background-color: var(--uptabs-primary);
+    color: #fff;
+    z-index: 2;
+  }
+  
+  .uptabs-tab-title:focus-visible {
+    outline: 2px solid var(--uptabs-primary);
+    outline-offset: 2px;
+  }
+  
+  /* Tab Title Positions */
+  .uptabs-tabs-view-horizontal .uptabs-tab-title {
+    margin-bottom: -1px;
+    border-radius: var(--uptabs-radius) var(--uptabs-radius) 0 0;
+  }
+  
+  .uptabs-tabs-view-horizontal-bottom .uptabs-tab-title {
+    margin-top: -1px;
+    border-radius: 0 0 var(--uptabs-radius) var(--uptabs-radius);
+  }
+  
+  .uptabs-tabs-view-vertical-left .uptabs-tab-title {
+    margin-right: -1px;
+    border-radius: var(--uptabs-radius) 0 0 var(--uptabs-radius);
+    display: block;
+    width: 100%;
+    white-space: normal;       
+    word-wrap: break-word;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    box-sizing: border-box;
+    padding: 10px 12px;
+  }
+  
+  .uptabs-tabs-view-vertical-right .uptabs-tab-title {
+    margin-left: -1px;
+    border-radius: 0 var(--uptabs-radius) var(--uptabs-radius) 0;
+    display: block;
+    width: 100%;
+    white-space: normal;         /
+    word-wrap: break-word;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    box-sizing: border-box;
+    padding: 10px 12px;
+  }
+  
+  /* Content Wrapper Styles */
+  .uptabs-tabs-content-wrapper {
+    flex: 1;
+    position: relative;
+    background-color: #fff;
+    box-sizing: border-box;
+  }
+  
+  .uptabs-tabs-view-horizontal .uptabs-tabs-content-wrapper {
+    border: 1px solid var(--uptabs-border);
+    border-top: none;
+    border-radius: 0 0 var(--uptabs-radius) var(--uptabs-radius);
+  }
+  
+  .uptabs-tabs-view-horizontal-bottom .uptabs-tabs-content-wrapper {
+    border: 1px solid var(--uptabs-border);
+    border-bottom: none;
+    border-radius: var(--uptabs-radius) var(--uptabs-radius) 0 0;
+  }
+  
+  .uptabs-tabs-view-vertical-left .uptabs-tabs-content-wrapper {
+    border: 1px solid var(--uptabs-border);
+    border-left: none;
+    border-radius: 0 var(--uptabs-radius) var(--uptabs-radius) 0;
+  }
+  
+  .uptabs-tabs-view-vertical-right .uptabs-tabs-content-wrapper {
+    border: 1px solid var(--uptabs-border);
+    border-right: none;
+    border-radius: var(--uptabs-radius) 0 0 var(--uptabs-radius);
+  }
+  
+  /* Tab Content Styles */
+  .uptabs-tab-content {
+    display: none;
+    padding: var(--uptabs-padding);
+    box-sizing: border-box;
+    height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: var(--uptabs-transition);
+  }
+  
+  .uptabs-tab-content.uptabs-active {
+    display: block;
+    height: auto;
+    opacity: 1;
+    overflow: visible;
+  }
+  
+  /* Tab Icon Styles */
+  .uptabs-tab-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .uptabs-tab-icon svg {
+    width: 20px;
+    height: 20px;
+    transition: var(--uptabs-transition);
+  }
+  
+  .uptabs-tab-title-inner {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+    word-break: break-word;
+  }
+
+  .uptabs-tab-title-inner,
+  .uptabs-icon-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .uptabs-icon-wrapper-top,
+  .uptabs-icon-wrapper-bottom {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .uptabs-icon-wrapper-bottom {
+    flex-direction: column-reverse;
+  }
+
+  .uptabs-icon-wrapper-left {
+    flex-direction: row;
+  }
+
+  .uptabs-icon-wrapper-right {
+    flex-direction: row-reverse;
+  }
+  
+  /* Card Content Layout */
+  .uptabs-card-content-wrapper {
+    display: flex;
+    width: 100%;
+    gap: var(--uptabs-gap);
+    transition: var(--uptabs-transition);
+  }
+  
+  /* Image Positioning */
+  .image-position-left .uptabs-card-content-wrapper {
+    flex-direction: row;
+    align-items: center;
+  }
+  
+  .image-position-right .uptabs-card-content-wrapper {
+    flex-direction: row-reverse;
+    align-items: center;
+  }
+  
+  .image-position-top .uptabs-card-content-wrapper {
+    flex-direction: column;
+  }
+  
+  .image-position-bottom .uptabs-card-content-wrapper {
+    flex-direction: column-reverse;
+  }
+
+  .align-start .uptabs-card-left-section {
+    align-items: flex-start;
+    justify-content: flex-start;
+    text-align: left;
+  }
+  .align-center .uptabs-card-left-section {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  .align-end .uptabs-card-left-section {
+    align-items: flex-end;
+    justify-content: flex-end;
+    text-align: right;
+  }
+
+
+
+  
+  /* Content Section */
+  .uptabs-card-left-section {
+    flex: 1;
+    /* padding: var(--uptabs-padding); */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    /* gap: var(--uptabs-gap); */
+  }
+  
+  /* Image Styling */
+  .uptabs-card-image {
+    flex-shrink: 0;
+    display: flex;
+    /* align-items: center; */
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    transition: var(--uptabs-transition);
+  }
+  
+
+  
+  /* Specific image positioning */
+  .image-position-left .uptabs-card-image,
+  .image-position-right .uptabs-card-image {
+    max-width: 50%;
+  }
+  
+
+  
+  .image-position-top .uptabs-card-image {
+    max-width: 100%;
+    margin-bottom: var(--uptabs-gap);
+  }
+  
+  .image-position-bottom .uptabs-card-image {
+    max-width: 100%;
+    margin-top: var(--uptabs-gap);
+  }
+  
+  /* Button Styles */
+  .uptabs-card-button {
+    display: inline-block;
+    background-color: var(--uptabs-secondary);
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: var(--uptabs-radius);
+    text-decoration: none;
+    transition: var(--uptabs-transition);
+    align-self: flex-start;
+  }
+  
+  .uptabs-card-button:hover {
+    background-color: #005177;
+    transform: translateY(-2px);
+  }
+  
+  /* Text Alignment */
+  .text-left {
+    text-align: left;
+  }
+  
+  .text-center {
+    text-align: center;
+  }
+  
+  .text-right {
+    text-align: right;
+  }
+  
+  /* Editor Specific Styles */
+  .elementor-editor-active .uptabs-tabs-wrapper {
+    pointer-events: auto !important;
+  }
+  
+  .elementor-editor-active .uptabs-tab-content:not(.uptabs-active) {
+    display: none !important;
+  }
+  
+  .elementor-editor-active .uptabs-tab-content.uptabs-active {
+    display: block !important;
+  }
+  
+  /* =============================================
+     Responsive Styles
+     ============================================= */
+  
+
+     @media (max-width: 767px) {
+      :root {
+        --uptabs-padding: 15px;
+        --uptabs-gap: 12px;
+      }
+    
+      /* ✅ Force all tabs to act like "top" layout regardless of position */
+      .uptabs-tabs-inner {
+        flex-direction: column !important;
+      }
+    
+      /* ✅ Force all wrappers (even vertical ones) to behave like top tabs */
+      .uptabs-tabs-wrapper {
+        flex-direction: row !important;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        overflow-y: hidden;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: thin;
+        padding-bottom: 5px;
+        gap: 8px;
+        width: 100%;
+        justify-content: flex-start !important;
+      }
+    
+      /* ✅ Reset vertical layout (left/right) to top view */
+      .uptabs-tabs-view-vertical-left .uptabs-tabs-inner,
+      .uptabs-tabs-view-vertical-right .uptabs-tabs-inner,
+      .uptabs-tabs-view-horizontal-bottom .uptabs-tabs-inner {
+        flex-direction: column !important;
+        min-width: auto;
+      }
+    
+      /* ✅ Reset vertical content spacing if margin is set from tab position */
+      .uptabs-tabs-content-wrapper {
+        margin: 0 !important;
+      }
+    
+      /* Tab button adjustments */
+      .uptabs-tab-title {
+        flex: 0 0 auto;
+        white-space: nowrap;
+        padding: 10px 15px;
+      }
+    
+      /* Content layout */
+      .uptabs-card-content-wrapper {
+        flex-direction: column;
+      }
+    
+      /* Image position reset for vertical stacking */
+      .image-position-left .uptabs-card-content-wrapper,
+      .image-position-right .uptabs-card-content-wrapper {
+        flex-direction: column !important;
+      }
+    
+      .image-position-left .uptabs-card-image,
+      .image-position-right .uptabs-card-image {
+        order: -1;
+        width: 100%;
+        max-width: 100%;
+      }
+    
+      .image-position-top .uptabs-card-image,
+      .image-position-bottom .uptabs-card-image {
+        max-width: 100%;
+        margin: 0 0 var(--uptabs-gap) 0;
+      }
+    
+      .uptabs-card-button {
+        align-self: center;
+        width: 100%;
+        text-align: center;
+      }
+    }
+    
+  
+  

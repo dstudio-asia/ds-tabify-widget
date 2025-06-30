@@ -3,7 +3,7 @@ if (! defined('ABSPATH')) {
 	exit; // Exit if accessed directly.
 }
 
-class DsTabify_Loader
+class UpTabs_Loader
 {
 
 
@@ -81,7 +81,7 @@ class DsTabify_Loader
 		}
 	}
 
-	public function dstabify_allowed_tags()
+	public function uptabs_allowed_tags()
 	{
 		$allowed_tags = array(
 			'strong' => array(),
@@ -138,13 +138,13 @@ class DsTabify_Loader
 	{
 
 		$message = sprintf(
-			esc_html__('"%1$s" requires "%2$s" to be installed and activated.', 'dstabify'),
-			'<strong>' . esc_html__('DsTabify', 'dstabify') . '</strong>',
-			'<strong>' . esc_html__('Elementor', 'dstabify') . '</strong>'
+			esc_html__('"%1$s" requires "%2$s" to be installed and activated.', 'uptabs'),
+			'<strong>' . esc_html__('UpTabs', 'uptabs') . '</strong>',
+			'<strong>' . esc_html__('Elementor', 'uptabs') . '</strong>'
 
 		);
 
-		printf('<div class="notice notice-warning is-dismissible"><p>%1$s</p></div>', wp_kses($message, $this->dstabify_allowed_tags()));
+		printf('<div class="notice notice-warning is-dismissible"><p>%1$s</p></div>', wp_kses($message, $this->uptabs_allowed_tags()));
 	}
 
 	/**
@@ -160,14 +160,14 @@ class DsTabify_Loader
 	{
 
 		$message = sprintf(
-			esc_html__('"%1$s" requires "%2$s" version %3$s or greater.', 'dstabify'),
-			'<strong>' . esc_html__('DsTabify', 'dstabify') . '</strong>',
-			'<strong>' . esc_html__('Elementor', 'dstabify') . '</strong>',
+			esc_html__('"%1$s" requires "%2$s" version %3$s or greater.', 'uptabs'),
+			'<strong>' . esc_html__('UpTabs', 'uptabs') . '</strong>',
+			'<strong>' . esc_html__('Elementor', 'uptabs') . '</strong>',
 			self::MINIMUM_ELEMENTOR_VERSION
 
 		);
 
-		printf('<div class="notice notice-warning is-dismissible"><p>%1$s</p></div>', wp_kses($message, $this->dstabify_allowed_tags()));
+		printf('<div class="notice notice-warning is-dismissible"><p>%1$s</p></div>', wp_kses($message, $this->uptabs_allowed_tags()));
 	}
 
 	/**
@@ -183,14 +183,14 @@ class DsTabify_Loader
 	{
 
 		$message = sprintf(
-			esc_html__('"%1$s" requires "%2$s" version %3$s or greater.', 'dstabify'),
-			'<strong>' . esc_html__('DsTabify', 'dstabify') . '</strong>',
-			'<strong>' . esc_html__('PHP', 'dstabify') . '</strong>',
+			esc_html__('"%1$s" requires "%2$s" version %3$s or greater.', 'uptabs'),
+			'<strong>' . esc_html__('UpTabs', 'uptabs') . '</strong>',
+			'<strong>' . esc_html__('PHP', 'uptabs') . '</strong>',
 			self::MINIMUM_PHP_VERSION
 
 		);
 
-		printf('<div class="notice notice-warning is-dismissible"><p>%1$s</p></div>', wp_kses($message, $this->dstabify_allowed_tags()));
+		printf('<div class="notice notice-warning is-dismissible"><p>%1$s</p></div>', wp_kses($message, $this->uptabs_allowed_tags()));
 	}
 
 	/**
@@ -207,34 +207,45 @@ class DsTabify_Loader
 	public function init()
 	{
 
-		add_action('elementor/frontend/after_enqueue_styles', [$this, 'dstabify_enqueue_frontend_styles']);
-		add_action('elementor/frontend/after_register_scripts', [$this, 'dstabify_enqueue_frontend_scripts']);
-		add_action('elementor/editor/after_enqueue_scripts', [$this, 'dstabify_enqueue_frontend_scripts']);
+		add_action('elementor/frontend/after_enqueue_styles', [$this, 'uptabs_enqueue_frontend_styles']);
+		add_action('elementor/frontend/after_register_scripts', [$this, 'uptabs_enqueue_frontend_scripts']);
+		add_action('elementor/editor/after_enqueue_scripts', [$this, 'uptabs_enqueue_frontend_scripts']);
 
-		add_action('elementor/widgets/register', [$this, 'dstabify_register_widgets']);
-		add_action('elementor/editor/before_enqueue_styles', [$this, 'dstabify_enqueue_editor_styles']);
+		add_action('elementor/widgets/register', [$this, 'uptabs_register_widgets']);
+		add_action('elementor/editor/before_enqueue_styles', [$this, 'uptabs_enqueue_editor_styles']);
 	}
 
 
 
-	public function dstabify_register_widgets($widgets_manager)
+	public function uptabs_register_widgets($widgets_manager)
 	{
-		require_once DSTABIFY_PATH . 'includes/class-dstabify-widget.php';
-		$widgets_manager->register(new DsTabify_Widget());
+		require_once UPTABS_PATH . 'includes/traits/repeater-tabs-trait.php';
+		require_once UPTABS_PATH . 'includes/traits/tab-container-style-trait.php';
+		require_once UPTABS_PATH . 'includes/traits/tab-title-style-trait.php';
+		require_once UPTABS_PATH . 'includes/traits/tab-icon-style-trait.php';
+		require_once UPTABS_PATH . 'includes/traits/tab-content-style-trait.php';
+		require_once UPTABS_PATH . 'includes/traits/tab-info-style-trait.php';
+
+
+
+		require_once UPTABS_PATH . 'includes/class-uptabs-widget.php';
+		$widgets_manager->register(new UpTabs_Widget());
 	}
 
-	public function dstabify_enqueue_frontend_styles()
+	public function uptabs_enqueue_frontend_styles()
 	{
-		wp_enqueue_style('dstabify-style-frontend', DSTABIFY_URL . 'assets/css/frontend.css', array(), DSTABIFY_VERSION);
+		wp_enqueue_style('uptabs-style-frontend', UPTABS_URL . 'assets/css/uptabs.css', array(), UPTABS_VERSION);
 	}
 
-	public function dstabify_enqueue_frontend_scripts()
+	public function uptabs_enqueue_frontend_scripts()
 	{
-		wp_enqueue_script('dstabify-script-frontend', DSTABIFY_URL . 'assets/js/frontend.js', array('jquery'), DSTABIFY_VERSION, true);
+		wp_enqueue_script('uptabs-script-frontend', UPTABS_URL . 'assets/js/uptabs.js', array('jquery'), UPTABS_VERSION, true);
 	}
 
-	public function dstabify_enqueue_editor_styles()
+	public function uptabs_enqueue_editor_styles()
 	{
-		wp_enqueue_style('dstabify-editor', DSTABIFY_URL . 'assets/css/editor.css', array(), DSTABIFY_VERSION);
+		wp_enqueue_style('uptabs-editor', UPTABS_URL . 'assets/css/editor.css', array(), UPTABS_VERSION);
 	}
+
+
 }
