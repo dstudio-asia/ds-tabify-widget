@@ -24,10 +24,12 @@ trait TabContainerStyleTrait
 				],
 
 				'selectors' => [
-					'{{WRAPPER}}.uptabs-tabs-view-horizontal .uptabs-tabs-wrapper' => 'gap: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}}.uptabs-tabs-view-horizontal-bottom .uptabs-tabs-wrapper' => 'gap: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}}.uptabs-tabs-view-vertical-left .uptabs-tabs-wrapper' => 'gap: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}}.uptabs-tabs-view-vertical-right .uptabs-tabs-wrapper' => 'gap: {{SIZE}}{{UNIT}};',
+					// '{{WRAPPER}}.uptabs-position-column .uptabs-tabs-wrapper' => 'gap: {{SIZE}}{{UNIT}};',
+					// '{{WRAPPER}}.uptabs-position-column-reverse .uptabs-tabs-wrapper' => 'gap: {{SIZE}}{{UNIT}};',
+					// '{{WRAPPER}}.uptabs-position-row .uptabs-tabs-wrapper' => 'gap: {{SIZE}}{{UNIT}};',
+					// '{{WRAPPER}}.uptabs-position-row-reverse .uptabs-tabs-wrapper' => 'gap: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .uptabs-tabs-wrapper' => 'gap: {{SIZE}}{{UNIT}};'
+					
 				],
 			]
 		);
@@ -39,12 +41,17 @@ trait TabContainerStyleTrait
 				'type' => Controls_Manager::SLIDER,
 				'range' => ['px' => ['min' => 0, 'max' => 100]],
 				'default' => ['size' => 0, 'unit' => 'px'],
-				'selectors' => [
-					'{{WRAPPER}}.uptabs-tabs-view-horizontal .uptabs-tabs-inner' => 'gap: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}}.uptabs-tabs-view-horizontal-bottom .uptabs-tabs-inner' => 'gap: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}}.uptabs-tabs-view-vertical-left .uptabs-tabs-inner' => 'gap: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}}.uptabs-tabs-view-vertical-right .uptabs-tabs-inner' => 'gap: {{SIZE}}{{UNIT}};',
-				],
+			
+					// '{{WRAPPER}}.uptabs-position-column .uptabs-tabs-inner' => 'gap: {{SIZE}}{{UNIT}};',
+					// '{{WRAPPER}}.uptabs-position-column-reverse .uptabs-tabs-inner' => 'gap: {{SIZE}}{{UNIT}};',
+					// '{{WRAPPER}}.uptabs-position-row .uptabs-tabs-inner' => 'gap: {{SIZE}}{{UNIT}};',
+					// '{{WRAPPER}}.uptabs-position-row-reverse .uptabs-tabs-inner' => 'gap: {{SIZE}}{{UNIT}};',
+					// For top/bottom positions (column layouts)
+					'selectors'   => [
+						'{{WRAPPER}} .uptabs-tabs-inner'  => 'gap: {{SIZE}}{{UNIT}};',
+					],
+				
+				
 			]
 		);
 	}

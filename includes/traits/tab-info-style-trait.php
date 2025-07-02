@@ -8,11 +8,13 @@ use Elementor\Group_Control_Border;
 use Elementor\Group_Control_Text_Shadow;
 use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Typography;
+
 trait TabInfoStyleTrait
 
 {
-	function uptabs_tab_info_style($control){
-		
+	function uptabs_tab_info_style($control)
+	{
+
 
 		// ===========================================
 		// STYLE TAB: HEADING
@@ -273,7 +275,7 @@ trait TabInfoStyleTrait
 				'default' => 'left',
 				'toggle' => true,
 
-				'prefix_class' => 'image-position-'
+				// 'prefix_class' => 'image-position-'
 			]
 		);
 

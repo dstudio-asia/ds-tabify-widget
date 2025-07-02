@@ -100,21 +100,39 @@ class UpTabs_Widget extends \Elementor\Widget_Base
 		// );
 
 		$this->add_responsive_control(
-			'uptabs_tabs_position',
+			'position',
 			[
 				'label'       => esc_html__('Tab Position', 'uptabs'),
 				'type'        => Controls_Manager::CHOOSE,
 				'options'     => [
-					'column'        => ['title' => esc_html__('Top', 'uptabs'),    'icon' => 'eicon-v-align-top'],
-					'column-reverse' => ['title' => esc_html__('Bottom', 'uptabs'), 'icon' => 'eicon-v-align-bottom'],
-					'row'     => ['title' => esc_html__('Left', 'uptabs'),   'icon' => 'eicon-h-align-left'],
-					'row-reverse'    => ['title' => esc_html__('Right', 'uptabs'),  'icon' => 'eicon-h-align-right'],
+					'horizontal'        => ['title' => esc_html__('Top', 'uptabs'),    'icon' => 'eicon-v-align-top'],
+					'horizontal-bottom' => ['title' => esc_html__('Bottom', 'uptabs'), 'icon' => 'eicon-v-align-bottom'],
+					'vertical-left'     => ['title' => esc_html__('Left', 'uptabs'),   'icon' => 'eicon-h-align-left'],
+					'vertical-right'    => ['title' => esc_html__('Right', 'uptabs'),  'icon' => 'eicon-h-align-right'],
 				],
-				'default'     => 'column',
-				// 'prefix_class' => 'uptabs-tabs-view-',
-				// 'render_type' => 'template',
+				'default'     => 'horizontal',
+				'prefix_class' => 'uptabs-tabs-view-',
+				'render_type' => 'template',
 				'selectors'   => [
-					'{{WRAPPER}} .uptabs-tabs-inner'  => 'flex-direction: {{VALUE}};',
+					/* Horizontal top */
+					'{{WRAPPER}}.uptabs-tabs-view-horizontal .uptabs-tabs-inner'           => 'flex-direction: column;',
+					'{{WRAPPER}}.uptabs-tabs-view-horizontal .uptabs-tabs-wrapper'         => 'flex-direction: row;',
+					'{{WRAPPER}}.uptabs-tabs-view-horizontal .uptabs-tabs-content-wrapper' => 'border-top: none; border-radius: 0 0 var(--uptabs-radius) var(--uptabs-radius);',
+
+					/* Horizontal bottom */
+					'{{WRAPPER}}.uptabs-tabs-view-horizontal-bottom .uptabs-tabs-inner'           => 'flex-direction: column-reverse;',
+					'{{WRAPPER}}.uptabs-tabs-view-horizontal-bottom .uptabs-tabs-wrapper'         => 'flex-direction: row;',
+					'{{WRAPPER}}.uptabs-tabs-view-horizontal-bottom .uptabs-tabs-content-wrapper' => 'border-bottom: none; border-radius: var(--uptabs-radius) var(--uptabs-radius) 0 0;',
+
+					/* Vertical left */
+					'{{WRAPPER}}.uptabs-tabs-view-vertical-left .uptabs-tabs-inner'           => 'flex-direction: row;',
+					'{{WRAPPER}}.uptabs-tabs-view-vertical-left .uptabs-tabs-wrapper'         => 'flex-direction: column; min-width:150px; overflow-y:auto;',
+					'{{WRAPPER}}.uptabs-tabs-view-vertical-left .uptabs-tabs-content-wrapper' => 'border-left: none; border-radius: 0 var(--uptabs-radius) var(--uptabs-radius) 0;',
+
+					/* Vertical right */
+					'{{WRAPPER}}.uptabs-tabs-view-vertical-right .uptabs-tabs-inner'           => 'flex-direction: row-reverse;',
+					'{{WRAPPER}}.uptabs-tabs-view-vertical-right .uptabs-tabs-wrapper'         => 'flex-direction: column; min-width:150px; overflow-y:auto;',
+					'{{WRAPPER}}.uptabs-tabs-view-vertical-right .uptabs-tabs-content-wrapper' => 'border-right: none; border-radius: var(--uptabs-radius) 0 0 var(--uptabs-radius);',
 				],
 			]
 		);
@@ -132,10 +150,6 @@ class UpTabs_Widget extends \Elementor\Widget_Base
 					'stretch' => ['title' => esc_html__('Stretch', 'uptabs'), 'icon' => 'eicon-text-align-justify'],
 				],
 				'default' => 'center',
-				// 'selectors'   => [
-				// 	'{{WRAPPER}} .uptabs-tabs-wrapper'  => 'justify-content: {{VALUE}};',
-				// ],
-				
 				'prefix_class' => 'uptabs-tabs-align-',
 			]
 		);
@@ -154,11 +168,12 @@ class UpTabs_Widget extends \Elementor\Widget_Base
 					'rem' => ['min' => 1, 'max' => 50],
 				],
 				'selectors' => [
-					// '{{WRAPPER}}.uptabs-position-row .uptabs-tabs-inner > .uptabs-tabs-wrapper' => 'width: {{SIZE}}{{UNIT}}; flex: 0 0 {{SIZE}}{{UNIT}};',
-					// '{{WRAPPER}}.uptabs-position-row-reverse .uptabs-tabs-inner > .uptabs-tabs-wrapper' => 'width: {{SIZE}}{{UNIT}}; flex: 0 0 {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} uptabs-position-row .uptabs-tabs-wrapper, .uptabs-position-row-reverse .uptabs-tabs-wrapper' => 'width: {{SIZE}}{{UNIT}}'
+					'{{WRAPPER}}.uptabs-tabs-view-vertical-left .uptabs-tabs-wrapper, 
+					{{WRAPPER}}.uptabs-tabs-view-vertical-right .uptabs-tabs-wrapper' => 'width: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}}.uptabs-tabs-view-horizontal .uptabs-tabs-wrapper,
+					{{WRAPPER}}.uptabs-tabs-view-horizontal-bottom .uptabs-tabs-wrapper' => 'height: {{SIZE}}{{UNIT}}; ',
 				],
-				'condition' => ['uptabs_tabs_position' => ['row', 'row-reverse']],
+				'condition' => ['position' => ['vertical-left', 'vertical-right']],
 			]
 		);
 
@@ -168,16 +183,16 @@ class UpTabs_Widget extends \Elementor\Widget_Base
 
 
 
-		// $this->add_control(
-		// 	'active_tab',
-		// 	[
-		// 		'label' => esc_html__('Active Tab', 'uptabs'),
-		// 		'type' => Controls_Manager::NUMBER,
-		// 		'default' => 1,
-		// 		'frontend_available' => true,
-		// 		'description' => esc_html__('Set the default active tab (1-based index).', 'uptabs'),
-		// 	]
-		// );
+		$this->add_control(
+			'active_tab',
+			[
+				'label' => esc_html__('Active Tab', 'uptabs'),
+				'type' => Controls_Manager::NUMBER,
+				'default' => 1,
+				'frontend_available' => true,
+				'description' => esc_html__('Set the default active tab (1-based index).', 'uptabs'),
+			]
+		);
 
 		$this->end_controls_section();
 
@@ -273,14 +288,27 @@ class UpTabs_Widget extends \Elementor\Widget_Base
 			$active_tab = !empty($settings['active_tab']) ? intval($settings['active_tab']) : 1;
 		}
 
-		$position = !empty($settings['uptabs_tabs_position']) ? $settings['uptabs_tabs_position'] : 'column';
+		// $position = !empty($settings['position']) ? $settings['position'] : 'horizontal';
 		$id_int = substr($this->get_id_int(), 0, 3);
 
+		// Determine the class for tab position
+		// $position_class = 'uptabs-tabs-view-horizontal';
+
+		// if ($position === 'top') {
+		// 	$position_class = 'uptabs-tabs-view-horizontal';
+		// } elseif ($position === 'bottom') {
+		// 	$position_class = 'uptabs-tabs-view-horizontal-bottom';
+		// } elseif ($position === 'left') {
+		// 	$position_class = 'uptabs-tabs-view-vertical-left';
+		// } elseif ($position === 'right') {
+		// 	$position_class = 'uptabs-tabs-view-vertical-right';
+		// }
+
+		// echo $position_class;
+		// die();
 
 		$this->add_render_attribute('uptabs-tabs', [
-
-			// 'class' => ['uptabs-tabs', 'uptabs-tabs-view-' . $position],
-			'class' => ['uptabs-tabs', 'uptabs-position-' . $position],
+			'class' => 'uptabs-tabs ',
 			'data-active-tab' => $active_tab,
 		]);
 ?>

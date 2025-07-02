@@ -54,7 +54,7 @@ trait TabContentStyleTrait
 					'{{WRAPPER}}.elementor-align-center .image-position-right .uptabs-card-content-wrapper' => 'justify-content: center;',
 					'{{WRAPPER}}.elementor-align-right .image-position-right .uptabs-card-content-wrapper' => 'justify-content: flex-end;',
 				],
-				'prefix_class' => 'elementor-align-',
+				// 'prefix_class' => 'elementor-align-',
 			]
 		);
 
