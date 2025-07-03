@@ -279,7 +279,7 @@ trait TabInfoStyleTrait
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'image_width',
 			[
 				'label' => esc_html__('Image Width', 'uptabs'),
@@ -289,7 +289,15 @@ trait TabInfoStyleTrait
 					'px' => ['min' => 100, 'max' => 1000, 'step' => 5],
 					'%' => ['min' => 10, 'max' => 100],
 				],
-				'default' => ['unit' => '%', 'size' => 40],
+				'mobile_default' => [
+					'size' => 100,
+					'unit' => '%',
+				],
+				'default'    => [
+					'size' => 40,
+					'unit' => '%',
+				],
+			
 				'selectors' => [
 					'{{WRAPPER}} .uptabs-card-image' => 'width: {{SIZE}}{{UNIT}};'
 				],

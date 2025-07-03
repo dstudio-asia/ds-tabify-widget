@@ -33,7 +33,7 @@ trait TabContentStyleTrait
 				],
 				'default' => 'center',
 				'selectors' => [
-					'{{WRAPPER}} .uptabs-card-content-wrapper' => 'text-align: {{VALUE}};',
+				
 					'{{WRAPPER}} .uptabs-card-left-section' => 'align-items: {{VALUE}};',
 
 					// Conditional mapping for flex values
@@ -54,7 +54,7 @@ trait TabContentStyleTrait
 					'{{WRAPPER}}.elementor-align-center .image-position-right .uptabs-card-content-wrapper' => 'justify-content: center;',
 					'{{WRAPPER}}.elementor-align-right .image-position-right .uptabs-card-content-wrapper' => 'justify-content: flex-end;',
 				],
-				// 'prefix_class' => 'elementor-align-',
+				'prefix_class' => 'elementor-align-',
 			]
 		);
 
@@ -153,6 +153,14 @@ trait TabContentStyleTrait
 				'label' => esc_html__('Padding', 'uptabs'),
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => ['px', '%', 'em'],
+				'default' => [
+					'top' => '20',
+					'right' => '20',
+					'bottom' => '20',
+					'left' => '20',
+					'unit' => 'px',
+					'isLinked' => true, 
+				],
 				'selectors' => [
 					'{{WRAPPER}} .uptabs-tab-content' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],

@@ -217,7 +217,7 @@
   /* Tab Content Styles */
   .uptabs-tab-content {
     display: none;
-    padding: var(--uptabs-padding);
+    /* padding: var(--uptabs-padding); */
     box-sizing: border-box;
     height: 0;
     overflow: hidden;
@@ -362,7 +362,7 @@
   
   .image-position-bottom .uptabs-card-image {
     max-width: 100%;
-    margin-top: var(--uptabs-gap);
+   
   }
   
   /* Button Styles */
@@ -421,12 +421,12 @@
     
       /* ✅ Force all tabs to act like "top" layout regardless of position */
       .uptabs-tabs-inner {
-        flex-direction: column !important;
+        flex-direction: column !important; /* Overrides any other direction */
       }
     
       /* ✅ Force all wrappers (even vertical ones) to behave like top tabs */
       .uptabs-tabs-wrapper {
-        flex-direction: row !important;
+        flex-direction: row;
         flex-wrap: nowrap;
         overflow-x: auto;
         overflow-y: hidden;
@@ -436,20 +436,27 @@
         padding-bottom: 5px;
         gap: 8px;
         width: 100%;
-        justify-content: flex-start !important;
+        justify-content: flex-start;
+      }
+
+       /* Reset any left/right specific styles */
+      .uptabs-position-row .uptabs-tabs-wrapper,
+      .uptabs-position-row-reverse .uptabs-tabs-wrapper {
+          flex-direction: row !important; /* Horizontal scroll for tabs */
+          min-width: 100% !important;
       }
     
       /* ✅ Reset vertical layout (left/right) to top view */
-      .uptabs-tabs-view-vertical-left .uptabs-tabs-inner,
-      .uptabs-tabs-view-vertical-right .uptabs-tabs-inner,
+      /* .uptabs-position-row .uptabs-tabs-inner,
+      .uptabs-position-row-reverse .uptabs-tabs-inner,
       .uptabs-position-column-reverse .uptabs-tabs-inner {
-        flex-direction: column !important;
+        flex-direction: column ;
         min-width: auto;
-      }
+      } */
     
       /* ✅ Reset vertical content spacing if margin is set from tab position */
       .uptabs-tabs-content-wrapper {
-        margin: 0 !important;
+        margin: 0;
       }
     
       /* Tab button adjustments */

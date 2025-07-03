@@ -14,6 +14,7 @@ trait TabIconStyleTrait
 				'type' => Controls_Manager::SLIDER,
 				'range' => ['px' => ['min' => 10, 'max' => 100]],
 				'default' => ['size' => 20, 'unit' => 'px'],
+				'render_type' => 'template',
 				'selectors' => [
 					'{{WRAPPER}} .uptabs-tab-icon svg' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
 				],
@@ -27,6 +28,7 @@ trait TabIconStyleTrait
 				'type' => Controls_Manager::SLIDER,
 				'range' => ['px' => ['min' => 0, 'max' => 50]],
 				'default' => ['size' => 8, 'unit' => 'px'],
+				'render_type' => 'template',
 				'selectors' => [
 					'{{WRAPPER}} .uptabs-tab-title-inner' => 'gap: {{SIZE}}{{UNIT}};',
 
@@ -64,6 +66,7 @@ trait TabIconStyleTrait
 					'left' => ['title' => esc_html__('Left', 'uptabs'), 'icon' => 'eicon-h-align-left'],
 					'right' => ['title' => esc_html__('Right', 'uptabs'), 'icon' => 'eicon-h-align-right'],
 				],
+				'render_type' => 'template',
 				'selectors' => [
 					'{{WRAPPER}} .uptabs-icon-wrapper' => 'flex-direction: {{VALUE}};',
 				],

@@ -112,10 +112,12 @@ class UpTabs_Widget extends \Elementor\Widget_Base
 				],
 				'default'     => 'column',
 				// 'prefix_class' => 'uptabs-tabs-view-',
-				// 'render_type' => 'template',
+				'render_type' => 'template',
 				'selectors'   => [
-					'{{WRAPPER}} .uptabs-tabs-inner'  => 'flex-direction: {{VALUE}};',
+					// 1. Main flex-direction control
+					'{{WRAPPER}} .uptabs-tabs-inner' => 'flex-direction: {{VALUE}};',
 				],
+
 			]
 		);
 
@@ -135,7 +137,7 @@ class UpTabs_Widget extends \Elementor\Widget_Base
 				// 'selectors'   => [
 				// 	'{{WRAPPER}} .uptabs-tabs-wrapper'  => 'justify-content: {{VALUE}};',
 				// ],
-				
+
 				'prefix_class' => 'uptabs-tabs-align-',
 			]
 		);
@@ -156,7 +158,7 @@ class UpTabs_Widget extends \Elementor\Widget_Base
 				'selectors' => [
 					// '{{WRAPPER}}.uptabs-position-row .uptabs-tabs-inner > .uptabs-tabs-wrapper' => 'width: {{SIZE}}{{UNIT}}; flex: 0 0 {{SIZE}}{{UNIT}};',
 					// '{{WRAPPER}}.uptabs-position-row-reverse .uptabs-tabs-inner > .uptabs-tabs-wrapper' => 'width: {{SIZE}}{{UNIT}}; flex: 0 0 {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} uptabs-position-row .uptabs-tabs-wrapper, .uptabs-position-row-reverse .uptabs-tabs-wrapper' => 'width: {{SIZE}}{{UNIT}}'
+					'{{WRAPPER}} .uptabs-position-row .uptabs-tabs-wrapper, .uptabs-position-row-reverse .uptabs-tabs-wrapper' => 'width: {{SIZE}}{{UNIT}}'
 				],
 				'condition' => ['uptabs_tabs_position' => ['row', 'row-reverse']],
 			]
@@ -277,13 +279,19 @@ class UpTabs_Widget extends \Elementor\Widget_Base
 		$id_int = substr($this->get_id_int(), 0, 3);
 
 
-		$this->add_render_attribute('uptabs-tabs', [
+			$this->add_render_attribute('uptabs-tabs', [
 
-			// 'class' => ['uptabs-tabs', 'uptabs-tabs-view-' . $position],
-			'class' => ['uptabs-tabs', 'uptabs-position-' . $position],
-			'data-active-tab' => $active_tab,
-		]);
-?>
+				// 'class' => ['uptabs-tabs', 'uptabs-tabs-view-' . $position],
+				'class' => ['uptabs-tabs', 'uptabs-position-' . $position],
+				'data-active-tab' => $active_tab,
+			]);
+
+			// $this->add_render_attribute('uptabs-tabs', [
+			// 	'class' => ['uptabs-tabs'],
+			// 	// 'data-position' => $position, // Add as data attribute
+			// 	'data-active-tab' => $active_tab,
+			// ]);
+		?>
 		<div <?php $this->print_render_attribute_string('uptabs-tabs'); ?>>
 			<div class="uptabs-tabs-inner">
 				<div class="uptabs-tabs-wrapper" role="tablist">
@@ -420,6 +428,125 @@ class UpTabs_Widget extends \Elementor\Widget_Base
 					<?php endif; ?>
 				</div>
 			</div>
-<?php endforeach;
+		<?php endforeach;
+	}
+
+
+
+	protected function content_template()
+	{
+		?>
+		<#
+			var id_int=Math.random().toString(36).substr(2, 5);
+			var active_tab=settings.active_tab ? parseInt(settings.active_tab) : 1;
+			var position=settings.uptabs_tabs_position || 'column' ;
+			var heading_tag=settings.uptabs_tab_heading_tag || 'h2' ;
+			var icon_position=settings.tab_icon_position || 'left' ;
+			var image_position=settings.image_position || 'left' ;
+			#>
+
+			<div class="uptabs-tabs uptabs-position-{{ position }}" data-active-tab="{{ active_tab }}">
+				<div class="uptabs-tabs-inner">
+					<div class="uptabs-tabs-wrapper" role="tablist">
+						<# _.each(settings.tabs, function(item, index) {
+							var tab_count=index + 1;
+							var tab_id='uptabs-tab-title-' + id_int + tab_count;
+							var active_class=(tab_count===active_tab) ? 'uptabs-active' : '' ;
+							var icon_html='' ;
+
+							if (item.tab_icon && item.tab_icon.value) {
+							icon_html=elementor.helpers.renderIcon(view, item.tab_icon, { 'aria-hidden' : true }, 'i' , 'object' );
+							}
+							#>
+							<div id="{{ tab_id }}"
+								class="uptabs-tab-title uptabs-icon-{{ icon_position }} {{ active_class }}"
+								aria-selected="{{ tab_count === active_tab ? 'true' : 'false' }}"
+								data-tab="{{ tab_count }}"
+								role="tab"
+								aria-controls="uptabs-tab-content-{{ id_int }}{{ tab_count }}"
+								tabindex="{{ tab_count === active_tab ? '0' : '-1' }}">
+								<# if (icon_html.value) { #>
+									<# if (icon_position==='top' || icon_position==='bottom' ) { #>
+										<div class="uptabs-icon-wrapper uptabs-icon-wrapper-{{ icon_position }}">
+											<span class="uptabs-tab-icon">{{{ icon_html.value }}}</span>
+											<span class="uptabs-tab-title-text">{{{ item.uptabs_tab_title }}}</span>
+										</div>
+										<# } else { #>
+											<div class="uptabs-tab-title-inner">
+												<# if (icon_position==='left' ) { #>
+													<span class="uptabs-tab-icon">{{{ icon_html.value }}}</span>
+													<# } #>
+														<span class="uptabs-tab-title-text">{{{ item.uptabs_tab_title }}}</span>
+														<# if (icon_position==='right' ) { #>
+															<span class="uptabs-tab-icon">{{{ icon_html.value }}}</span>
+															<# } #>
+											</div>
+											<# } #>
+												<# } else { #>
+													<span class="uptabs-tab-title-text">{{{ item.uptabs_tab_title }}}</span>
+													<# } #>
+							</div>
+							<# }); #>
+					</div>
+
+					<div class="uptabs-tabs-content-wrapper">
+						<# _.each(settings.tabs, function(item, index) {
+							var tab_count=index + 1;
+							var tab_content_id='uptabs-tab-content-' + id_int + tab_count;
+							var active_class=(tab_count===active_tab) ? 'uptabs-active' : '' ;
+							var has_image=item.uptabs_tab_image && item.uptabs_tab_image.url;
+							var btn_text=item.uptabs_tab_button_text || '' ;
+							var btn_link=item.uptabs_tab_button_link || {};
+							#>
+							<div id="{{ tab_content_id }}"
+								class="uptabs-tab-content elementor-repeater-item-{{ item._id }} {{ active_class }} image-position-{{ image_position }} {{ has_image ? 'has-image' : 'no-image' }}"
+								data-tab="{{ tab_count }}"
+								role="tabpanel"
+								aria-labelledby="uptabs-tab-title-{{ id_int }}{{ tab_count }}"
+								<# if (tab_count !==active_tab) { #>hidden<# } #>>
+									<div class="uptabs-card-content-wrapper">
+										<div class="uptabs-card-left-section">
+											<# if (item.uptabs_tab_heading) { #>
+												<{{ heading_tag }} class="uptab-header">{{{ item.uptabs_tab_heading }}}</{{ heading_tag }}>
+												<# } #>
+
+													<div class="uptab-description">
+														<p class="uptabs-card-description">{{{ item.uptabs_tab_description }}}</p>
+													</div>
+
+													<# if (btn_text) { #>
+														<div class="uptab-card-button-wrapper">
+															<a class="uptabs-card-button"
+																href="{{ btn_link.url }}"
+																<# if (btn_link.is_external) { #>target="_blank"<# } #>
+																	<# if (btn_link.nofollow) { #>rel="nofollow"<# } #>>
+																			{{{ btn_text }}}
+															</a>
+														</div>
+														<# } #>
+										</div>
+
+										<# if (has_image) { #>
+											<div class="uptabs-card-image">
+												<#
+													var image={
+													id: item.uptabs_tab_image.id,
+													url: item.uptabs_tab_image.url,
+													size: settings.thumbnail_size,
+													dimension: settings.thumbnail_custom_dimension,
+													model: view.getEditModel()
+													};
+													var image_url=elementor.imagesManager.getImageUrl(image);
+													#>
+													<img src="{{ image_url }}" alt="{{ item.uptabs_tab_title }}">
+											</div>
+											<# } #>
+									</div>
+							</div>
+							<# }); #>
+					</div>
+				</div>
+			</div>
+	<?php
 	}
 }
