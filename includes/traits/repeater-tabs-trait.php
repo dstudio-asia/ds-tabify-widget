@@ -18,7 +18,7 @@ trait RepeaterTabsTrait
 
 		// Title Tab
 		$repeater->start_controls_tab(
-			'tab_title',
+			'uptabs_control_tab_title',
 			[
 				'label' => esc_html__('Title', 'uptabs'),
 			]
@@ -37,7 +37,7 @@ trait RepeaterTabsTrait
 		);
 
 		$repeater->add_control(
-			'tab_icon',
+			'uptabs_tab_icon',
 			[
 				'label' => esc_html__('Icon', 'uptabs'),
 				'type' => Controls_Manager::ICONS,
@@ -49,7 +49,7 @@ trait RepeaterTabsTrait
 		);
 
 		$repeater->add_control(
-			'tab_id',
+			'uptabs_tab_id',
 			[
 				'label' => esc_html__('Tab ID/Slug', 'uptabs'),
 				'type' => Controls_Manager::TEXT,
@@ -64,7 +64,7 @@ trait RepeaterTabsTrait
 		// TAB: CONTENT
 		// ======================
 		$repeater->start_controls_tab(
-			'tab_content',
+			'uptabs_tab_content',
 			[
 				'label' => esc_html__('Content', 'uptabs'),
 			]
@@ -119,7 +119,7 @@ trait RepeaterTabsTrait
 		// TAB: IMAGE
 		// ======================
 		$repeater->start_controls_tab(
-			'tab_image',
+			'uptabs_tab_image_label',
 			[
 				'label' => esc_html__('Image', 'uptabs'),
 			]

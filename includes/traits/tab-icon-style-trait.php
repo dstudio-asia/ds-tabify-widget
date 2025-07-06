@@ -8,7 +8,7 @@ trait TabIconStyleTrait
 {
 	function uptabs_tab_icon_style($control){
 		$this->add_responsive_control(
-			'tab_icon_size',
+			'uptabs_tab_icon_size',
 			[
 				'label' => esc_html__('Icon Size', 'uptabs'),
 				'type' => Controls_Manager::SLIDER,
@@ -16,13 +16,15 @@ trait TabIconStyleTrait
 				'default' => ['size' => 20, 'unit' => 'px'],
 				'render_type' => 'template',
 				'selectors' => [
+					// '{{WRAPPER}} .uptabs-tab-icon svg' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
 					'{{WRAPPER}} .uptabs-tab-icon svg' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
+
 				],
 			]
 		);
 
 		$this->add_responsive_control(
-			'tab_icon_spacing',
+			'uptabs_tab_icon_spacing',
 			[
 				'label' => esc_html__('Icon Spacing', 'uptabs'),
 				'type' => Controls_Manager::SLIDER,
@@ -55,7 +57,7 @@ trait TabIconStyleTrait
 		// );
 
 		$this->add_control(
-			'tab_icon_position',
+			'uptabs_tab_icon_position',
 			[
 				'label' => esc_html__('Icon Position', 'uptabs'),
 				'type' => Controls_Manager::CHOOSE,
@@ -86,7 +88,7 @@ trait TabIconStyleTrait
 		);
 
 		$this->add_control(
-			'tab_icon_color',
+			'uptabs_tab_icon_color',
 			[
 				'label' => esc_html__('Color', 'uptabs'),
 				'type' => Controls_Manager::COLOR,
@@ -97,14 +99,14 @@ trait TabIconStyleTrait
 		$this->end_controls_tab();
 
 		$this->start_controls_tab(
-			'tab_icon_hover',
+			'uptabs_tab_icon_hover',
 			[
 				'label' => esc_html__('Hover', 'uptabs'),
 			]
 		);
 
 		$this->add_control(
-			'tab_icon_hover_color',
+			'uptabs_tab_icon_hover_color',
 			[
 				'label' => esc_html__('Color', 'uptabs'),
 				'type' => Controls_Manager::COLOR,
@@ -115,14 +117,14 @@ trait TabIconStyleTrait
 		$this->end_controls_tab();
 
 		$this->start_controls_tab(
-			'tab_icon_active',
+			'uptabs_tab_icon_active',
 			[
 				'label' => esc_html__('Active', 'uptabs'),
 			]
 		);
 
 		$this->add_control(
-			'tab_icon_active_color',
+			'uptabs_tab_icon_active_color',
 			[
 				'label' => esc_html__('Color', 'uptabs'),
 				'type' => Controls_Manager::COLOR,

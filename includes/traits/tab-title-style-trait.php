@@ -12,14 +12,14 @@ trait TabTitleStyleTrait
 	function uptabs_tab_title_style($control){
 		// Normal Tab
 		$control->start_controls_tab(
-			'tab_title_normal',
+			'uptabs_tab_title_normal',
 			[
 				'label' => esc_html__('Normal', 'uptabs'),
 			]
 		);
 
 		$control->add_control(
-			'tab_bg_color',
+			'uptabs_tab_bg_color',
 			[
 				'label' => esc_html__('Background Color', 'uptabs'),
 				'type' => Controls_Manager::COLOR,
@@ -28,7 +28,7 @@ trait TabTitleStyleTrait
 		);
 
 		$control->add_control(
-			'tab_text_color',
+			'uptabs_tab_text_color',
 			[
 				'label' => esc_html__('Text Color', 'uptabs'),
 				'type' => Controls_Manager::COLOR,
@@ -40,14 +40,14 @@ trait TabTitleStyleTrait
 
 		// Hover Tab
 		$control->start_controls_tab(
-			'tab_title_hover',
+			'uptabs_tab_title_hover',
 			[
 				'label' => esc_html__('Hover', 'uptabs'),
 			]
 		);
 
 		$control->add_control(
-			'tab_hover_bg_color',
+			'uptabs_tab_hover_bg_color',
 			[
 				'label' => esc_html__('Background Color', 'uptabs'),
 				'type' => Controls_Manager::COLOR,
@@ -56,7 +56,7 @@ trait TabTitleStyleTrait
 		);
 
 		$control->add_control(
-			'tab_hover_text_color',
+			'uptabs_tab_hover_text_color',
 			[
 				'label' => esc_html__('Text Color', 'uptabs'),
 				'type' => Controls_Manager::COLOR,
@@ -68,14 +68,14 @@ trait TabTitleStyleTrait
 
 		// Active Tab
 		$control->start_controls_tab(
-			'tab_title_active',
+			'uptabs_tab_title_active',
 			[
 				'label' => esc_html__('Active', 'uptabs'),
 			]
 		);
 
 		$control->add_control(
-			'tab_active_bg_color',
+			'uptabs_tab_active_bg_color',
 			[
 				'label' => esc_html__('Background Color', 'uptabs'),
 				'type' => Controls_Manager::COLOR,
@@ -84,7 +84,7 @@ trait TabTitleStyleTrait
 		);
 
 		$control->add_control(
-			'tab_active_text_color',
+			'uptabs_tab_active_text_color',
 			[
 				'label' => esc_html__('Text Color', 'uptabs'),
 				'type' => Controls_Manager::COLOR,
@@ -98,13 +98,13 @@ trait TabTitleStyleTrait
 		$control->add_group_control(
 			Group_Control_Border::get_type(),
 			[
-				'name' => 'tab_border',
+				'name' => 'uptabs_tab_border',
 				'selector' => '{{WRAPPER}} .uptabs-tab-title',
 			]
 		);
 
 		$control->add_control(
-			'tab_border_radius',
+			'uptabs_tab_border_radius',
 			[
 				'label' => esc_html__('Border Radius', 'uptabs'),
 				'type' => Controls_Manager::DIMENSIONS,
@@ -116,7 +116,7 @@ trait TabTitleStyleTrait
 		);
 
 		$control->add_responsive_control(
-			'tab_padding',
+			'uptabs_tab_padding',
 			[
 				'label' => esc_html__('Padding', 'uptabs'),
 				'type' => Controls_Manager::DIMENSIONS,
@@ -130,7 +130,7 @@ trait TabTitleStyleTrait
 		$control->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
-				'name' => 'tab_typography',
+				'name' => 'uptabs_tab_typography',
 				'selector' => '{{WRAPPER}} .uptabs-tab-title',
 			]
 		);
@@ -138,7 +138,15 @@ trait TabTitleStyleTrait
 		$control->add_group_control(
 			Group_Control_Text_Shadow::get_type(),
 			[
-				'name' => 'title_shadow',
+				'name' => 'uptabs_title_shadow',
+				'selector' => '{{WRAPPER}} .uptabs-tab-title',
+			]
+		);
+
+		$this->add_group_control(
+			\Elementor\Group_Control_Text_Stroke::get_type(),
+			[
+				'name' => 'uptabs_text_stroke',
 				'selector' => '{{WRAPPER}} .uptabs-tab-title',
 			]
 		);

@@ -228,174 +228,122 @@ protected function render()
 
 
 
-protected function content_template()
-	{
-		?>
-		<#
-			var id_int=view.getIDInt().toString().substr(0, 3);
-			var position=settings.position ? settings.position : 'horizontal' ;
-			var active_tab=settings.active_tab ? parseInt(settings.active_tab) : 1;
-			#>
-			<div class="dstabify-tabs dstabify-tabs-view-{{ position }}" data-active-tab="{{ active_tab }}">
-				<div class="dstabify-tabs-inner">
-					<# if (position==='horizontal-bottom' ) { #>
-						<div class="dstabify-tabs-content-wrapper">
-							<# _.each(settings.tabs, function(item, index) {
-								var tab_count=index + 1;
-								var tab_content_id='dstabify-tab-content-' + id_int + tab_count;
-								var active_class=tab_count===active_tab ? 'dstabify-active' : '' ;
-								var image_url=item.dstabify_tab_image && item.dstabify_tab_image.url ? item.dstabify_tab_image.url : '' ;
-								var has_image=image_url !=='' ;
-								var btn_text=item.dstabify_tab_button_text || '' ;
-								var btn_link=item.dstabify_tab_button_link || {};
-								var image_position=item.image_position || 'left' ;
-								var heading_tag=item.dstabify_tab_heading_tag ? item.dstabify_tab_heading_tag : 'h2' ;
-								#>
-								<div id="{{ tab_content_id }}"
-									class="dstabify-tab-content elementor-repeater-item-{{ item._id }} {{ active_class }} image-position-{{ image_position }} {{ has_image ? 'has-image' : 'no-image' }}"
-									data-tab="{{ tab_count }}"
-									role="tabpanel"
-									aria-labelledby="dstabify-tab-title-{{ id_int }}{{ tab_count }}"
-									<# if (tab_count !==active_tab) { #>hidden<# } #>>
-										<div class="dstabify-card-content-wrapper">
-											<div class="dstabify-card-left-section">
-												<# if (item.dstabify_tab_heading) { #>
-													<{{ heading_tag }} class="dstabify-card-heading">{{{ item.dstabify_tab_heading }}}</{{ heading_tag }}>
-													<# } #>
+  protected function content_template()
+  {
+	  ?>
+	  <#
+		  var id_int=Math.random().toString(36).substr(2, 5);
+		  var active_tab=settings.active_tab ? parseInt(settings.active_tab) : 1;
+		  var position=settings.uptabs_tabs_position || 'column' ;
+		  var heading_tag=settings.uptabs_tab_heading_tag || 'h2' ;
+		  var icon_position=settings.tab_icon_position || 'left' ;
+		  var uptab_image_postion=settings.uptab_image_postion || 'left' ;
+		  #>
 
-														<p class="dstabify-card-description">{{{ item.dstabify_tab_description }}}</p>
-														<# if (btn_text) { #>
-															<a class="dstabify-card-button" href="{{ btn_link.url }}"
-																<# if (btn_link.is_external) { #>target="_blank"<# } #>
-																	<# if (btn_link.nofollow) { #>rel="nofollow"<# } #>>
-																			{{{ btn_text }}}
-															</a>
-															<# } #>
-											</div>
+		  <div class="uptabs-tabs uptabs-position-{{ position }}" data-active-tab="{{ active_tab }}">
+			  <div class="uptabs-tabs-inner">
+				  <div class="uptabs-tabs-wrapper" role="tablist">
+					  <# _.each(settings.tabs, function(item, index) {
+						  var tab_count=index + 1;
+						  var tab_id='uptabs-tab-title-' + id_int + tab_count;
+						  var active_class=(tab_count===active_tab) ? 'uptabs-active' : '' ;
+						  var icon_html='' ;
 
-											<# if (has_image) { #>
-												<div class="dstabify-card-image">
-													<#
-														var image={
-														id: item.dstabify_tab_image.id,
-														url: item.dstabify_tab_image.url,
-														size: item.thumbnail_size,
-														dimension: item.thumbnail_custom_dimension,
-														model: view.getEditModel()
-														};
-														var image_url=elementor.imagesManager.getImageUrl(image);
-														#>
-														<img src="{{ image_url }}" alt="{{ item.dstabify_tab_heading }}">
-												</div>
-												<# } #>
-										</div>
-								</div>
-								<# }); #>
-						</div>
-						<# } #>
+						  if (item.tab_icon && item.tab_icon.value) {
+						  icon_html=elementor.helpers.renderIcon(view, item.tab_icon, { 'aria-hidden' : true }, 'i' , 'object' );
+						  }
+						  #>
+						  <div id="{{ tab_id }}"
+							  class="uptabs-tab-title uptabs-icon-{{ icon_position }} {{ active_class }}"
+							  aria-selected="{{ tab_count === active_tab ? 'true' : 'false' }}"
+							  data-tab="{{ tab_count }}"
+							  role="tab"
+							  aria-controls="uptabs-tab-content-{{ id_int }}{{ tab_count }}"
+							  tabindex="{{ tab_count === active_tab ? '0' : '-1' }}">
+							  <# if (icon_html.value) { #>
+								  <# if (icon_position==='top' || icon_position==='bottom' ) { #>
+									  <div class="uptabs-icon-wrapper uptabs-icon-wrapper-{{ icon_position }}">
+										  <span class="uptabs-tab-icon">{{{ icon_html.value }}}</span>
+										  <span class="uptabs-tab-title-text">{{{ item.uptabs_tab_title }}}</span>
+									  </div>
+									  <# } else { #>
+										  <div class="uptabs-tab-title-inner">
+											  <# if (icon_position==='left' ) { #>
+												  <span class="uptabs-tab-icon">{{{ icon_html.value }}}</span>
+												  <# } #>
+													  <span class="uptabs-tab-title-text">{{{ item.uptabs_tab_title }}}</span>
+													  <# if (icon_position==='right' ) { #>
+														  <span class="uptabs-tab-icon">{{{ icon_html.value }}}</span>
+														  <# } #>
+										  </div>
+										  <# } #>
+											  <# } else { #>
+												  <span class="uptabs-tab-title-text">{{{ item.uptabs_tab_title }}}</span>
+												  <# } #>
+						  </div>
+						  <# }); #>
+				  </div>
 
-							<div class="dstabify-tabs-wrapper" role="tablist">
-								<# _.each(settings.tabs, function(item, index) {
-									var tab_count=index + 1;
-									var tab_id='dstabify-tab-title-' + id_int + tab_count;
-									var active_class=tab_count===active_tab ? 'dstabify-active' : '' ;
-									var icon_html='' ;
-									var icon_position=item.tab_icon_position || 'left' ;
+				  <div class="uptabs-tabs-content-wrapper">
+					  <# _.each(settings.tabs, function(item, index) {
+						  var tab_count=index + 1;
+						  var tab_content_id='uptabs-tab-content-' + id_int + tab_count;
+						  var active_class=(tab_count===active_tab) ? 'uptabs-active' : '' ;
+						  var has_image=item.uptabs_tab_image && item.uptabs_tab_image.url;
+						  var btn_text=item.uptabs_tab_button_text || '' ;
+						  var btn_link=item.uptabs_tab_button_link || {};
+						  #>
+						  <div id="{{ tab_content_id }}"
+							  class="uptabs-tab-content elementor-repeater-item-{{ item._id }} {{ active_class }} image-position-{{ uptab_image_postion }} {{ has_image ? 'has-image' : 'no-image' }}"
+							  data-tab="{{ tab_count }}"
+							  role="tabpanel"
+							  aria-labelledby="uptabs-tab-title-{{ id_int }}{{ tab_count }}"
+							  <# if (tab_count !==active_tab) { #>hidden<# } #>>
+								  <div class="uptabs-card-content-wrapper">
+									  <div class="uptabs-card-left-section">
+										  <# if (item.uptabs_tab_heading) { #>
+											  <{{ heading_tag }} class="uptab-header">{{{ item.uptabs_tab_heading }}}</{{ heading_tag }}>
+											  <# } #>
 
-									if (item.tab_icon && item.tab_icon.value) {
-									icon_html=elementor.helpers.renderIcon(view, item.tab_icon, { 'aria-hidden' : true }, 'i' , 'object' );
-									}
-									#>
-									<div id="{{ tab_id }}"
-										class="dstabify-tab-title dstabify-icon-{{ icon_position }} {{ active_class }}"
-										aria-selected="{{ tab_count === active_tab ? 'true' : 'false' }}"
-										data-tab="{{ tab_count }}"
-										role="tab"
-										aria-controls="dstabify-tab-content-{{ id_int }}{{ tab_count }}"
-										tabindex="{{ tab_count === active_tab ? '0' : '-1' }}">
-										<# if (icon_html.value) { #>
-											<# if (icon_position==='top' || icon_position==='bottom' ) { #>
-												<div class="dstabify-icon-wrapper dstabify-icon-wrapper-{{ icon_position }}">
-													<span class="dstabify-tab-icon">{{{ icon_html.value }}}</span>
-													<span class="dstabify-tab-title-text">{{{ item.dstabify_tab_title }}}</span>
-												</div>
-												<# } else { #>
-													<div class="dstabify-tab-title-inner">
-														<# if (icon_position==='left' ) { #>
-															<span class="dstabify-tab-icon">{{{ icon_html.value }}}</span>
-															<# } #>
-																<span class="dstabify-tab-title-text">{{{ item.dstabify_tab_title }}}</span>
-																<# if (icon_position==='right' ) { #>
-																	<span class="dstabify-tab-icon">{{{ icon_html.value }}}</span>
-																	<# } #>
-													</div>
-													<# } #>
-														<# } else { #>
-															<span class="dstabify-tab-title-text">{{{ item.dstabify_tab_title }}}</span>
-															<# } #>
-									</div>
-									<# }); #>
-							</div>
+												  <div class="uptab-description">
+													  <p class="uptabs-card-description">{{{ item.uptabs_tab_description }}}</p>
+												  </div>
 
-							<# if (position !=='horizontal-bottom' ) { #>
-								<div class="dstabify-tabs-content-wrapper">
-									<# _.each(settings.tabs, function(item, index) {
-										var tab_count=index + 1;
-										var tab_content_id='dstabify-tab-content-' + id_int + tab_count;
-										var active_class=tab_count===active_tab ? 'dstabify-active' : '' ;
-										var image_url=item.dstabify_tab_image && item.dstabify_tab_image.url ? item.dstabify_tab_image.url : '' ;
-										var has_image=image_url !=='' ;
-										var btn_text=item.dstabify_tab_button_text || '' ;
-										var btn_link=item.dstabify_tab_button_link || {};
-										var image_position=item.image_position || 'left' ;
-										var heading_tag=item.dstabify_tab_heading_tag ? item.dstabify_tab_heading_tag : 'h2' ;
-										#>
-										<div id="{{ tab_content_id }}"
-											class="dstabify-tab-content elementor-repeater-item-{{ item._id }} {{ active_class }} image-position-{{ image_position }} {{ has_image ? 'has-image' : 'no-image' }}"
-											data-tab="{{ tab_count }}"
-											role="tabpanel"
-											aria-labelledby="dstabify-tab-title-{{ id_int }}{{ tab_count }}"
-											<# if (tab_count !==active_tab) { #>hidden<# } #>>
-												<div class="dstabify-card-content-wrapper">
-													<div class="dstabify-card-left-section">
-														<# if (item.dstabify_tab_heading) { #>
-															<{{ heading_tag }} class="dstabify-card-heading">{{{ item.dstabify_tab_heading }}}</{{ heading_tag }}>
-															<# } #>
+												  <# if (btn_text) { #>
+													  <div class="uptab-card-button-wrapper">
+														  <a class="uptabs-card-button"
+															  href="{{ btn_link.url }}"
+															  <# if (btn_link.is_external) { #>target="_blank"<# } #>
+																  <# if (btn_link.nofollow) { #>rel="nofollow"<# } #>>
+																		  {{{ btn_text }}}
+														  </a>
+													  </div>
+													  <# } #>
+									  </div>
 
-																<p class="dstabify-card-description">{{{ item.dstabify_tab_description }}}</p>
-																<# if (btn_text) { #>
-																	<a class="dstabify-card-button" href="{{ btn_link.url }}"
-																		<# if (btn_link.is_external) { #>target="_blank"<# } #>
-																			<# if (btn_link.nofollow) { #>rel="nofollow"<# } #>>
-																					{{{ btn_text }}}
-																	</a>
-																	<# } #>
-													</div>
-
-													<# if (has_image) { #>
-														<div class="dstabify-card-image">
-															<#
-																var image={
-																id: item.dstabify_tab_image.id,
-																url: item.dstabify_tab_image.url,
-																size: item.thumbnail_size,
-																dimension: item.thumbnail_custom_dimension,
-																model: view.getEditModel()
-																};
-																var image_url=elementor.imagesManager.getImageUrl(image);
-																#>
-																<img src="{{ image_url }}" alt="{{ item.dstabify_tab_heading }}">
-														</div>
-														<# } #>
-												</div>
-										</div>
-										<# }); #>
-								</div>
-								<# } #>
-				</div>
-			</div>
-	<?php
-	}
+									  <# if (has_image) { #>
+										  <div class="uptabs-card-image">
+											  <#
+												  var image={
+												  id: item.uptabs_tab_image.id,
+												  url: item.uptabs_tab_image.url,
+												  size: settings.thumbnail_size,
+												  dimension: settings.thumbnail_custom_dimension,
+												  model: view.getEditModel()
+												  };
+												  var image_url=elementor.imagesManager.getImageUrl(image);
+												  #>
+												  <img src="{{ image_url }}" alt="{{ item.uptabs_tab_title }}">
+										  </div>
+										  <# } #>
+								  </div>
+						  </div>
+						  <# }); #>
+				  </div>
+			  </div>
+		  </div>
+  <?php
+  }
 
 
 

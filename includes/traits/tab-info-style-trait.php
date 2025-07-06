@@ -20,7 +20,7 @@ trait TabInfoStyleTrait
 		// STYLE TAB: HEADING
 		// ===========================================
 		$this->start_controls_section(
-			'section_heading_style',
+			'uptabs_section_heading_style',
 			[
 				'label' => esc_html__('Heading', 'uptabs'),
 				'tab' => Controls_Manager::TAB_STYLE,
@@ -44,30 +44,30 @@ trait TabInfoStyleTrait
 		);
 
 		$this->add_control(
-			'heading_color',
+			'uptabs_heading_color',
 			[
 				'label' => esc_html__('Color', 'uptabs'),
 				'type' => Controls_Manager::COLOR,
-				'selectors' => ['{{WRAPPER}} .uptabs-card-heading' => 'color: {{VALUE}};'],
+				'selectors' => ['{{WRAPPER}} .uptabs-header' => 'color: {{VALUE}};'],
 			]
 		);
 
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
-				'name' => 'heading_typography',
-				'selector' => '{{WRAPPER}} .uptabs-card-heading',
+				'name' => 'uptabs_heading_typography',
+				'selector' => '{{WRAPPER}} .uptabs-header',
 			]
 		);
 
 		$this->add_responsive_control(
-			'heading_spacing',
+			'uptabs_heading_spacing',
 			[
 				'label' => esc_html__('Spacing', 'uptabs'),
 				'type' => Controls_Manager::SLIDER,
 				'range' => ['px' => ['min' => 0, 'max' => 500]],
 				'selectors' => [
-					'{{WRAPPER}} .uptab-header' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .uptabs-header' => 'margin-bottom: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
@@ -78,7 +78,7 @@ trait TabInfoStyleTrait
 		// STYLE TAB: DESCRIPTION
 		// ===========================================
 		$this->start_controls_section(
-			'section_description_style',
+			'uptabs_section_description_style',
 			[
 				'label' => esc_html__('Description', 'uptabs'),
 				'tab' => Controls_Manager::TAB_STYLE,
@@ -86,7 +86,7 @@ trait TabInfoStyleTrait
 		);
 
 		$this->add_control(
-			'description_color',
+			'uptabs_description_color',
 			[
 				'label' => esc_html__('Color', 'uptabs'),
 				'type' => Controls_Manager::COLOR,
@@ -97,13 +97,13 @@ trait TabInfoStyleTrait
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
-				'name' => 'description_typography',
+				'name' => 'uptabs_description_typography',
 				'selector' => '{{WRAPPER}} .uptabs-card-description',
 			]
 		);
 
 		$this->add_responsive_control(
-			'description_spacing',
+			'uptabs_description_spacing',
 			[
 				'label' => esc_html__('Spacing', 'uptabs'),
 				'type' => Controls_Manager::SLIDER,
@@ -121,7 +121,7 @@ trait TabInfoStyleTrait
 		// STYLE TAB: BUTTON
 		// ===========================================
 		$this->start_controls_section(
-			'section_button_style',
+			'uptabs_section_button_style',
 			[
 				'label' => esc_html__('Button', 'uptabs'),
 				'tab' => Controls_Manager::TAB_STYLE,
@@ -138,7 +138,7 @@ trait TabInfoStyleTrait
 		);
 
 		$this->add_control(
-			'button_text_color',
+			'uptabs_button_text_color',
 			[
 				'label' => esc_html__('Text Color', 'uptabs'),
 				'type' => Controls_Manager::COLOR,
@@ -147,7 +147,7 @@ trait TabInfoStyleTrait
 		);
 
 		$this->add_control(
-			'button_bg_color',
+			'uptabs_button_bg_color',
 			[
 				'label' => esc_html__('Background Color', 'uptabs'),
 				'type' => Controls_Manager::COLOR,
@@ -158,14 +158,14 @@ trait TabInfoStyleTrait
 		$this->end_controls_tab();
 
 		$this->start_controls_tab(
-			'tab_button_hover',
+			'uptabs_tab_button_hover',
 			[
 				'label' => esc_html__('Hover', 'uptabs'),
 			]
 		);
 
 		$this->add_control(
-			'button_hover_text_color',
+			'uptabs_button_hover_text_color',
 			[
 				'label' => esc_html__('Text Color', 'uptabs'),
 				'type' => Controls_Manager::COLOR,
@@ -174,7 +174,7 @@ trait TabInfoStyleTrait
 		);
 
 		$this->add_control(
-			'button_hover_bg_color',
+			'uptabs_button_hover_bg_color',
 			[
 				'label' => esc_html__('Background Color', 'uptabs'),
 				'type' => Controls_Manager::COLOR,
@@ -183,7 +183,7 @@ trait TabInfoStyleTrait
 		);
 
 		$this->add_control(
-			'button_hover_border_color',
+			'uptabs_button_hover_border_color',
 			[
 				'label' => esc_html__('Border Color', 'uptabs'),
 				'type' => Controls_Manager::COLOR,
@@ -198,7 +198,7 @@ trait TabInfoStyleTrait
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
-				'name' => 'button_typography',
+				'name' => 'uptabs_button_typography',
 				'selector' => '{{WRAPPER}} .uptabs-card-button',
 			]
 		);
@@ -206,13 +206,13 @@ trait TabInfoStyleTrait
 		$this->add_group_control(
 			Group_Control_Border::get_type(),
 			[
-				'name' => 'button_border',
+				'name' => 'uptabs_button_border',
 				'selector' => '{{WRAPPER}} .uptabs-card-button',
 			]
 		);
 
 		$this->add_control(
-			'button_border_radius',
+			'uptabs_button_border_radius',
 			[
 				'label' => esc_html__('Border Radius', 'uptabs'),
 				'type' => Controls_Manager::DIMENSIONS,
@@ -224,7 +224,7 @@ trait TabInfoStyleTrait
 		);
 
 		$this->add_responsive_control(
-			'button_padding',
+			'uptabs_button_padding',
 			[
 				'label' => esc_html__('Padding', 'uptabs'),
 				'type' => Controls_Manager::DIMENSIONS,
@@ -236,7 +236,7 @@ trait TabInfoStyleTrait
 		);
 
 		$this->add_responsive_control(
-			'button_margin',
+			'uptabs_button_margin',
 			[
 				'label' => esc_html__('Margin', 'uptabs'),
 				'type' => Controls_Manager::DIMENSIONS,
@@ -253,7 +253,7 @@ trait TabInfoStyleTrait
 		// STYLE TAB: IMAGE
 		// ===========================================
 		$this->start_controls_section(
-			'section_image_style',
+			'uptabs_section_image_style',
 			[
 				'label' => esc_html__('Image', 'uptabs'),
 				'tab' => Controls_Manager::TAB_STYLE,
@@ -262,7 +262,7 @@ trait TabInfoStyleTrait
 
 
 		$this->add_control(
-			'image_position',
+			'uptabs_image_postion',
 			[
 				'label' => esc_html__('Image Position', 'uptabs'),
 				'type' => \Elementor\Controls_Manager::CHOOSE,
@@ -275,12 +275,12 @@ trait TabInfoStyleTrait
 				'default' => 'left',
 				'toggle' => true,
 
-				// 'prefix_class' => 'image-position-'
+				// 'prefix_class' => 'uptabs-image-position-'
 			]
 		);
 
 		$this->add_responsive_control(
-			'image_width',
+			'uptabs_image_width',
 			[
 				'label' => esc_html__('Image Width', 'uptabs'),
 				'type' => Controls_Manager::SLIDER,
@@ -297,7 +297,7 @@ trait TabInfoStyleTrait
 					'size' => 40,
 					'unit' => '%',
 				],
-			
+
 				'selectors' => [
 					'{{WRAPPER}} .uptabs-card-image' => 'width: {{SIZE}}{{UNIT}};'
 				],
@@ -305,7 +305,7 @@ trait TabInfoStyleTrait
 		);
 
 		$this->add_control(
-			'image_border_radius',
+			'uptabs_image_border_radius',
 			[
 				'label' => esc_html__('Border Radius', 'uptabs'),
 				'type' => Controls_Manager::DIMENSIONS,
@@ -317,7 +317,7 @@ trait TabInfoStyleTrait
 		);
 
 		$this->add_control(
-			'image_border_radius',
+			'uptabs_image_border_radius',
 			[
 				'label' => esc_html__('Border Radius', 'uptabs'),
 				'type' => Controls_Manager::DIMENSIONS,
@@ -337,16 +337,16 @@ trait TabInfoStyleTrait
 		);
 
 		$this->add_responsive_control(
-			'image_spacing',
+			'uptabs_image_spacing',
 			[
 				'label' => esc_html__('Spacing', 'uptabs'),
 				'type' => Controls_Manager::SLIDER,
 				'range' => ['px' => ['min' => 0, 'max' => 100]],
 				'selectors' => [
-					'{{WRAPPER}} .image-position-left .uptabs-card-image' => 'margin-left: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .image-position-right .uptabs-card-image' => 'margin-right: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .image-position-top .uptabs-card-image' => 'margin-top: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .image-position-bottom .uptabs-card-image' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .uptabs-image-position-left .uptabs-card-image' => 'margin-left: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .uptabs-image-position-right .uptabs-card-image' => 'margin-right: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .uptabs-image-position-top .uptabs-card-image' => 'margin-top: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .uptabs-image-position-bottom .uptabs-card-image' => 'margin-bottom: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);

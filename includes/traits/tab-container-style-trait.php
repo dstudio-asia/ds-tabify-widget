@@ -10,7 +10,7 @@ trait TabContainerStyleTrait
 	function uptabs_container_style($control){
 		
 		$control->add_responsive_control(
-			'tab_gap',
+			'uptabs_tab_gap',
 			[
 				'label' => esc_html__('Gap Between Tabs', 'uptabs'),
 				'type' => Controls_Manager::SLIDER,
@@ -35,7 +35,7 @@ trait TabContainerStyleTrait
 		);
 
 		$control->add_responsive_control(
-			'content_spacing',
+			'uptabs_content_spacing',
 			[
 				'label' => esc_html__('Distance from content', 'uptabs'),
 				'type' => Controls_Manager::SLIDER,

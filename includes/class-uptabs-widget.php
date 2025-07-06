@@ -1,16 +1,8 @@
 <?php
 
 use Elementor\Controls_Manager;
+use Elementor\Icons_Manager;
 use Elementor\Plugin;
-use Elementor\Group_Control_Text_Stroke;
-use Elementor\Group_Control_Text_Shadow;
-use Elementor\Group_Control_Typography;
-use Elementor\Group_Control_Image_Size;
-use Elementor\Group_Control_Border;
-use Elementor\Group_Control_Box_Shadow;
-
-use Elementor\Core\Kits\Documents\Tabs\Global_Colors;
-use Elementor\Core\Kits\Documents\Tabs\Global_Typography;
 
 if (! defined('ABSPATH')) {
 	exit; // Exit if accessed directly.
@@ -51,7 +43,7 @@ class UpTabs_Widget extends \Elementor\Widget_Base
 
 
 		$this->start_controls_section(
-			'section_tabs',
+			'uptabs_section_tabs',
 			[
 				'label' => esc_html__('Tabs', 'uptabs'),
 			]
@@ -60,7 +52,7 @@ class UpTabs_Widget extends \Elementor\Widget_Base
 		$this->uptabs_repeater_tabs($repeater);
 
 		$this->add_control(
-			'tabs',
+			'uptabs_tabs',
 			[
 				'label' => esc_html__('Tabs Items', 'uptabs'),
 				'type' => Controls_Manager::REPEATER,
@@ -158,7 +150,7 @@ class UpTabs_Widget extends \Elementor\Widget_Base
 				'selectors' => [
 					// '{{WRAPPER}}.uptabs-position-row .uptabs-tabs-inner > .uptabs-tabs-wrapper' => 'width: {{SIZE}}{{UNIT}}; flex: 0 0 {{SIZE}}{{UNIT}};',
 					// '{{WRAPPER}}.uptabs-position-row-reverse .uptabs-tabs-inner > .uptabs-tabs-wrapper' => 'width: {{SIZE}}{{UNIT}}; flex: 0 0 {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .uptabs-position-row .uptabs-tabs-wrapper, .uptabs-position-row-reverse .uptabs-tabs-wrapper' => 'width: {{SIZE}}{{UNIT}}'
+					'{{WRAPPER}} .uptabs-position-row .uptabs-tabs-wrapper, .uptabs-position-row-reverse .uptabs-tabs-wrapper' => 'flex-basis: {{SIZE}}{{UNIT}}'
 				],
 				'condition' => ['uptabs_tabs_position' => ['row', 'row-reverse']],
 			]
@@ -187,7 +179,7 @@ class UpTabs_Widget extends \Elementor\Widget_Base
 		// STYLE TAB: TABS CONTAINER
 		// ===========================================
 		$this->start_controls_section(
-			'section_tab_container_style',
+			'uptabs_section_tab_container_style',
 			[
 				'label' => esc_html__('Tabs Container', 'uptabs'),
 				'tab' => Controls_Manager::TAB_STYLE,
@@ -202,7 +194,7 @@ class UpTabs_Widget extends \Elementor\Widget_Base
 		// STYLE TAB: TAB TITLE
 		// ===========================================
 		$this->start_controls_section(
-			'section_tab_title_style',
+			'uptabs_section_tab_title_style',
 			[
 				'label' => esc_html__('Tab Title', 'uptabs'),
 				'tab' => Controls_Manager::TAB_STYLE,
@@ -219,7 +211,7 @@ class UpTabs_Widget extends \Elementor\Widget_Base
 		// STYLE TAB: TAB ICON
 		// ===========================================
 		$this->start_controls_section(
-			'section_tab_icon_style',
+			'uptabs_section_tab_icon_style',
 			[
 				'label' => esc_html__('Tab Icon', 'uptabs'),
 				'tab' => Controls_Manager::TAB_STYLE,
@@ -234,7 +226,7 @@ class UpTabs_Widget extends \Elementor\Widget_Base
 		// STYLE TAB: TAB CONTENT
 		// ===========================================
 		$this->start_controls_section(
-			'section_tab_content_style',
+			'uptabs_section_tab_content_style',
 			[
 				'label' => esc_html__('Tab Content', 'uptabs'),
 				'tab' => Controls_Manager::TAB_STYLE,
@@ -263,35 +255,41 @@ class UpTabs_Widget extends \Elementor\Widget_Base
 	protected function render()
 	{
 		$settings = $this->get_settings_for_display();
-		$tabs = $settings['tabs'];
+		$tabs = $settings['uptabs_tabs'];
+
+
+		// echo "<pre>";
+		// print_r($tabs);
+		// echo "</pre>";
+		// die;
 
 		// Get active tab - handle both frontend and editor
 		$active_tab = 1;
-		if (\Elementor\Plugin::$instance->editor->is_edit_mode()) {
+		if (Plugin::$instance->editor->is_edit_mode()) {
 			$widget_id = $this->get_id();
 			$active_tab = isset($_SESSION['uptabs_active_tab'][$widget_id]) ?
-				$_SESSION['uptabs_active_tab'][$widget_id] : (!empty($settings['active_tab']) ? intval($settings['active_tab']) : 1);
+				$_SESSION['uptabs_active_tab'][$widget_id] : (!empty($settings['uptabs_active_tab']) ? intval($settings['uptabs_active_tab']) : 1);
 		} else {
-			$active_tab = !empty($settings['active_tab']) ? intval($settings['active_tab']) : 1;
+			$active_tab = !empty($settings['uptabs_active_tab']) ? intval($settings['uptabs_active_tab']) : 1;
 		}
 
 		$position = !empty($settings['uptabs_tabs_position']) ? $settings['uptabs_tabs_position'] : 'column';
 		$id_int = substr($this->get_id_int(), 0, 3);
 
 
-			$this->add_render_attribute('uptabs-tabs', [
+		$this->add_render_attribute('uptabs-tabs', [
 
-				// 'class' => ['uptabs-tabs', 'uptabs-tabs-view-' . $position],
-				'class' => ['uptabs-tabs', 'uptabs-position-' . $position],
-				'data-active-tab' => $active_tab,
-			]);
+			// 'class' => ['uptabs-tabs', 'uptabs-tabs-view-' . $position],
+			'class' => ['uptabs-tabs', 'uptabs-position-' . $position],
+			'data-active-tab' => $active_tab,
+		]);
 
-			// $this->add_render_attribute('uptabs-tabs', [
-			// 	'class' => ['uptabs-tabs'],
-			// 	// 'data-position' => $position, // Add as data attribute
-			// 	'data-active-tab' => $active_tab,
-			// ]);
-		?>
+		// $this->add_render_attribute('uptabs-tabs', [
+		// 	'class' => ['uptabs-tabs'],
+		// 	// 'data-position' => $position, // Add as data attribute
+		// 	'data-active-tab' => $active_tab,
+		// ]);
+?>
 		<div <?php $this->print_render_attribute_string('uptabs-tabs'); ?>>
 			<div class="uptabs-tabs-inner">
 				<div class="uptabs-tabs-wrapper" role="tablist">
@@ -300,11 +298,11 @@ class UpTabs_Widget extends \Elementor\Widget_Base
 						$tab_id = 'uptabs-tab-title-' . $id_int . $tab_count;
 						$active_class = $tab_count === $active_tab ? 'uptabs-active' : '';
 						$icon_html = '';
-						$icon_position = $settings['tab_icon_position'] ?? 'left';
+						$icon_position = $settings['uptabs_tab_icon_position'] ?? 'left';
 
-						if (!empty($item['tab_icon']['value'])) {
+						if (!empty($item['uptabs_tab_icon']['value'])) {
 							ob_start();
-							\Elementor\Icons_Manager::render_icon($item['tab_icon'], ['aria-hidden' => 'true']);
+							Icons_Manager::render_icon($item['uptabs_tab_icon'], ['aria-hidden' => 'true']);
 							$icon_html = ob_get_clean();
 						}
 
@@ -337,7 +335,7 @@ class UpTabs_Widget extends \Elementor\Widget_Base
 									</div>
 								<?php endif; ?>
 							<?php else : ?>
-								<span class="uptabs-tab-title-text"><?php echo esc_html($item['uptabs_tab_title']); ?></span>
+								<span class="uptabs-tab-title-text"><?php echo esc_html($item['uptabs_tab_title'] ?? null); ?></span>
 							<?php endif; ?>
 						</div>
 					<?php endforeach; ?>
@@ -360,7 +358,7 @@ class UpTabs_Widget extends \Elementor\Widget_Base
 	{
 
 		$heading_tag = 	!empty($settings['uptabs_tab_heading_tag']) ? $settings['uptabs_tab_heading_tag'] : 'h2';
-		$image_position = $settings['image_position'] ?? 'left';
+		$uptabs_image_postion = $settings['uptabs_image_postion'] ?? 'left';
 		foreach ($tabs as $index => $item) :
 			$tab_count = $index + 1;
 			$tab_content_id = 'uptabs-tab-content-' . $id_int . $tab_count;
@@ -378,7 +376,7 @@ class UpTabs_Widget extends \Elementor\Widget_Base
 					'uptabs-tab-content',
 					'elementor-repeater-item-' . $item['_id'],
 					$active_class,
-					'image-position-' . esc_attr($image_position),
+					'uptabs-image-position-' . esc_attr($uptabs_image_postion),
 					$has_image ? 'has-image' : 'no-image'
 				],
 				'data-tab' => $tab_count,
@@ -399,7 +397,7 @@ class UpTabs_Widget extends \Elementor\Widget_Base
 
 							$heading_tag = !empty($heading_tag) ? $heading_tag : 'h3'; // Default fallback
 							printf(
-								'<%1$s class="uptab-header">%2$s</%1$s>',
+								'<%1$s class="uptabs-header">%2$s</%1$s>',
 								tag_escape($heading_tag),
 								esc_html($item['uptabs_tab_heading'])
 							);
@@ -407,7 +405,7 @@ class UpTabs_Widget extends \Elementor\Widget_Base
 						?>
 
 
-						<div class="uptab-description">
+						<div class="uptabs-description">
 
 
 							<p class="uptabs-card-description"><?php echo esc_html($item['uptabs_tab_description']); ?></p>
@@ -428,125 +426,6 @@ class UpTabs_Widget extends \Elementor\Widget_Base
 					<?php endif; ?>
 				</div>
 			</div>
-		<?php endforeach;
-	}
-
-
-
-	protected function content_template()
-	{
-		?>
-		<#
-			var id_int=Math.random().toString(36).substr(2, 5);
-			var active_tab=settings.active_tab ? parseInt(settings.active_tab) : 1;
-			var position=settings.uptabs_tabs_position || 'column' ;
-			var heading_tag=settings.uptabs_tab_heading_tag || 'h2' ;
-			var icon_position=settings.tab_icon_position || 'left' ;
-			var image_position=settings.image_position || 'left' ;
-			#>
-
-			<div class="uptabs-tabs uptabs-position-{{ position }}" data-active-tab="{{ active_tab }}">
-				<div class="uptabs-tabs-inner">
-					<div class="uptabs-tabs-wrapper" role="tablist">
-						<# _.each(settings.tabs, function(item, index) {
-							var tab_count=index + 1;
-							var tab_id='uptabs-tab-title-' + id_int + tab_count;
-							var active_class=(tab_count===active_tab) ? 'uptabs-active' : '' ;
-							var icon_html='' ;
-
-							if (item.tab_icon && item.tab_icon.value) {
-							icon_html=elementor.helpers.renderIcon(view, item.tab_icon, { 'aria-hidden' : true }, 'i' , 'object' );
-							}
-							#>
-							<div id="{{ tab_id }}"
-								class="uptabs-tab-title uptabs-icon-{{ icon_position }} {{ active_class }}"
-								aria-selected="{{ tab_count === active_tab ? 'true' : 'false' }}"
-								data-tab="{{ tab_count }}"
-								role="tab"
-								aria-controls="uptabs-tab-content-{{ id_int }}{{ tab_count }}"
-								tabindex="{{ tab_count === active_tab ? '0' : '-1' }}">
-								<# if (icon_html.value) { #>
-									<# if (icon_position==='top' || icon_position==='bottom' ) { #>
-										<div class="uptabs-icon-wrapper uptabs-icon-wrapper-{{ icon_position }}">
-											<span class="uptabs-tab-icon">{{{ icon_html.value }}}</span>
-											<span class="uptabs-tab-title-text">{{{ item.uptabs_tab_title }}}</span>
-										</div>
-										<# } else { #>
-											<div class="uptabs-tab-title-inner">
-												<# if (icon_position==='left' ) { #>
-													<span class="uptabs-tab-icon">{{{ icon_html.value }}}</span>
-													<# } #>
-														<span class="uptabs-tab-title-text">{{{ item.uptabs_tab_title }}}</span>
-														<# if (icon_position==='right' ) { #>
-															<span class="uptabs-tab-icon">{{{ icon_html.value }}}</span>
-															<# } #>
-											</div>
-											<# } #>
-												<# } else { #>
-													<span class="uptabs-tab-title-text">{{{ item.uptabs_tab_title }}}</span>
-													<# } #>
-							</div>
-							<# }); #>
-					</div>
-
-					<div class="uptabs-tabs-content-wrapper">
-						<# _.each(settings.tabs, function(item, index) {
-							var tab_count=index + 1;
-							var tab_content_id='uptabs-tab-content-' + id_int + tab_count;
-							var active_class=(tab_count===active_tab) ? 'uptabs-active' : '' ;
-							var has_image=item.uptabs_tab_image && item.uptabs_tab_image.url;
-							var btn_text=item.uptabs_tab_button_text || '' ;
-							var btn_link=item.uptabs_tab_button_link || {};
-							#>
-							<div id="{{ tab_content_id }}"
-								class="uptabs-tab-content elementor-repeater-item-{{ item._id }} {{ active_class }} image-position-{{ image_position }} {{ has_image ? 'has-image' : 'no-image' }}"
-								data-tab="{{ tab_count }}"
-								role="tabpanel"
-								aria-labelledby="uptabs-tab-title-{{ id_int }}{{ tab_count }}"
-								<# if (tab_count !==active_tab) { #>hidden<# } #>>
-									<div class="uptabs-card-content-wrapper">
-										<div class="uptabs-card-left-section">
-											<# if (item.uptabs_tab_heading) { #>
-												<{{ heading_tag }} class="uptab-header">{{{ item.uptabs_tab_heading }}}</{{ heading_tag }}>
-												<# } #>
-
-													<div class="uptab-description">
-														<p class="uptabs-card-description">{{{ item.uptabs_tab_description }}}</p>
-													</div>
-
-													<# if (btn_text) { #>
-														<div class="uptab-card-button-wrapper">
-															<a class="uptabs-card-button"
-																href="{{ btn_link.url }}"
-																<# if (btn_link.is_external) { #>target="_blank"<# } #>
-																	<# if (btn_link.nofollow) { #>rel="nofollow"<# } #>>
-																			{{{ btn_text }}}
-															</a>
-														</div>
-														<# } #>
-										</div>
-
-										<# if (has_image) { #>
-											<div class="uptabs-card-image">
-												<#
-													var image={
-													id: item.uptabs_tab_image.id,
-													url: item.uptabs_tab_image.url,
-													size: settings.thumbnail_size,
-													dimension: settings.thumbnail_custom_dimension,
-													model: view.getEditModel()
-													};
-													var image_url=elementor.imagesManager.getImageUrl(image);
-													#>
-													<img src="{{ image_url }}" alt="{{ item.uptabs_tab_title }}">
-											</div>
-											<# } #>
-									</div>
-							</div>
-							<# }); #>
-					</div>
-				</div>
-			</div>
-	<?php
+<?php endforeach;
 	}
 }

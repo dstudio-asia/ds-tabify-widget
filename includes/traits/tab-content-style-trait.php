@@ -7,13 +7,15 @@ use Elementor\Group_Control_Border;
 
 use Elementor\Group_Control_Text_Shadow;
 use Elementor\Group_Control_Box_Shadow;
+
 trait TabContentStyleTrait
 
 {
-	function uptabs_tab_content_style($control){
+	function uptabs_tab_content_style($control)
+	{
 
 		$control->add_responsive_control(
-			'content_align',
+			'uptabs_content_align',
 			[
 				'label' => esc_html__('Alignment', 'elementor-addon'),
 				'type' => Controls_Manager::CHOOSE,
@@ -33,38 +35,38 @@ trait TabContentStyleTrait
 				],
 				'default' => 'center',
 				'selectors' => [
-				
+
 					'{{WRAPPER}} .uptabs-card-left-section' => 'align-items: {{VALUE}};',
 
 					// Conditional mapping for flex values
-					'{{WRAPPER}}.elementor-align-left .image-position-bottom .uptabs-card-content-wrapper' => 'align-items: flex-start;',
-					'{{WRAPPER}}.elementor-align-center .image-position-bottom .uptabs-card-content-wrapper' => 'align-items: center;',
-					'{{WRAPPER}}.elementor-align-right .image-position-bottom .uptabs-card-content-wrapper' => 'align-items: flex-end;',
+					'{{WRAPPER}}.elementor-align-left .uptabs-image-position-bottom .uptabs-card-content-wrapper' => 'align-items: flex-start;',
+					'{{WRAPPER}}.elementor-align-center .uptabs-image-position-bottom .uptabs-card-content-wrapper' => 'align-items: center;',
+					'{{WRAPPER}}.elementor-align-right .uptabs-image-position-bottom .uptabs-card-content-wrapper' => 'align-items: flex-end;',
 
-					'{{WRAPPER}}.elementor-align-left .image-position-top .uptabs-card-content-wrapper' => 'align-items: flex-start;',
-					'{{WRAPPER}}.elementor-align-center .image-position-top .uptabs-card-content-wrapper' => 'align-items: center;',
-					'{{WRAPPER}}.elementor-align-right .image-position-top .uptabs-card-content-wrapper' => 'align-items: flex-end;',
+					'{{WRAPPER}}.elementor-align-left .uptabs-image-position-top .uptabs-card-content-wrapper' => 'align-items: flex-start;',
+					'{{WRAPPER}}.elementor-align-center .uptabs-image-position-top .uptabs-card-content-wrapper' => 'align-items: center;',
+					'{{WRAPPER}}.elementor-align-right .uptabs-image-position-top .uptabs-card-content-wrapper' => 'align-items: flex-end;',
 
 					// For left/right positions
-					'{{WRAPPER}}.elementor-align-left .image-position-left .uptabs-card-content-wrapper' => 'justify-content: flex-start;',
-					'{{WRAPPER}}.elementor-align-center .image-position-left .uptabs-card-content-wrapper' => 'justify-content: center;',
-					'{{WRAPPER}}.elementor-align-right .image-position-left .uptabs-card-content-wrapper' => 'justify-content: flex-end;',
+					'{{WRAPPER}}.elementor-align-left .uptabs-image-position-left .uptabs-card-content-wrapper' => 'justify-content: flex-start;',
+					'{{WRAPPER}}.elementor-align-center .uptabs-image-position-left .uptabs-card-content-wrapper' => 'justify-content: center;',
+					'{{WRAPPER}}.elementor-align-right .uptabs-image-position-left .uptabs-card-content-wrapper' => 'justify-content: flex-end;',
 
-					'{{WRAPPER}}.elementor-align-left .image-position-right .uptabs-card-content-wrapper' => 'justify-content: flex-start;',
-					'{{WRAPPER}}.elementor-align-center .image-position-right .uptabs-card-content-wrapper' => 'justify-content: center;',
-					'{{WRAPPER}}.elementor-align-right .image-position-right .uptabs-card-content-wrapper' => 'justify-content: flex-end;',
+					'{{WRAPPER}}.elementor-align-left .uptabs-image-position-right .uptabs-card-content-wrapper' => 'justify-content: flex-start;',
+					'{{WRAPPER}}.elementor-align-center .uptabs-image-position-right .uptabs-card-content-wrapper' => 'justify-content: center;',
+					'{{WRAPPER}}.elementor-align-right .uptabs-image-position-right .uptabs-card-content-wrapper' => 'justify-content: flex-end;',
 				],
 				'prefix_class' => 'elementor-align-',
 			]
 		);
 
-		$this->add_responsive_control(
-			'content_vertical_alignment',
+		$this->add_control(
+			'uptabs_content_vertical_alignment',
 			[
 				'label' => esc_html__('Vertical Align (Content)', 'uptabs'),
 				'type' => \Elementor\Controls_Manager::CHOOSE,
 				'options' => [
-					'flex-start' => [
+					'start' => [
 						'title' => esc_html__('Top', 'uptabs'),
 						'icon' => 'eicon-v-align-top',
 					],
@@ -72,15 +74,20 @@ trait TabContentStyleTrait
 						'title' => esc_html__('Center', 'uptabs'),
 						'icon' => 'eicon-v-align-middle',
 					],
-					'flex-end' => [
+					'end' => [
 						'title' => esc_html__('Bottom', 'uptabs'),
 						'icon' => 'eicon-v-align-bottom',
 					],
 				],
+				'condition' => [
+					'uptabs_image_postion!' => ['left', 'right'],
+				],
 				'default' => 'flex-start',
 				'selectors' => [
-					'{{WRAPPER}} .uptabs-card-left-section' => 'justify-content: {{VALUE}};',
+					'{{WRAPPER}} .uptabs-card-content-wrapper' => 'justify-content: {{VALUE}};',
+					'{{WRAPPER}} .uptabs-image-position-left .uptabs-card-content-wrapper' => 'align-items: {{VALUE}};',
 				],
+
 				'separator' => 'before',
 			]
 		);
@@ -89,7 +96,7 @@ trait TabContentStyleTrait
 
 
 		$control->add_control(
-			'content_bg_color',
+			'uptabs_content_bg_color',
 			[
 				'label' => esc_html__('Background Color', 'uptabs'),
 				'type' => Controls_Manager::COLOR,
@@ -102,7 +109,7 @@ trait TabContentStyleTrait
 		$control->add_group_control(
 			Group_Control_Text_Shadow::get_type(),
 			[
-				'name' => 'content_shadow',
+				'name' => 'uptabs_content_shadow',
 				'selector' => '{{WRAPPER}} .uptabs-tab-content',
 			]
 		);
@@ -112,7 +119,7 @@ trait TabContentStyleTrait
 		$control->add_group_control(
 			Group_Control_Border::get_type(),
 			[
-				'name' => 'content_border',
+				'name' => 'uptabs_content_border',
 				'label' => __('Content Border', 'uptabs'),
 				'selector' => '{{WRAPPER}} .uptabs-tab-content',
 				'fields_options' => [
@@ -136,7 +143,7 @@ trait TabContentStyleTrait
 		);
 
 		$control->add_control(
-			'content_border_radius',
+			'uptabs_content_border_radius',
 			[
 				'label' => esc_html__('Border Radius', 'uptabs'),
 				'type' => Controls_Manager::DIMENSIONS,
@@ -148,7 +155,7 @@ trait TabContentStyleTrait
 		);
 
 		$control->add_responsive_control(
-			'content_padding',
+			'uptabs_content_padding',
 			[
 				'label' => esc_html__('Padding', 'uptabs'),
 				'type' => Controls_Manager::DIMENSIONS,
@@ -159,7 +166,7 @@ trait TabContentStyleTrait
 					'bottom' => '20',
 					'left' => '20',
 					'unit' => 'px',
-					'isLinked' => true, 
+					'isLinked' => true,
 				],
 				'selectors' => [
 					'{{WRAPPER}} .uptabs-tab-content' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
@@ -170,7 +177,7 @@ trait TabContentStyleTrait
 		$control->add_group_control(
 			Group_Control_Box_Shadow::get_type(),
 			[
-				'name' => 'content_box_shadow',
+				'name' => 'uptabs_content_box_shadow',
 				'selector' => '{{WRAPPER}} .uptabs-tab-content',
 			]
 		);
