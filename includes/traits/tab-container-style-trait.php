@@ -39,8 +39,13 @@ trait TabContainerStyleTrait
 			[
 				'label' => esc_html__('Distance from content', 'uptabs'),
 				'type' => Controls_Manager::SLIDER,
-				'range' => ['px' => ['min' => 0, 'max' => 100]],
-				'default' => ['size' => 0, 'unit' => 'px'],
+				'size_units' => ['px','em', 'rem'],
+				'range' => [
+					'px' => ['min' => 0, 'max' => 400],
+					'em' => ['min' => 0, 'max' => 40],
+					'rem' => ['min' => 0, 'max' => 40],
+				],
+				'default' => ['size' => 20, 'unit' => 'px'],
 			
 					// '{{WRAPPER}}.uptabs-position-column .uptabs-tabs-inner' => 'gap: {{SIZE}}{{UNIT}};',
 					// '{{WRAPPER}}.uptabs-position-column-reverse .uptabs-tabs-inner' => 'gap: {{SIZE}}{{UNIT}};',

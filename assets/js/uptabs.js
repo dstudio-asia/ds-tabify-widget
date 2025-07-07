@@ -36,9 +36,7 @@
               .removeClass("uptabs-active")
               .attr({ "aria-selected": "false", tabindex: "-1" });
 
-            $tabContents
-              .removeClass("uptabs-active")
-              .attr("hidden", "hidden");
+            $tabContents.removeClass("uptabs-active").attr("hidden", "hidden");
 
             $tabButtons
               .filter(`[data-tab="${tabNum}"]`)

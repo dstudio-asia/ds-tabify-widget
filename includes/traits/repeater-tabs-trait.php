@@ -29,8 +29,8 @@ trait RepeaterTabsTrait
 			[
 				'label' => esc_html__('Title', 'uptabs'),
 				'type' => Controls_Manager::TEXT,
-				'default' => esc_html__('Tab Title', 'uptabs'),
-				'placeholder' => esc_html__('Tab Title', 'uptabs'),
+				'default' => esc_html__('Tab', 'uptabs'),
+				'placeholder' => esc_html__('Tab', 'uptabs'),
 				'label_block' => true,
 				'dynamic' => ['active' => true],
 			]
@@ -84,6 +84,7 @@ trait RepeaterTabsTrait
 			[
 				'label' => esc_html__('Description', 'uptabs'),
 				'type' => Controls_Manager::TEXTAREA,
+				// 'type' => Controls_Manager::WYSIWYG,
 				'default' => esc_html__('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ultricies leo in dui ultricies porttitor. Fusce placerat massa vitae diam aliquam, ac tincidunt tortor venenatis.', 'uptabs'),
 			]
 		);

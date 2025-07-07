@@ -12,9 +12,110 @@ use Elementor\Group_Control_Typography;
 trait TabInfoStyleTrait
 
 {
-	function uptabs_tab_info_style($control)
+	function uptabs_tab_info_style()
 	{
 
+		// ===========================================
+		// STYLE TAB: IMAGE
+		// ===========================================
+		$this->start_controls_section(
+			'uptabs_section_image_style',
+			[
+				'label' => esc_html__('Image', 'uptabs'),
+				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+
+		$this->add_responsive_control(
+			'uptabs_image_width',
+			[
+				'label' => esc_html__('Image Width', 'uptabs'),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px', '%'],
+				'range' => [
+					'px' => ['min' => 100, 'max' => 1000, 'step' => 5],
+					'%' => ['min' => 10, 'max' => 100],
+				],
+				'mobile_default' => [
+					'size' => 100,
+					'unit' => '%',
+				],
+				'default'    => [
+					'size' => 40,
+					'unit' => '%',
+				],
+
+				'selectors' => [
+					'{{WRAPPER}} .uptabs-card-image' => 'width: {{SIZE}}{{UNIT}};'
+				],
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Border::get_type(),
+			[
+				'name' => 'uptabs_image_border_radius',
+				'label' => __('Content Border', 'uptabs'),
+				'selector' => '{{WRAPPER}} .uptabs-card-image img',
+				'fields_options' => [
+					'border' => [
+						'default' => 'solid',
+					],
+					'width' => [
+						'default' => [
+							'top' => 1,
+							'right' => 1,
+							'bottom' => 1,
+							'left' => 1,
+							'isLinked' => true,
+						],
+					],
+					'color' => [
+						'default' => '#000000',
+					],
+				],
+			]
+		);
+
+		$this->add_control(
+			'uptabs_image_border_radius',
+			[
+				'label' => esc_html__('Border Radius', 'uptabs'),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => ['px', '%'],
+				'selectors' => [
+					'{{WRAPPER}}  .uptabs-card-image img' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+			]
+		);
+
+
+
+		$this->add_group_control(
+			Group_Control_Box_Shadow::get_type(),
+			[
+				'name' => 'image_box_shadow',
+				'selector' => '{{WRAPPER}} .uptabs-card-image img',
+			]
+		);
+
+		$this->add_responsive_control(
+			'uptabs_image_spacing',
+			[
+				'label' => esc_html__('Spacing', 'uptabs'),
+				'type' => Controls_Manager::SLIDER,
+				'range' => ['px' => ['min' => 0, 'max' => 100]],
+				'selectors' => [
+					'{{WRAPPER}} .uptabs-image-position-left .uptabs-card-image' => 'margin-left: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .uptabs-image-position-right .uptabs-card-image' => 'margin-right: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .uptabs-image-position-top .uptabs-card-image' => 'margin-top: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .uptabs-image-position-bottom .uptabs-card-image' => 'margin-bottom: {{SIZE}}{{UNIT}};',
+				],
+			]
+		);
+
+		$this->end_controls_section();
 
 		// ===========================================
 		// STYLE TAB: HEADING
@@ -27,21 +128,7 @@ trait TabInfoStyleTrait
 			]
 		);
 
-		$this->add_control(
-			'uptabs_tab_heading_tag',
-			[
-				'label' => esc_html__('HTML Tag', 'elementor-addon'),
-				'type' => Controls_Manager::SELECT,
-				'options' => [
-					'h1' => 'H1',
-					'h2' => 'H2',
-					'h3' => 'H3',
-					'h4' => 'H4',
-					'h5' => 'H5',
-				],
-				'default' => 'h2',
-			]
-		);
+		
 
 		$this->add_control(
 			'uptabs_heading_color',
@@ -249,108 +336,6 @@ trait TabInfoStyleTrait
 
 		$this->end_controls_section();
 
-		// ===========================================
-		// STYLE TAB: IMAGE
-		// ===========================================
-		$this->start_controls_section(
-			'uptabs_section_image_style',
-			[
-				'label' => esc_html__('Image', 'uptabs'),
-				'tab' => Controls_Manager::TAB_STYLE,
-			]
-		);
-
-
-		$this->add_control(
-			'uptabs_image_postion',
-			[
-				'label' => esc_html__('Image Position', 'uptabs'),
-				'type' => \Elementor\Controls_Manager::CHOOSE,
-				'options' => [
-					'right' => ['title' => esc_html__('Left', 'uptabs'), 'icon' => 'eicon-h-align-left'],
-					'left' => ['title' => esc_html__('Right', 'uptabs'), 'icon' => 'eicon-h-align-right'],
-					'bottom' => ['title' => esc_html__('Top', 'uptabs'), 'icon' => 'eicon-v-align-top'],
-					'top' => ['title' => esc_html__('Bottom', 'uptabs'), 'icon' => 'eicon-v-align-bottom'],
-				],
-				'default' => 'left',
-				'toggle' => true,
-
-				// 'prefix_class' => 'uptabs-image-position-'
-			]
-		);
-
-		$this->add_responsive_control(
-			'uptabs_image_width',
-			[
-				'label' => esc_html__('Image Width', 'uptabs'),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => ['px', '%'],
-				'range' => [
-					'px' => ['min' => 100, 'max' => 1000, 'step' => 5],
-					'%' => ['min' => 10, 'max' => 100],
-				],
-				'mobile_default' => [
-					'size' => 100,
-					'unit' => '%',
-				],
-				'default'    => [
-					'size' => 40,
-					'unit' => '%',
-				],
-
-				'selectors' => [
-					'{{WRAPPER}} .uptabs-card-image' => 'width: {{SIZE}}{{UNIT}};'
-				],
-			]
-		);
-
-		$this->add_control(
-			'uptabs_image_border_radius',
-			[
-				'label' => esc_html__('Border Radius', 'uptabs'),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => ['px', '%'],
-				'selectors' => [
-					'{{WRAPPER}} {{CURRENT_ITEM}} .uptabs-card-image img' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				],
-			]
-		);
-
-		$this->add_control(
-			'uptabs_image_border_radius',
-			[
-				'label' => esc_html__('Border Radius', 'uptabs'),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => ['px', '%'],
-				'selectors' => [
-					'{{WRAPPER}} .uptabs-card-image img' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-				],
-			]
-		);
-
-		$this->add_group_control(
-			Group_Control_Box_Shadow::get_type(),
-			[
-				'name' => 'image_box_shadow',
-				'selector' => '{{WRAPPER}} .uptabs-card-image img',
-			]
-		);
-
-		$this->add_responsive_control(
-			'uptabs_image_spacing',
-			[
-				'label' => esc_html__('Spacing', 'uptabs'),
-				'type' => Controls_Manager::SLIDER,
-				'range' => ['px' => ['min' => 0, 'max' => 100]],
-				'selectors' => [
-					'{{WRAPPER}} .uptabs-image-position-left .uptabs-card-image' => 'margin-left: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .uptabs-image-position-right .uptabs-card-image' => 'margin-right: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .uptabs-image-position-top .uptabs-card-image' => 'margin-top: {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .uptabs-image-position-bottom .uptabs-card-image' => 'margin-bottom: {{SIZE}}{{UNIT}};',
-				],
-			]
-		);
-
-		$this->end_controls_section();
+	
 	}
 }

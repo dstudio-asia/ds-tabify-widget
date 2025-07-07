@@ -59,37 +59,25 @@ class UpTabs_Widget extends \Elementor\Widget_Base
 				'fields' => $repeater->get_controls(),
 				'default' => [
 					[
-						'uptabs_tab_title' => esc_html__('Tab #1', 'uptabs'),
+						'uptabs_tab_title' => esc_html__('Tab', 'uptabs'),
 						'uptabs_tab_heading' => esc_html__('This is a heading', 'uptabs'),
 						'uptabs_tab_description' => esc_html__('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ultricies leo in dui ultricies porttitor. Fusce placerat massa vitae diam aliquam, ac tincidunt tortor venenatis.', 'uptabs'),
 					],
 					[
-						'uptabs_tab_title' => esc_html__('Tab #2', 'uptabs'),
+						'uptabs_tab_title' => esc_html__('Tab', 'uptabs'),
+						'uptabs_tab_heading' => esc_html__('This is a heading', 'uptabs'),
+						'uptabs_tab_description' => esc_html__('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ultricies leo in dui ultricies porttitor. Fusce placerat massa vitae diam aliquam, ac tincidunt tortor venenatis.', 'uptabs'),
+					],
+					[
+						'uptabs_tab_title' => esc_html__('Tab', 'uptabs'),
 						'uptabs_tab_heading' => esc_html__('This is a heading', 'uptabs'),
 						'uptabs_tab_description' => esc_html__('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ultricies leo in dui ultricies porttitor. Fusce placerat massa vitae diam aliquam, ac tincidunt tortor venenatis.', 'uptabs'),
 					],
 				],
 				'title_field' => '{{{ uptabs_tab_title }}}',
+
 			]
 		);
-
-		// $this->add_responsive_control(
-		// 	'position',
-		// 	[
-		// 		'label' => esc_html__('Direction', 'uptabs'),
-		// 		'type' => Controls_Manager::CHOOSE,
-		// 		'options' => [
-		// 			'horizontal' => ['title' => esc_html__('Top', 'uptabs'), 'icon' => 'eicon-v-align-top'],
-		// 			'horizontal-bottom' => ['title' => esc_html__('Bottom', 'uptabs'), 'icon' => 'eicon-v-align-bottom'],
-		// 			'vertical-left' => ['title' => esc_html__('Left', 'uptabs'), 'icon' => 'eicon-h-align-left'],
-		// 			'vertical-right' => ['title' => esc_html__('Right', 'uptabs'), 'icon' => 'eicon-h-align-right'],
-		// 		],
-		// 		'selectors' => [
-		// 			'{{WRAPPER}}.' => 'text-align: {{VALUE}};',
-		// 		],
-
-		// 	]
-		// );
 
 		$this->add_responsive_control(
 			'uptabs_tabs_position',
@@ -120,10 +108,10 @@ class UpTabs_Widget extends \Elementor\Widget_Base
 				'label' => esc_html__('Justify', 'uptabs'),
 				'type' => Controls_Manager::CHOOSE,
 				'options' => [
-					'start' => ['title' => esc_html__('Start', 'uptabs'), 'icon' => 'eicon-text-align-left'],
-					'center' => ['title' => esc_html__('Center', 'uptabs'), 'icon' => 'eicon-text-align-center'],
-					'end' => ['title' => esc_html__('End', 'uptabs'), 'icon' => 'eicon-text-align-right'],
-					'stretch' => ['title' => esc_html__('Stretch', 'uptabs'), 'icon' => 'eicon-text-align-justify'],
+					'start' => ['title' => esc_html__('Start', 'uptabs'), 'icon' => 'eicon-align-start-h'],
+					'center' => ['title' => esc_html__('Center', 'uptabs'), 'icon' => 'eicon-align-center-v'],
+					'end' => ['title' => esc_html__('End', 'uptabs'), 'icon' => 'eicon-align-end-h'],
+					'stretch' => ['title' => esc_html__('Stretch', 'uptabs'), 'icon' => 'eicon-align-stretch-h'],
 				],
 				'default' => 'center',
 				// 'selectors'   => [
@@ -131,6 +119,26 @@ class UpTabs_Widget extends \Elementor\Widget_Base
 				// ],
 
 				'prefix_class' => 'uptabs-tabs-align-',
+			]
+		);
+		$this->add_responsive_control(
+			'uptabs_title_align',
+			[
+				'label' => esc_html__('Title Align', 'uptabs'),
+				'type' => Controls_Manager::CHOOSE,
+				'options' => [
+
+					'start' => ['title' => esc_html__('Start', 'uptabs'), 'icon' => 'eicon-text-align-left'],
+					'center' => ['title' => esc_html__('Center', 'uptabs'), 'icon' => 'eicon-text-align-center'],
+					'end' => ['title' => esc_html__('End', 'uptabs'), 'icon' => 'eicon-text-align-right'],
+
+				],
+				'default' => 'center',
+				'selectors'   => [
+					'{{WRAPPER}} .uptabs-tab-title'  => 'justify-content: {{VALUE}};',
+				],
+
+
 			]
 		);
 
@@ -242,6 +250,135 @@ class UpTabs_Widget extends \Elementor\Widget_Base
 		// STYLE TAB: TAB INFO STYLE
 		// ===========================================
 		$this->uptabs_tab_info_style($this);
+
+
+
+		// ===========================================
+		// CONTENT TAB: Content Tab
+		// ===========================================
+		$this->start_controls_section(
+			'uptabs_section_content_tab',
+			[
+				'label' => esc_html__('Content Tab', 'marquee-addons-for-elementor'),
+				'tab' => Controls_Manager::TAB_CONTENT,
+			]
+		);
+		$this->add_control(
+			'uptabs_tab_heading_tag',
+			[
+				'label' => esc_html__('Heading Tag', 'elementor-addon'),
+				'type' => Controls_Manager::SELECT,
+				'options' => [
+					'h1' => 'H1',
+					'h2' => 'H2',
+					'h3' => 'H3',
+					'h4' => 'H4',
+					'h5' => 'H5',
+				],
+				'default' => 'h2',
+			]
+		);
+
+		$this->add_control(
+			'uptabs_image_postion',
+			[
+				'label' => esc_html__('Image Position', 'uptabs'),
+				'type' => \Elementor\Controls_Manager::CHOOSE,
+				'options' => [
+					'right' => ['title' => esc_html__('Left', 'uptabs'), 'icon' => 'eicon-h-align-left'],
+					'left' => ['title' => esc_html__('Right', 'uptabs'), 'icon' => 'eicon-h-align-right'],
+					'bottom' => ['title' => esc_html__('Top', 'uptabs'), 'icon' => 'eicon-v-align-top'],
+					'top' => ['title' => esc_html__('Bottom', 'uptabs'), 'icon' => 'eicon-v-align-bottom'],
+				],
+				'default' => 'left',
+				'toggle' => true,
+
+				// 'prefix_class' => 'uptabs-image-position-'
+			]
+		);
+
+		$this->add_responsive_control(
+			'uptabs_content_align',
+			[
+				'label' => esc_html__('Alignment', 'elementor-addon'),
+				'type' => Controls_Manager::CHOOSE,
+				'options' => [
+					'left' => [
+						'title' => esc_html__('Left', 'elementor-addon'),
+						'icon' => 'eicon-text-align-left',
+					],
+					'center' => [
+						'title' => esc_html__('Center', 'elementor-addon'),
+						'icon' => 'eicon-text-align-center',
+					],
+					'right' => [
+						'title' => esc_html__('Right', 'elementor-addon'),
+						'icon' => 'eicon-text-align-right',
+					],
+				],
+				'default' => 'center',
+				'selectors' => [
+
+					'{{WRAPPER}} .uptabs-card-left-section' => 'align-items: {{VALUE}};',
+
+					// Conditional mapping for flex values
+					'{{WRAPPER}}.elementor-align-left .uptabs-image-position-bottom .uptabs-card-content-wrapper' => 'align-items: flex-start;',
+					'{{WRAPPER}}.elementor-align-center .uptabs-image-position-bottom .uptabs-card-content-wrapper' => 'align-items: center;',
+					'{{WRAPPER}}.elementor-align-right .uptabs-image-position-bottom .uptabs-card-content-wrapper' => 'align-items: flex-end;',
+
+					'{{WRAPPER}}.elementor-align-left .uptabs-image-position-top .uptabs-card-content-wrapper' => 'align-items: flex-start;',
+					'{{WRAPPER}}.elementor-align-center .uptabs-image-position-top .uptabs-card-content-wrapper' => 'align-items: center;',
+					'{{WRAPPER}}.elementor-align-right .uptabs-image-position-top .uptabs-card-content-wrapper' => 'align-items: flex-end;',
+
+					// For left/right positions
+					'{{WRAPPER}}.elementor-align-left .uptabs-image-position-left .uptabs-card-content-wrapper' => 'justify-content: flex-start;',
+					'{{WRAPPER}}.elementor-align-center .uptabs-image-position-left .uptabs-card-content-wrapper' => 'justify-content: center;',
+					'{{WRAPPER}}.elementor-align-right .uptabs-image-position-left .uptabs-card-content-wrapper' => 'justify-content: flex-end;',
+
+					'{{WRAPPER}}.elementor-align-left .uptabs-image-position-right .uptabs-card-content-wrapper' => 'justify-content: flex-start;',
+					'{{WRAPPER}}.elementor-align-center .uptabs-image-position-right .uptabs-card-content-wrapper' => 'justify-content: center;',
+					'{{WRAPPER}}.elementor-align-right .uptabs-image-position-right .uptabs-card-content-wrapper' => 'justify-content: flex-end;',
+				],
+				'prefix_class' => 'elementor-align-',
+			]
+		);
+
+		$this->add_control(
+			'uptabs_content_vertical_alignment',
+			[
+				'label' => esc_html__('Vertical Align (Content)', 'uptabs'),
+				'type' => \Elementor\Controls_Manager::CHOOSE,
+				'options' => [
+					'start' => [
+						'title' => esc_html__('Top', 'uptabs'),
+						'icon' => 'eicon-v-align-top',
+					],
+					'center' => [
+						'title' => esc_html__('Center', 'uptabs'),
+						'icon' => 'eicon-v-align-middle',
+					],
+					'end' => [
+						'title' => esc_html__('Bottom', 'uptabs'),
+						'icon' => 'eicon-v-align-bottom',
+					],
+				],
+				'condition' => [
+					'uptabs_image_postion' => ['left', 'right'],
+				],
+				'default' => 'center',
+				'selectors' => [
+					'{{WRAPPER}} .uptabs-card-content-wrapper' => 'justify-content: {{VALUE}};',
+					'{{WRAPPER}} .uptabs-image-position-left .uptabs-card-content-wrapper' => 'align-items: {{VALUE}};',
+				],
+
+			]
+		);
+
+
+
+
+		$this->end_controls_section();
+		//Collupsable Section End
 	}
 
 	/**
@@ -315,27 +452,30 @@ class UpTabs_Widget extends \Elementor\Widget_Base
 							'aria-controls' => 'uptabs-tab-content-' . $id_int . $tab_count,
 							'tabindex' => $tab_count === $active_tab ? '0' : '-1',
 						]);
+
+						$tab_title = $item['uptabs_tab_title'] . " #" . $tab_count;
+
 					?>
 						<div <?php $this->print_render_attribute_string($tab_id); ?>>
 							<?php if ($icon_html) : ?>
 								<?php if ($icon_position === 'top' || $icon_position === 'bottom') : ?>
 									<div class="uptabs-icon-wrapper uptabs-icon-wrapper-<?php echo esc_attr($icon_position); ?>">
 										<span class="uptabs-tab-icon"><?php echo $icon_html; ?></span>
-										<span class="uptabs-tab-title-text"><?php echo esc_html($item['uptabs_tab_title']); ?></span>
+										<span class="uptabs-tab-title-text"><?php echo esc_html($tab_title); ?></span>
 									</div>
 								<?php else : ?>
 									<div class="uptabs-tab-title-inner">
 										<?php if ($icon_position === 'left') : ?>
 											<span class="uptabs-tab-icon"><?php echo $icon_html; ?></span>
 										<?php endif; ?>
-										<span class="uptabs-tab-title-text"><?php echo esc_html($item['uptabs_tab_title']); ?></span>
+										<span class="uptabs-tab-title-text"><?php echo esc_html($tab_title); ?></span>
 										<?php if ($icon_position === 'right') : ?>
 											<span class="uptabs-tab-icon"><?php echo $icon_html; ?></span>
 										<?php endif; ?>
 									</div>
 								<?php endif; ?>
 							<?php else : ?>
-								<span class="uptabs-tab-title-text"><?php echo esc_html($item['uptabs_tab_title'] ?? null); ?></span>
+								<span class="uptabs-tab-title-text"><?php echo esc_html($tab_title ?? null); ?></span>
 							<?php endif; ?>
 						</div>
 					<?php endforeach; ?>
@@ -408,7 +548,7 @@ class UpTabs_Widget extends \Elementor\Widget_Base
 						<div class="uptabs-description">
 
 
-							<p class="uptabs-card-description"><?php echo esc_html($item['uptabs_tab_description']); ?></p>
+							<p class="uptabs-card-description"><?php echo wp_kses_post($item['uptabs_tab_description']); ?></p>
 						</div>
 						<?php if (!empty($btn_text)) : ?>
 							<div class="uptab-card-button-wrapper">
