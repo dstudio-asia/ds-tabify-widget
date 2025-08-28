@@ -7,10 +7,9 @@ use Elementor\Group_Control_Image_Size;
 trait RepeaterTabsTrait
 
 {
-	function uptabs_repeater_tabs($repeater){
-	
-	
+	function uptabs_repeater_tabs(){
 
+		$repeater = new Elementor\Repeater();
 		// ======================
 		// TAB: TITLE
 		// ======================
@@ -100,6 +99,7 @@ trait RepeaterTabsTrait
 			'uptabs_tab_button_text',
 			[
 				'label' => esc_html__('Button Text', 'uptabs'),
+				'default' => esc_html__('Click Me', 'uptabs'),
 				'type' => Controls_Manager::TEXT,
 			]
 		);
@@ -146,6 +146,36 @@ trait RepeaterTabsTrait
 
 
 		$repeater->end_controls_tab();
+
+		
+
+		$this->add_control(
+			'uptabs_tabs',
+			[
+				'label' => esc_html__('Tabs Items', 'uptabs'),
+				'type' => Controls_Manager::REPEATER,
+				'fields' => $repeater->get_controls(),
+				'default' => [
+					[
+						'uptabs_tab_title' => esc_html__('Tab', 'uptabs'),
+						'uptabs_tab_heading' => esc_html__('This is a heading', 'uptabs'),
+						'uptabs_tab_description' => esc_html__('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ultricies leo in dui ultricies porttitor. Fusce placerat massa vitae diam aliquam, ac tincidunt tortor venenatis.', 'uptabs'),
+					],
+					[
+						'uptabs_tab_title' => esc_html__('Tab', 'uptabs'),
+						'uptabs_tab_heading' => esc_html__('This is a heading', 'uptabs'),
+						'uptabs_tab_description' => esc_html__('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ultricies leo in dui ultricies porttitor. Fusce placerat massa vitae diam aliquam, ac tincidunt tortor venenatis.', 'uptabs'),
+					],
+					[
+						'uptabs_tab_title' => esc_html__('Tab', 'uptabs'),
+						'uptabs_tab_heading' => esc_html__('This is a heading', 'uptabs'),
+						'uptabs_tab_description' => esc_html__('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ultricies leo in dui ultricies porttitor. Fusce placerat massa vitae diam aliquam, ac tincidunt tortor venenatis.', 'uptabs'),
+					],
+				],
+				'title_field' => '{{{ uptabs_tab_title }}}',
+
+			]
+		);
 
 	}
 }

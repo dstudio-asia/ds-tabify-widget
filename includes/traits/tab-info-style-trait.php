@@ -238,6 +238,7 @@ trait TabInfoStyleTrait
 			[
 				'label' => esc_html__('Background Color', 'uptabs'),
 				'type' => Controls_Manager::COLOR,
+				'default' => '#54595F',
 				'selectors' => ['{{WRAPPER}} .uptabs-card-button' => 'background-color: {{VALUE}};'],
 			]
 		);

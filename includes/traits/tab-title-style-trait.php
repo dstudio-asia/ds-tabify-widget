@@ -173,6 +173,13 @@ trait TabTitleStyleTrait
 				'label' => esc_html__('Padding', 'uptabs'),
 				'type' => Controls_Manager::DIMENSIONS,
 				'size_units' => ['px', '%', 'em'],
+				'default' => [
+					'unit' => 'px',
+					'top' => 10,
+					'right' => 10,
+					'bottom' => 10,
+					'left' => 10,
+				],
 				'selectors' => [
 					'{{WRAPPER}} .uptabs-tab-title' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 				],

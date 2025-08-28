@@ -71,20 +71,23 @@
   .uptabs-position-column .uptabs-tabs-wrapper,
   .uptabs-position-column-reverse .uptabs-tabs-wrapper {
     flex-direction: row;
-    min-height: 50px;
+    /* min-height: 50px; */
   }
   
   /* Horizontal Tabs Alignment */
   .uptabs-tabs-align-start .uptabs-tabs-wrapper {
     justify-content: flex-start;
+    text-align: left;
   }
   
   .uptabs-tabs-align-center .uptabs-tabs-wrapper {
     justify-content: center;
+    text-align: center;
   }
   
   .uptabs-tabs-align-end .uptabs-tabs-wrapper {
     justify-content: flex-end;
+    text-align: right;
   }
   
   .uptabs-tabs-align-stretch .uptabs-tabs-wrapper {
@@ -151,17 +154,17 @@
   /* Tab Title Positions */
   .uptabs-position-column .uptabs-tab-title {
     margin-bottom: -1px;
-    border-radius: var(--uptabs-radius) var(--uptabs-radius) 0 0;
+    /* border-radius: var(--uptabs-radius) var(--uptabs-radius) 0 0; */
   }
   
   .uptabs-position-column-reverse .uptabs-tab-title {
     margin-top: -1px;
-    border-radius: 0 0 var(--uptabs-radius) var(--uptabs-radius);
+    /* border-radius: 0 0 var(--uptabs-radius) var(--uptabs-radius); */
   }
   
   .uptabs-tabs-view-vertical-left .uptabs-tab-title {
     margin-right: -1px;
-    border-radius: var(--uptabs-radius) 0 0 var(--uptabs-radius);
+    /* border-radius: var(--uptabs-radius) 0 0 var(--uptabs-radius); */
     display: block;
     width: 100%;
     white-space: normal;       
@@ -174,7 +177,7 @@
   
   .uptabs-tabs-view-vertical-right .uptabs-tab-title {
     margin-left: -1px;
-    border-radius: 0 var(--uptabs-radius) var(--uptabs-radius) 0;
+    /* border-radius: 0 var(--uptabs-radius) var(--uptabs-radius) 0; */
     display: block;
     width: 100%;
     white-space: normal;         /
@@ -197,25 +200,25 @@
   .uptabs-position-column .uptabs-tabs-content-wrapper {
     border: 1px solid var(--uptabs-border);
     border-top: none;
-    border-radius: 0 0 var(--uptabs-radius) var(--uptabs-radius);
+    /* border-radius: 0 0 var(--uptabs-radius) var(--uptabs-radius); */
   }
   
   .uptabs-position-column-reverse .uptabs-tabs-content-wrapper {
     border: 1px solid var(--uptabs-border);
     border-bottom: none;
-    border-radius: var(--uptabs-radius) var(--uptabs-radius) 0 0;
+    /* border-radius: var(--uptabs-radius) var(--uptabs-radius) 0 0; */
   }
   
   .uptabs-tabs-view-vertical-left .uptabs-tabs-content-wrapper {
     border: 1px solid var(--uptabs-border);
     border-left: none;
-    border-radius: 0 var(--uptabs-radius) var(--uptabs-radius) 0;
+    /* border-radius: 0 var(--uptabs-radius) var(--uptabs-radius) 0; */
   }
   
   .uptabs-tabs-view-vertical-right .uptabs-tabs-content-wrapper {
     border: 1px solid var(--uptabs-border);
     border-right: none;
-    border-radius: var(--uptabs-radius) 0 0 var(--uptabs-radius);
+    /* border-radius: var(--uptabs-radius) 0 0 var(--uptabs-radius); */
   }
   
   /* Tab Content Styles */
@@ -259,6 +262,8 @@
     gap: 8px;
     flex: 1;
     word-break: break-word;
+    justify-content: inherit; /* inherits flex alignment */
+    text-align: inherit;
   }
 
   .uptabs-tab-title-inner,
@@ -374,20 +379,21 @@
    
   }
   
+  
   /* Button Styles */
   .uptabs-card-button {
     display: inline-block;
-    background-color: var(--uptabs-secondary);
-    color: #fff;
+    /* background-color: var(--uptabs-secondary); */
+    color: #000000;
     padding: 10px 20px;
     border-radius: var(--uptabs-radius);
-    text-decoration: none;
+    text-decoration: none !important;
     transition: var(--uptabs-transition);
     align-self: flex-start;
   }
   
   .uptabs-card-button:hover {
-    background-color: #005177;
+    /* background-color: #005177; */
     transform: translateY(-2px);
   }
   
@@ -488,6 +494,21 @@
       .uptabs-card-content-wrapper {
         flex-direction: column;
       }
+
+          .uptabs-icon-wrapper-top {
+          flex-direction: column !important;
+        }
+        .uptabs-icon-wrapper-bottom {
+          flex-direction: column-reverse !important;
+        }
+        .uptabs-icon-wrapper-left {
+          flex-direction: row !important;
+        }
+        .uptabs-icon-wrapper-right {
+          flex-direction: row-reverse !important;
+        }
+
+
     
       /* Image position reset for vertical stacking */
       .uptabs-image-position-left .uptabs-card-content-wrapper,
@@ -515,5 +536,18 @@
       }
     }
     
+
+    @media (min-width: 2400px) {
+      .uptabs-tabs {
+        max-width: 1400px;   /* limit overall width */
+        margin: 0 auto;      /* keep it centered */
+      }
+
+      .uptabs-tabs-wrapper {
+        flex-wrap: nowrap;   /* prevent tabs from jumping to next row */
+        justify-content: flex-start; /* or center, depending on control */
+        gap: 20px;           /* maintain consistent spacing */
+      }
+    }
   
   

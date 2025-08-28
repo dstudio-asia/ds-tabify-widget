@@ -7,7 +7,10 @@ use Elementor\Group_Control_Image_Size;
 trait TabContainerStyleTrait
 
 {
+	
 	function uptabs_container_style($control){
+
+		
 		
 		$control->add_responsive_control(
 			'uptabs_tab_gap',

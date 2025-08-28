@@ -10,7 +10,7 @@ if (! defined('ABSPATH')) {
 
 class UpTabs_Widget extends \Elementor\Widget_Base
 {
-	use RepeaterTabsTrait, TabContainerStyleTrait, TabTitleStyleTrait, TabIconStyleTrait, TabContentStyleTrait, TabInfoStyleTrait;
+	use RepeaterTabsTrait, TabContainerStyleTrait, TabTitleStyleTrait, TabIconStyleTrait, TabContentStyleTrait, TabInfoStyleTrait, TabAlignmentTrait;
 	public function get_name()
 	{
 		return 'uptabs';
@@ -48,122 +48,11 @@ class UpTabs_Widget extends \Elementor\Widget_Base
 				'label' => esc_html__('Tabs', 'uptabs'),
 			]
 		);
-		$repeater = new Elementor\Repeater();
-		$this->uptabs_repeater_tabs($repeater);
-
-		$this->add_control(
-			'uptabs_tabs',
-			[
-				'label' => esc_html__('Tabs Items', 'uptabs'),
-				'type' => Controls_Manager::REPEATER,
-				'fields' => $repeater->get_controls(),
-				'default' => [
-					[
-						'uptabs_tab_title' => esc_html__('Tab', 'uptabs'),
-						'uptabs_tab_heading' => esc_html__('This is a heading', 'uptabs'),
-						'uptabs_tab_description' => esc_html__('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ultricies leo in dui ultricies porttitor. Fusce placerat massa vitae diam aliquam, ac tincidunt tortor venenatis.', 'uptabs'),
-					],
-					[
-						'uptabs_tab_title' => esc_html__('Tab', 'uptabs'),
-						'uptabs_tab_heading' => esc_html__('This is a heading', 'uptabs'),
-						'uptabs_tab_description' => esc_html__('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ultricies leo in dui ultricies porttitor. Fusce placerat massa vitae diam aliquam, ac tincidunt tortor venenatis.', 'uptabs'),
-					],
-					[
-						'uptabs_tab_title' => esc_html__('Tab', 'uptabs'),
-						'uptabs_tab_heading' => esc_html__('This is a heading', 'uptabs'),
-						'uptabs_tab_description' => esc_html__('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam ultricies leo in dui ultricies porttitor. Fusce placerat massa vitae diam aliquam, ac tincidunt tortor venenatis.', 'uptabs'),
-					],
-				],
-				'title_field' => '{{{ uptabs_tab_title }}}',
-
-			]
-		);
-
-		$this->add_responsive_control(
-			'uptabs_tabs_position',
-			[
-				'label'       => esc_html__('Tab Position', 'uptabs'),
-				'type'        => Controls_Manager::CHOOSE,
-				'options'     => [
-					'column'        => ['title' => esc_html__('Top', 'uptabs'),    'icon' => 'eicon-v-align-top'],
-					'column-reverse' => ['title' => esc_html__('Bottom', 'uptabs'), 'icon' => 'eicon-v-align-bottom'],
-					'row'     => ['title' => esc_html__('Left', 'uptabs'),   'icon' => 'eicon-h-align-left'],
-					'row-reverse'    => ['title' => esc_html__('Right', 'uptabs'),  'icon' => 'eicon-h-align-right'],
-				],
-				'default'     => 'column',
-				// 'prefix_class' => 'uptabs-tabs-view-',
-				'render_type' => 'template',
-				'selectors'   => [
-					// 1. Main flex-direction control
-					'{{WRAPPER}} .uptabs-tabs-inner' => 'flex-direction: {{VALUE}};',
-				],
-
-			]
-		);
+		$this->uptabs_repeater_tabs();
 
 
-		$this->add_responsive_control(
-			'uptabs_tabs_justify',
-			[
-				'label' => esc_html__('Justify', 'uptabs'),
-				'type' => Controls_Manager::CHOOSE,
-				'options' => [
-					'start' => ['title' => esc_html__('Start', 'uptabs'), 'icon' => 'eicon-align-start-h'],
-					'center' => ['title' => esc_html__('Center', 'uptabs'), 'icon' => 'eicon-align-center-v'],
-					'end' => ['title' => esc_html__('End', 'uptabs'), 'icon' => 'eicon-align-end-h'],
-					'stretch' => ['title' => esc_html__('Stretch', 'uptabs'), 'icon' => 'eicon-align-stretch-h'],
-				],
-				'default' => 'center',
-				// 'selectors'   => [
-				// 	'{{WRAPPER}} .uptabs-tabs-wrapper'  => 'justify-content: {{VALUE}};',
-				// ],
 
-				'prefix_class' => 'uptabs-tabs-align-',
-			]
-		);
-		$this->add_responsive_control(
-			'uptabs_title_align',
-			[
-				'label' => esc_html__('Title Align', 'uptabs'),
-				'type' => Controls_Manager::CHOOSE,
-				'options' => [
-
-					'start' => ['title' => esc_html__('Start', 'uptabs'), 'icon' => 'eicon-text-align-left'],
-					'center' => ['title' => esc_html__('Center', 'uptabs'), 'icon' => 'eicon-text-align-center'],
-					'end' => ['title' => esc_html__('End', 'uptabs'), 'icon' => 'eicon-text-align-right'],
-
-				],
-				'default' => 'center',
-				'selectors'   => [
-					'{{WRAPPER}} .uptabs-tab-title'  => 'justify-content: {{VALUE}};',
-				],
-
-
-			]
-		);
-
-		$this->add_responsive_control(
-			'uptabs_width',
-			[
-				'label' => esc_html__('Width', 'uptabs'),
-				'type' => Controls_Manager::SLIDER,
-				'size_units' => ['px', '%', 'em', 'rem', 'custom'],
-				'default' => ['size' => 10, 'unit' => '%'],
-				'range' => [
-					'px' => ['min' => 10, 'max' => 500],
-					'%' => ['min' => 10, 'max' => 50],
-					'em' => ['min' => 1, 'max' => 50],
-					'rem' => ['min' => 1, 'max' => 50],
-				],
-				'selectors' => [
-					// '{{WRAPPER}}.uptabs-position-row .uptabs-tabs-inner > .uptabs-tabs-wrapper' => 'width: {{SIZE}}{{UNIT}}; flex: 0 0 {{SIZE}}{{UNIT}};',
-					// '{{WRAPPER}}.uptabs-position-row-reverse .uptabs-tabs-inner > .uptabs-tabs-wrapper' => 'width: {{SIZE}}{{UNIT}}; flex: 0 0 {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .uptabs-position-row .uptabs-tabs-wrapper, .uptabs-position-row-reverse .uptabs-tabs-wrapper' => 'flex-basis: {{SIZE}}{{UNIT}}'
-				],
-				'condition' => ['uptabs_tabs_position' => ['row', 'row-reverse']],
-			]
-		);
-
+		$this->uptabs_tab_alignment();
 
 
 
@@ -218,17 +107,11 @@ class UpTabs_Widget extends \Elementor\Widget_Base
 		// ===========================================
 		// STYLE TAB: TAB ICON
 		// ===========================================
-		$this->start_controls_section(
-			'uptabs_section_tab_icon_style',
-			[
-				'label' => esc_html__('Tab Icon', 'uptabs'),
-				'tab' => Controls_Manager::TAB_STYLE,
-			]
-		);
+		
 		$this->uptabs_tab_icon_style($this);
 
 
-		$this->end_controls_section();
+	
 
 		// ===========================================
 		// STYLE TAB: TAB CONTENT
@@ -395,11 +278,6 @@ class UpTabs_Widget extends \Elementor\Widget_Base
 		$tabs = $settings['uptabs_tabs'];
 
 
-		// echo "<pre>";
-		// print_r($tabs);
-		// echo "</pre>";
-		// die;
-
 		// Get active tab - handle both frontend and editor
 		$active_tab = 1;
 		if (Plugin::$instance->editor->is_edit_mode()) {
@@ -415,11 +293,10 @@ class UpTabs_Widget extends \Elementor\Widget_Base
 
 
 		$this->add_render_attribute('uptabs-tabs', [
-
-			// 'class' => ['uptabs-tabs', 'uptabs-tabs-view-' . $position],
 			'class' => ['uptabs-tabs', 'uptabs-position-' . $position],
 			'data-active-tab' => $active_tab,
 		]);
+		
 
 		// $this->add_render_attribute('uptabs-tabs', [
 		// 	'class' => ['uptabs-tabs'],
@@ -445,7 +322,7 @@ class UpTabs_Widget extends \Elementor\Widget_Base
 
 						$this->add_render_attribute($tab_id, [
 							'id' => $tab_id,
-							'class' => ['uptabs-tab-title', 'uptabs-icon-' . $icon_position, $active_class],
+							'class' => ['uptabs-tab-title', $active_class],
 							'aria-selected' => $tab_count === $active_tab ? 'true' : 'false',
 							'data-tab' => $tab_count,
 							'role' => 'tab',
@@ -552,11 +429,15 @@ class UpTabs_Widget extends \Elementor\Widget_Base
 						</div>
 						<?php if (!empty($btn_text)) : ?>
 							<div class="uptab-card-button-wrapper">
-								<a class="uptabs-card-button" href="<?php echo esc_url($btn_link['url']); ?>" <?php echo $btn_link['is_external'] ? 'target="_blank"' : ''; ?> <?php echo $btn_link['nofollow'] ? 'rel="nofollow"' : ''; ?>>
+								<a class="button uptabs-card-button" href="<?php echo esc_url($btn_link['url']); ?>" <?php echo $btn_link['is_external'] ? 'target="_blank"' : ''; ?> <?php echo $btn_link['nofollow'] ? 'rel="nofollow"' : ''; ?>>
 									<?php echo esc_html($btn_text); ?>
 								</a>
 							</div>
 						<?php endif; ?>
+
+						
+
+						
 					</div>
 
 					<?php if ($has_image) : ?>

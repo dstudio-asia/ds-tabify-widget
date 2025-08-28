@@ -225,6 +225,7 @@ class UpTabs_Loader
 		require_once UPTABS_PATH . 'includes/traits/tab-icon-style-trait.php';
 		require_once UPTABS_PATH . 'includes/traits/tab-content-style-trait.php';
 		require_once UPTABS_PATH . 'includes/traits/tab-info-style-trait.php';
+		require_once UPTABS_PATH . 'includes/traits/tab-alignment-trait.php';
 
 
 
