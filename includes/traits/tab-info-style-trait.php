@@ -105,6 +105,7 @@ trait TabInfoStyleTrait
 			[
 				'label' => esc_html__('Spacing', 'uptabs'),
 				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px', '%', 'em'],
 				'range' => ['px' => ['min' => 0, 'max' => 100]],
 				'selectors' => [
 					'{{WRAPPER}} .uptabs-image-position-left .uptabs-card-image' => 'margin-left: {{SIZE}}{{UNIT}};',
@@ -152,6 +153,7 @@ trait TabInfoStyleTrait
 			[
 				'label' => esc_html__('Spacing', 'uptabs'),
 				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px', '%', 'em'],
 				'range' => ['px' => ['min' => 0, 'max' => 500]],
 				'selectors' => [
 					'{{WRAPPER}} .uptabs-header' => 'margin-bottom: {{SIZE}}{{UNIT}};',
@@ -194,6 +196,7 @@ trait TabInfoStyleTrait
 			[
 				'label' => esc_html__('Spacing', 'uptabs'),
 				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px', '%', 'em'],
 				'range' => ['px' => ['min' => 0, 'max' => 500]],
 				'default' => ['size' => 20, 'unit' => 'px'],
 				'selectors' => [
@@ -324,16 +327,19 @@ trait TabInfoStyleTrait
 		);
 
 		$this->add_responsive_control(
-			'uptabs_button_margin',
+			'uptabs_button_spacing',
 			[
-				'label' => esc_html__('Margin', 'uptabs'),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => ['px', 'em', '%'],
+				'label' => esc_html__('Spacing', 'uptabs'),
+				'type' => Controls_Manager::SLIDER,
+				'size_units' => ['px', '%', 'em'],
+				'range' => ['px' => ['min' => 0, 'max' => 500]],
+				'default' => ['size' => 20, 'unit' => 'px'],
 				'selectors' => [
-					'{{WRAPPER}} .uptabs-card-button' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					'{{WRAPPER}} .uptabs-card-button' => 'margin-bottom: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
+
 
 		$this->end_controls_section();
 

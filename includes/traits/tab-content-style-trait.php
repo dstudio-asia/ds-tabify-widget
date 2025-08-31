@@ -14,7 +14,13 @@ trait TabContentStyleTrait
 	function uptabs_tab_content_style($control)
 	{
 
-
+		$this->start_controls_section(
+			'uptabs_section_tab_content_style',
+			[
+				'label' => esc_html__('Tab Content', 'uptabs'),
+				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
 
 
 
@@ -96,6 +102,25 @@ trait TabContentStyleTrait
 				],
 			]
 		);
+		$control->add_responsive_control(
+			'uptabs_content_margin',
+			[
+				'label' => esc_html__('Margin', 'uptabs'),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => ['px', '%', 'em'],
+				'default' => [
+					'top' => '0',
+					'right' => '0',
+					'bottom' => '0',
+					'left' => '0',
+					'unit' => 'px',
+					
+				],
+				'selectors' => [
+					'{{WRAPPER}} .uptabs-tab-content' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+				],
+			]
+		);
 
 		$control->add_group_control(
 			Group_Control_Box_Shadow::get_type(),
@@ -104,5 +129,7 @@ trait TabContentStyleTrait
 				'selector' => '{{WRAPPER}} .uptabs-tab-content',
 			]
 		);
+
+		$this->end_controls_section();
 	}
 }

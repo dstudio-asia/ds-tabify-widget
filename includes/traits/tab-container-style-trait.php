@@ -10,7 +10,13 @@ trait TabContainerStyleTrait
 	
 	function uptabs_container_style($control){
 
-		
+		$this->start_controls_section(
+			'uptabs_section_tab_container_style',
+			[
+				'label' => esc_html__('Tabs Container', 'uptabs'),
+				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
 		
 		$control->add_responsive_control(
 			'uptabs_tab_gap',
@@ -62,5 +68,7 @@ trait TabContainerStyleTrait
 				
 			]
 		);
+
+		$this->end_controls_section();
 	}
 }
