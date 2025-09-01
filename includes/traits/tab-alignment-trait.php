@@ -132,10 +132,15 @@ trait TabAlignmentTrait
 				// (Elementor applies this per breakpoint for the selector below.)
 				'selectors_dictionary' => [
 					// justify + grow
-					'start'   => '--tabs-justify:flex-start; --tabs-grow:0;',
-					'center'  => '--tabs-justify:center;     --tabs-grow:0;',
-					'end'     => '--tabs-justify:flex-end;   --tabs-grow:0;',
-					'stretch' => '--tabs-justify:flex-start; --tabs-grow:1; --tabs-wrap:wrap; --tabs-basis:0;',
+					// 'start'   => '--tabs-justify:flex-start; --tabs-grow:0;',
+					// 'center'  => '--tabs-justify:center;     --tabs-grow:0;',
+					// 'end'     => '--tabs-justify:flex-end;   --tabs-grow:0;',
+					// 'stretch' => '--tabs-justify:flex-start; --tabs-grow:1; --tabs-wrap:wrap; --tabs-basis:0;',
+
+					'start'   => '--tabs-justify:flex-start; --tabs-grow:0; --tabs-basis:auto; --tabs-min:max-content; --tab-title-ws:nowrap; --tabs-x:auto; --tabs-wrap:nowrap;',
+					'center'  => '--tabs-justify:center;     --tabs-grow:0; --tabs-basis:auto; --tabs-min:max-content; --tab-title-ws:nowrap; --tabs-x:auto; --tabs-wrap:nowrap;',
+					'end'     => '--tabs-justify:flex-end;   --tabs-grow:0; --tabs-basis:auto; --tabs-min:max-content; --tab-title-ws:nowrap; --tabs-x:auto; --tabs-wrap:nowrap;',
+					'stretch' => '--tabs-justify:flex-start; --tabs-grow:1; --tabs-basis:0;    --tabs-min:0;          --tab-title-ws:normal; --tabs-x:hidden; --tabs-wrap:wrap;',
 				],
 				'selectors' => [
 					// IMPORTANT: we drop the property name and inject the whole declaration string
@@ -182,7 +187,9 @@ trait TabAlignmentTrait
 				'selectors' => [
 					// '{{WRAPPER}}.uptabs-position-row .uptabs-tabs-inner > .uptabs-tabs-wrapper' => 'width: {{SIZE}}{{UNIT}}; flex: 0 0 {{SIZE}}{{UNIT}};',
 					// '{{WRAPPER}}.uptabs-position-row-reverse .uptabs-tabs-inner > .uptabs-tabs-wrapper' => 'width: {{SIZE}}{{UNIT}}; flex: 0 0 {{SIZE}}{{UNIT}};',
-					'{{WRAPPER}} .uptabs-position-row .uptabs-tabs-wrapper, .uptabs-position-row-reverse .uptabs-tabs-wrapper' => 'flex-basis: {{SIZE}}{{UNIT}}'
+					// '{{WRAPPER}} .uptabs-position-row .uptabs-tabs-wrapper, .uptabs-position-row-reverse .uptabs-tabs-wrapper' => 'flex-basis: {{SIZE}}{{UNIT}}'
+					'{{WRAPPER}} .uptabs-tabs' => '--tabs-aside-user: {{SIZE}}{{UNIT}};'
+
 				],
 				'condition' => ['uptabs_tabs_position' => ['row', 'row-reverse']],
 			]
