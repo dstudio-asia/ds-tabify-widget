@@ -86,20 +86,20 @@
   .uptabs-tabs { --tabs-aside-min: 96px; } 
 
   .uptabs-tabs-wrapper {
-  display: flex;
-  flex-direction: var(--tabs-wrapper, row);       /* row for top/bottom, column for left/right */
-  flex-wrap: var(--tabs-wrap, wrap);              /* per-position / stretch */
-  justify-content: var(--tabs-justify, center);   /* your Justify control */
-  flex: 0 0 var(--tabs-aside, auto);              /* reserve sidebar width on Left/Right */
-  max-width: var(--tabs-aside, none);
-  min-width: calc(var(--is-vertical, 0) * var(--tabs-aside-min)); /* prevent 10px sidebar */
-  overflow-x: var(--tabs-x, hidden);              /* horizontal scroll only for top/bottom */
-  overflow-y: var(--tabs-y, auto);                /* vertical scroll only for left/right */
-  white-space: var(--tabs-white-space, normal);   /* nowrap for top/bottom, normal for left/right */
-  box-sizing: border-box;
-  overscroll-behavior: contain;
-  z-index: 1;
-}
+    display: flex;
+    flex-direction: var(--tabs-wrapper, row);       /* row for top/bottom, column for left/right */
+    flex-wrap: var(--tabs-wrap, wrap);              /* per-position / stretch */
+    justify-content: var(--tabs-justify, center);   /* your Justify control */
+    flex: 0 0 var(--tabs-aside, auto);              /* reserve sidebar width on Left/Right */
+    /* max-width: var(--tabs-aside, none); */
+    min-width: calc(var(--is-vertical, 0) * var(--tabs-aside-min)); /* prevent 10px sidebar */
+    overflow-x: var(--tabs-x, hidden);              /* horizontal scroll only for top/bottom */
+    overflow-y: var(--tabs-y, auto);                /* vertical scroll only for left/right */
+    white-space: var(--tabs-white-space, normal);   /* nowrap for top/bottom, normal for left/right */
+    box-sizing: border-box;
+    overscroll-behavior: contain;
+    z-index: 1;
+  }
 
 
   
@@ -218,7 +218,7 @@
     /* border-radius: 0 var(--uptabs-radius) var(--uptabs-radius) 0; */
     display: block;
     width: 100%;
-    white-space: normal;         /
+    white-space: normal; 
     word-wrap: break-word;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -322,7 +322,18 @@
     display: flex;
     align-items: center;
     gap: 6px;
+    flex-direction: var(--icon-dir, row);
   }
+
+  /* Explicit child order so DOM order doesn't matter */
+.uptabs-tab-title-inner .uptabs-tab-icon,
+.uptabs-icon-wrapper .uptabs-tab-icon {
+  order: var(--icon-order, 0) !important;
+}
+.uptabs-tab-title-inner .uptabs-tab-title-text,
+.uptabs-icon-wrapper .uptabs-tab-title-text {
+  order: var(--text-order, 1) !important;
+}
 
   .uptabs-icon-wrapper-top,
   .uptabs-icon-wrapper-bottom {
@@ -515,27 +526,68 @@
        
       } */
 
-     .uptabs-tabs-wrapper{
-        width:100%;
-        -webkit-overflow-scrolling: touch;
-        scrollbar-width: thin;
+      .uptabs-tabs {
+    /* layout vars */
+    --tabs-inner: column !important;           /* headers above content */
+    --tabs-wrapper: row !important;            /* headers in a row */
+    --tabs-aside: auto !important;             /* no sidebar width */
+    --is-vertical: 0 !important;               /* disable vertical mode */
 
-        /* Horizontal scroller for Top/Bottom, vertical scroller for Left/Right */
-        overflow-x: var(--tabs-x, auto);          /* auto when top/bottom */
-        overflow-y: var(--tabs-y, hidden);        /* auto when left/right */
-        white-space: var(--tabs-white-space,nowrap);
-        flex-wrap: var(--tabs-wrap, nowrap);
+    /* scrolling + wrapping */
+    --tabs-x: auto !important;                 /* horizontal scroll ON */
+    --tabs-y: hidden !important;               /* vertical scroll OFF */
+    --tabs-white-space: nowrap !important;     /* keep titles on one line */
+    --tabs-wrap: nowrap !important;            /* prevent wrapping */
+    --tab-title-ws: nowrap !important;         /* ensure title nowrap */
 
-        /* Only constrain height when vertical; 0 when horizontal */
-        max-height: calc(var(--is-vertical,0) * var(--mobile-vertical-max-h));
-        padding-bottom: 5px;
-        gap: 8px;
-    }
+    /* content-wrapper border sides like TOP layout */
+    --cw-top: none !important;
+    --cw-right: initial !important;
+    --cw-bottom: initial !important;
+    --cw-left: initial !important;
+  }
 
-      .uptabs-tab-title {
-        /* white-space: nowrap;   */
-        padding: 10px 15px;
-      }
+  .uptabs-tabs-wrapper{
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;          /* single line */
+     justify-content: var(--tabs-justify, center) !important;
+    width: 100% !important;
+    flex: none !important;
+
+    overflow-x: auto !important;           /* show scrollbar */
+    overflow-y: hidden !important;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: auto;                 /* Firefox */
+    scrollbar-color: rgba(0,0,0,.35) transparent;
+    gap: 8px;
+  }
+
+
+  .uptabs-tabs-wrapper::-webkit-scrollbar{ height: 8px; }
+  .uptabs-tabs-wrapper::-webkit-scrollbar-track{ background: transparent; }
+  .uptabs-tabs-wrapper::-webkit-scrollbar-thumb{
+    background: rgba(0,0,0,.35); border-radius: 6px;
+  }
+
+
+
+  .uptabs-tabs-view-vertical-left .uptabs-tab-title,
+  .uptabs-tabs-view-vertical-right .uptabs-tab-title {
+    width: auto !important;
+    display: inline-flex !important;
+    white-space: nowrap !important;
+  }
+
+
+
+        .uptabs-tab-title{
+          display: inline-flex !important;
+          flex: 0 0 auto !important;             /* no grow, no shrink */
+          min-width: max-content !important;     /* size to its text */
+          white-space: nowrap !important;      
+        padding: 10px 15px;  /* stay on one line */
+        }
 
        .uptabs-tabs-content-wrapper { margin: 0; }
 
@@ -548,10 +600,10 @@
           justify-content: start;
       } */
 
-      .uptabs-tabs-align-stretch .uptabs-tab-title {
-        flex: unset;
-        min-width: auto;
-      }
+        .uptabs-tabs-align-stretch .uptabs-tab-title{
+    flex: 0 0 auto !important;
+    min-width: max-content !important;
+  }
 
 
     
@@ -563,17 +615,10 @@
         min-width: auto;
       } */
     
-      /* ✅ Reset vertical content spacing if margin is set from tab position */
-      .uptabs-tabs-content-wrapper {
-        margin: 0;
-      }
+     
     
       /* Tab button adjustments */
-      .uptabs-tab-title {
-        /* flex: 0 0 auto; */
-        white-space: nowrap;
-        padding: 10px 15px;
-      }
+     
     
       /* Content layout */
       .uptabs-card-content-wrapper {

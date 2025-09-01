@@ -89,21 +89,30 @@ trait TabIconStyleTrait
 		$this->add_responsive_control(
 			'uptabs_tab_icon_position',
 			[
-				'label' => esc_html__('Icon Position', 'uptabs'),
-				'type' => Controls_Manager::CHOOSE,
+				'label'   => esc_html__('Icon Position', 'uptabs'),
+				'type'    => Controls_Manager::CHOOSE,
 				'default' => 'left',
 				'options' => [
-					'top' => ['title' => esc_html__('Top', 'uptabs'), 'icon' => 'eicon-v-align-top'],
+					'top'    => ['title' => esc_html__('Top', 'uptabs'),    'icon' => 'eicon-v-align-top'],
 					'bottom' => ['title' => esc_html__('Bottom', 'uptabs'), 'icon' => 'eicon-v-align-bottom'],
-					'left' => ['title' => esc_html__('Left', 'uptabs'), 'icon' => 'eicon-h-align-left'],
-					'right' => ['title' => esc_html__('Right', 'uptabs'), 'icon' => 'eicon-h-align-right'],
+					'left'   => ['title' => esc_html__('Left', 'uptabs'),   'icon' => 'eicon-h-align-left'],
+					'right'  => ['title' => esc_html__('Right', 'uptabs'),  'icon' => 'eicon-h-align-right'],
 				],
 				'render_type' => 'template',
-				// 'selectors' => [
-				// 	'{{WRAPPER}} .uptabs-icon-wrapper' => 'flex-direction: {{VALUE}};',
-				// ],
+				'selectors_dictionary' => [
+					// use direction + explicit child orders
+					'left'   => '--icon-dir:row;    --icon-order:0; --text-order:1;',
+					'right'  => '--icon-dir:row;    --icon-order:1; --text-order:0;',
+					'top'    => '--icon-dir:column; --icon-order:0; --text-order:1;',
+					'bottom' => '--icon-dir:column; --icon-order:1; --text-order:0;',
+				],
+				'selectors' => [
+					'{{WRAPPER}} .uptabs-tabs' => '{{VALUE}}',
+				],
 			]
 		);
+
+
 
 		// $this->add_responsive_control(
 		// 	'uptabs_tab_icon_position',
